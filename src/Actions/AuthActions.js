@@ -14,3 +14,4 @@ export const passwordChange = (text) => {
         payload: text
     };
 };
+

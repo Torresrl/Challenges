@@ -1,7 +1,11 @@
 import React, {Component} from 'react';
-import {Input, CardSection, Card, Button} from './common';
+import {View} from 'react-native';
 import {connect} from 'react-redux';
+import {Actions} from 'react-native-router-flux';
+import {Input, CardSection, Card, Button} from './common';
 import {emailChange, passwordChange} from '../Actions';
+
+
 
 class LoginForm extends Component {
 
@@ -13,12 +17,15 @@ class LoginForm extends Component {
         this.props.passwordChange(text);
     }
 
+    onNewUser(){
+        Actions.newUser();
+    }
+
     render () {
         return(
+                <Card >
 
-                <Card>
-
-                    <CardSection>
+                    <CardSection >
                         <Input
                             placeholder="user@gmail.com"
                             label="Email:"
@@ -27,7 +34,7 @@ class LoginForm extends Component {
                         />
                     </CardSection>
 
-                    <CardSection>
+                    <CardSection >
                         <Input
                             secureTextEntry
                             placeholder="Password"
@@ -43,14 +50,12 @@ class LoginForm extends Component {
                         </Button>
                     </CardSection>
                     <CardSection>
-                        <Button>
+                        <Button onPress={this.onNewUser.bind(this)}>
                             New User
                         </Button>
                     </CardSection>
 
-
                 </Card>
-
 
         );
 
