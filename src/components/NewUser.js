@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
+import {Text} from 'react-native';
 import {connect} from 'react-redux';
 import {Input, CardSection, Card, Button} from './common';
-import {newEmailChange, newPasswordChange} from '../Actions';
+import {newEmailChange, newPasswordChange, createUser} from '../Actions';
 
 class NewUser extends Component {
 
@@ -13,8 +14,16 @@ class NewUser extends Component {
         this.props.newPasswordChange(text);
     }
 
+    onSubmit() {
+        const{email, password} = this.props;
+        this.props.createUser({email, password});
+    }
+
 
     render() {
+
+        const{email, password} = this.props;
+
         return (
             <Card >
 
@@ -23,7 +32,7 @@ class NewUser extends Component {
                         placeholder="user@gmail.com"
                         label="Email:"
                         onChangeText={this.onEmailChange.bind(this)}
-                        value={this.props.email}
+                        value={email}
                     />
                 </CardSection>
 
@@ -33,14 +42,19 @@ class NewUser extends Component {
                         placeholder="Password"
                         label="Password:"
                         onChangeText={this.onPasswordChange.bind(this)}
-                        value={this.props.password}
+                        value={password}
                     />
                 </CardSection>
 
+                    <Text style={styles.errorTextStyle}>
+                        {this.props.error}
+                    </Text>
+
                 <CardSection>
-                    <Button>
+                    <Button onPress={ () => {this.onSubmit()}}>
                         Submit
                     </Button>
+
                 </CardSection>
 
             </Card>
@@ -48,10 +62,19 @@ class NewUser extends Component {
     }
 }
 
+const styles = {
+    errorTextStyle: {
+        color: 'red',
+        fontSize: 12,
+        alignSelf: 'center'
+
+    }
+};
+
 const mapStateToProps = ({register}) => {
-    const{email, password} = register;
-    return {email, password};
+    const{email, password, error} = register;
+    return {email, password, error};
 };
 
 
-export default connect(mapStateToProps, {newEmailChange, newPasswordChange})(NewUser);
+export default connect(mapStateToProps, {newEmailChange, newPasswordChange, createUser})(NewUser);
