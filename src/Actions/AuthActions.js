@@ -39,7 +39,7 @@ const loginSuccess = (dispatch, user) => {
     dispatch ({
         type: LOGIN_SUCCESS
     });
-    Actions.main();
+    Actions.main({type: 'reset'});
 
 };
 

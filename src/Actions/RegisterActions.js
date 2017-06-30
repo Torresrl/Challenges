@@ -46,7 +46,7 @@ const createUserSuccess = (dispatch, user) => {
         payload: user
     });
 
-    Actions.main();
+    Actions.main({type: 'reset'});
 };
 
 

@@ -31,7 +31,7 @@ class NewUser extends Component {
         }
 
         return (
-            <Card >
+            <Card style={styles.cardStyle}>
                 <CardSection >
                     <Input
                         placeholder="user@gmail.com"
@@ -88,6 +88,9 @@ const styles = {
         alignItems: 'center',
         marginTop: 250
 
+    },
+    cardStyle: {
+        marginTop: 70
     }
 };
 
