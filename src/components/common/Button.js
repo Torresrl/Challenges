@@ -30,7 +30,7 @@ const styles = {
         alignSelf: 'stretch',
         backgroundColor: '#fff',
         borderRadius: 5,
-        borderWidth: 1,
+        borderWidth: 0,
         borderColor: '#00008b',
         marginLeft: 5,
         marginRight: 5

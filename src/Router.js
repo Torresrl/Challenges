@@ -1,5 +1,4 @@
 import React from 'react';
-import {Text, View} from 'react-native';
 import {Scene, Router} from 'react-native-router-flux';
 import LoginForm from './components/LoginForm';
 
