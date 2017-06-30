@@ -1,4 +1,5 @@
 import firebase from 'firebase';
+import {Actions} from 'react-native-router-flux';
 import {NEW_EMAIL_CHANGE,
     NEW_PASSWORD_CHANGE,
     CREATE_USER,
@@ -27,7 +28,7 @@ export const createUser = ({email, password}) => {
         return {
             type: WEAK_PASSWORD
         };
-    };
+    }
 
 
     return (dispatch) => {
@@ -45,7 +46,7 @@ const createUserSuccess = (dispatch, user) => {
         payload: user
     });
 
-    //her skal action til onnloget side komer
+    Actions.main();
 };
 
 

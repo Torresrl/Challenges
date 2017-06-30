@@ -25,7 +25,7 @@ export default (state = INITIAL_STATE, action) => {
         case CREATE_USER_SUCCESS:
             return INITIAL_STATE;
         case CREATE_USER_FAIL:
-            return {...state, password: "", error: "couldn't create user"};
+            return {...state, load: false, password: "", error: "couldn't create user"};
         case WEAK_PASSWORD:
             return {...state, password: "",
                 error: "Your password need to be 7 characters or more."}

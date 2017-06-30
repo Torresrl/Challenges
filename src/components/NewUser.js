@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {Text} from 'react-native';
+import {Text, View} from 'react-native';
 import {connect} from 'react-redux';
-import {Input, CardSection, Card, Button} from './common';
+import {Input, CardSection, Card, Button, Spinner} from './common';
 import {newEmailChange, newPasswordChange, createUser} from '../Actions';
 
 class NewUser extends Component {
@@ -19,14 +19,19 @@ class NewUser extends Component {
         this.props.createUser({email, password});
     }
 
+    renderContent() {
+        const{email, password, load} = this.props;
 
-    render() {
-
-        const{email, password} = this.props;
+        if(load){
+            return(
+                <View style={styles.spinnerStyle}>
+                    <Spinner size="large"/>
+                </View>
+            )
+        }
 
         return (
             <Card >
-
                 <CardSection >
                     <Input
                         placeholder="user@gmail.com"
@@ -46,9 +51,9 @@ class NewUser extends Component {
                     />
                 </CardSection>
 
-                    <Text style={styles.errorTextStyle}>
-                        {this.props.error}
-                    </Text>
+                <Text style={styles.errorTextStyle}>
+                    {this.props.error}
+                </Text>
 
                 <CardSection>
                     <Button onPress={ () => {this.onSubmit()}}>
@@ -56,8 +61,16 @@ class NewUser extends Component {
                     </Button>
 
                 </CardSection>
-
             </Card>
+        );
+    }
+
+
+    render() {
+        return (
+            <View>
+                {this.renderContent()}
+            </View>
         );
     }
 }
@@ -67,13 +80,20 @@ const styles = {
         color: 'red',
         fontSize: 12,
         alignSelf: 'center'
+    },
+
+    spinnerStyle: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 250
 
     }
 };
 
 const mapStateToProps = ({register}) => {
-    const{email, password, error} = register;
-    return {email, password, error};
+    const{email, password, error, load} = register;
+    return {email, password, error, load};
 };
 
 
