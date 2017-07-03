@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {View, Text} from 'react-native';
 
-class Feed extends Component {
+
+class Challenges extends Component {
     render() {
         return(
             <View style={styles.containerStyle}>
@@ -20,4 +21,4 @@ styles = {
 
 };
 
-export default Feed;
+export default Challenges;
