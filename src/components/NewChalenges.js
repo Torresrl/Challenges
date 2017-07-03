@@ -1,27 +1,29 @@
 import React, {Component} from 'react';
 import {View, Text} from 'react-native';
-import {Button, Input, Card, CardSection} from './common';
-import {Actions} from 'react-native-router-flux';
 import ImagePicker from 'react-native-image-picker';
+import {connect} from 'react-redux';
+import {Button, Input, Card, CardSection} from './common';
+import {nameChange, descriptionChange, addImage} from '../Actions';
 
 
+class NewChallenges extends Component {
+
+    onNameChange(text){
+        this.props.nameChange(text);
+    }
+
+    onDesChange(text){
+        this.props.descriptionChange(text);
+    }
+
+    onAddImage(text){
+        this.props.addImage(text);
+
+    }
 
 
-class newChallenges extends Component {
-
-
-
-    //Denne kobles opp i router
-    static renderRightButton = () =>{
-        return(
-            <Button style={styles.styleAddButton} onPress={ () => {Actions.newChallenges()}}>
-                +
-            </Button>
-        );
-    };
 
     chooseImage() {
-
         ImagePicker.showImagePicker(null, (response) => {
             console.log('Response = ', response);
 
@@ -38,12 +40,9 @@ class newChallenges extends Component {
                 let source = { uri: response.uri };
                 // You can also display the image using data:
                 // let source = { uri: 'data:image/jpeg;base64,' + response.data };
-                this.setState({
-                    avatarSource: source
-                });
+                this.onAddImage(source);
             }
         });
-
 
 
 
@@ -52,7 +51,8 @@ class newChallenges extends Component {
 
     render() {
 
-        const {styleFirstCard} = styles;
+        const {styleFirstCard, styleButtonCard} = styles;
+        const {nameChallenges, description} = this.props;
 
         return(
 
@@ -69,7 +69,9 @@ class newChallenges extends Component {
                     <CardSection>
                         <Input
                             label="name"
-                            placeholder ="summer challenges"
+                            placeholder ="Name"
+                            onChangeText={this.onNameChange.bind(this)}
+                            value={nameChallenges}
                         />
 
                     </CardSection>
@@ -77,9 +79,18 @@ class newChallenges extends Component {
                         <Input
                             label="Description"
                             placeholder="Description"
+                            onChangeText={this.onDesChange.bind(this)}
+                            value={description}
                         />
                     </CardSection>
                 </Card>
+                <Card style={styleButtonCard}>
+                    <Button>
+                        +
+                    </Button>
+                </Card>
+
+
             </View>
         );
     }
@@ -96,6 +107,20 @@ styles = {
         marginTop: 70
     },
 
+    styleButtonCard: {
+        borderWidth: 0,
+        shadowColor: '#FFF'
+
+
+    },
+    
+
 };
 
-export default newChallenges;
+const mapStateToProps = ({newChallenges}) =>{
+    const {nameChallenges, description, image} = newChallenges;
+    return {nameChallenges, description, image};
+
+};
+
+export default connect(mapStateToProps, {nameChange, descriptionChange, addImage})(NewChallenges);

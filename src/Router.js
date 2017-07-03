@@ -6,7 +6,7 @@ import NewUser from './components/NewUser';
 import Feed from './components/Feed';
 import Profile from './components/Profile';
 import Challenges from './components/Challenges';
-import newChallenges from './components/newChalenges';
+import NewChallenges from './components/NewChalenges';
 
 const RouterComponent = () => {
 
@@ -44,11 +44,11 @@ const RouterComponent = () => {
                             key="challenges"
                             component={Challenges}
                             title="Challenges"
-                            renderRightButton={newChallenges.renderRightButton}
+                            renderRightButton={Challenges.renderRightButton}
                         />
                         <Scene
                             key="newChallenges"
-                            component={newChallenges}
+                            component={NewChallenges}
                             title="New Challenges"
                         />
                     </Scene>
