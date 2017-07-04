@@ -8,7 +8,7 @@ class Challenges extends Component {
     //Denne kobles opp i router
     static renderRightButton = () =>{
         return(
-            <Button style={styles.styleAddButton} onPress={ () => {Actions.newChallenges()}}>
+            <Button style={styles2.styleAddChal} onPress={ () => {Actions.newChallenges()}}>
                 +
             </Button>
         );
@@ -17,18 +17,22 @@ class Challenges extends Component {
 
     render() {
         return(
-            <View style={styles.containerStyle}>
+            <View style={styles2.containerStyle}>
                 <Text> Challenges</Text>
             </View>
         );
     }
 }
 
-styles = {
+styles2 = {
     containerStyle: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    styleAddChal: {
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 
 };

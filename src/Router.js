@@ -6,7 +6,7 @@ import NewUser from './components/NewUser';
 import Feed from './components/Feed';
 import Profile from './components/Profile';
 import Challenges from './components/Challenges';
-import NewChallenges from './components/NewChalenges';
+import NewChallenges from './components/NewChallenges';
 
 const RouterComponent = () => {
 

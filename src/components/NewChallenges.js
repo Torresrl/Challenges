@@ -1,9 +1,17 @@
 import React, {Component} from 'react';
-import {View, Text, Image} from 'react-native';
+import {Text, Image, ScrollView, View} from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import {connect} from 'react-redux';
 import {Button, Input, Card, CardSection} from './common';
-import {nameChange, descriptionChange, addImage} from '../Actions';
+import AddChallengeList from './AddChallengeList';
+import {nameChange,
+    descriptionChange,
+    addImage,
+    challengeNameChange,
+    challengeDesChange,
+    addChallenge
+}from '../Actions';
+
 
 
 class NewChallenges extends Component {
@@ -20,6 +28,24 @@ class NewChallenges extends Component {
         this.props.addImage(text);
 
     }
+
+    onChalNameChang(text){
+        this.props.challengeNameChange(text);
+
+    }
+
+    onChalDesChang(text){
+        this.props.challengeDesChange(text);
+
+    }
+
+
+    onAddChallenge(){
+        const {challengeName, challengeDes} = this.props;
+        this.props.addChallenge({name: challengeName, description: challengeDes})
+    }
+
+
 
     renderPicture(){
         const {image} = this.props;
@@ -51,7 +77,6 @@ class NewChallenges extends Component {
     }
 
 
-
     chooseImage() {
         ImagePicker.showImagePicker(null, (response) => {
             console.log('Response = ', response);
@@ -73,55 +98,77 @@ class NewChallenges extends Component {
             }
         });
 
-
-
-
     }
 
     render() {
 
-        const {styleButtonCard} = styles;
-        const {nameChallenges, description} = this.props;
+        const {styleButtonCard, styleAddButton} = styles;
+        const {nameChallenges, description, challengeName, challengeDes} = this.props;
 
         return(
+                <ScrollView >
+                        {this.renderPicture()}
+                    <Card>
+                        <CardSection>
+                            <Input
+                                label="Name"
+                                placeholder ="Name"
+                                onChangeText={this.onNameChange.bind(this)}
+                                value={nameChallenges}
+                            />
 
-            <View>
-                    {this.renderPicture()}
-                <Card>
-                    <CardSection>
-                        <Input
-                            label="Name"
-                            placeholder ="Name"
-                            onChangeText={this.onNameChange.bind(this)}
-                            value={nameChallenges}
-                        />
+                        </CardSection>
+                        <CardSection>
+                            <Input
+                                label="Description"
+                                placeholder="Description"
+                                onChangeText={this.onDesChange.bind(this)}
+                                value={description}
+                            />
+                        </CardSection>
+                    </Card>
 
-                    </CardSection>
-                    <CardSection>
-                        <Input
-                            label="Description"
-                            placeholder="Description"
-                            onChangeText={this.onDesChange.bind(this)}
-                            value={description}
-                        />
-                    </CardSection>
-                </Card>
-                <Card style={styleButtonCard}>
-                    <Button>
-                        +
-                    </Button>
-                </Card>
+                    <AddChallengeList/>
 
+                    <Card>
+                        <CardSection>
+                            <Input
+                                label="Challenge"
+                                placeholder ="Name"
+                                onChangeText={this.onChalNameChang.bind(this)}
+                                value={challengeName}
+                            />
 
-            </View>
+                        </CardSection>
+                        <CardSection>
+                            <Input
+                                label="Description"
+                                placeholder="Description"
+                                onChangeText={this.onChalDesChang.bind(this)}
+                                value={challengeDes}
+                            />
+                        </CardSection>
+                    </Card>
+
+                    <Card style={styleButtonCard}>
+                        <Button
+                            style={styleAddButton}
+                            onPress={() =>{this.onAddChallenge()}}
+                        >
+                            Add Challeng
+                        </Button>
+                        <Button style={styleAddButton}>
+                            Submit
+                        </Button>
+                    </Card>
+                </ScrollView>
         );
     }
 }
 
 styles = {
     styleAddButton: {
-        alignItems: 'center',
-        justifyContent: 'center',
+        borderWidth: 1
     },
 
 
@@ -131,7 +178,9 @@ styles = {
 
     styleButtonCard: {
         borderWidth: 0,
-        shadowColor: '#FFF'
+        shadowColor: '#FFF',
+        flexDirection: 'row',
+        marginBottom: 70
 
 
     },
@@ -145,9 +194,16 @@ styles = {
 };
 
 const mapStateToProps = ({newChallenges}) =>{
-    const {nameChallenges, description, image} = newChallenges;
-    return {nameChallenges, description, image};
+    const {nameChallenges, description, image, challengeName, challengeDes} = newChallenges;
+    return {nameChallenges, description, image, challengeName, challengeDes};
 
 };
 
-export default connect(mapStateToProps, {nameChange, descriptionChange, addImage})(NewChallenges);
+export default connect(mapStateToProps, {
+        nameChange,
+        descriptionChange,
+        addImage,
+        challengeNameChange,
+        challengeDesChange,
+        addChallenge
+    })(NewChallenges);

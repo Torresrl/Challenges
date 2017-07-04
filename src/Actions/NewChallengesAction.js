@@ -1,6 +1,9 @@
 import {CHALLENGES_NAME,
         CHALLENGES_DESCRIPTION,
-        CHALLENGES_IMAGE
+        CHALLENGES_IMAGE,
+        ADD_CHALLENGE,
+        CHALLENG_NAME,
+        CHALLENG_DES
 } from './types';
 
 
@@ -23,5 +26,26 @@ export const addImage = (text) => {
         type: CHALLENGES_IMAGE,
         payload: text
 
+    };
+};
+
+export const challengeNameChange = (text) => {
+    return {
+        type: CHALLENG_NAME,
+        payload: text
+    };
+};
+
+export const challengeDesChange = (text) => {
+    return {
+        type: CHALLENG_DES,
+        payload: text
+    };
+};
+
+export const addChallenge = (text) => {
+    return {
+        type: ADD_CHALLENGE,
+        payload: text
     };
 };

@@ -19,3 +19,6 @@ export const WEAK_PASSWORD = "weak_password";
 export const CHALLENGES_NAME = 'challenges_name';
 export const CHALLENGES_DESCRIPTION ='challenges_description';
 export const CHALLENGES_IMAGE = 'challenges_image';
+export const ADD_CHALLENGE = 'add_challenge';
+export const CHALLENG_NAME = 'challeng_name';
+export const CHALLENG_DES = 'challeng_des';
