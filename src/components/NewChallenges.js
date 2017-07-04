@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, Image} from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import {connect} from 'react-redux';
 import {Button, Input, Card, CardSection} from './common';
@@ -19,6 +19,35 @@ class NewChallenges extends Component {
     onAddImage(text){
         this.props.addImage(text);
 
+    }
+
+    renderPicture(){
+        const {image} = this.props;
+        const{styleFirstCard, imageStyle} = styles;
+        if(image){
+            return (
+                <Card style={styleFirstCard}>
+                    <CardSection>
+                        <Image source={image} style={imageStyle}/>
+                    </CardSection>
+                    <CardSection>
+                        <Button onPress={() => {this.chooseImage()}}>
+                            Change Picture
+                        </Button>
+                    </CardSection>
+                </Card>
+            );
+        } else {
+            return (
+                <Card style={styleFirstCard}>
+                    <CardSection>
+                        <Button onPress={() => {this.chooseImage()}}>
+                            Add Picture
+                        </Button>
+                    </CardSection>
+                </Card>
+            );
+        }
     }
 
 
@@ -51,24 +80,17 @@ class NewChallenges extends Component {
 
     render() {
 
-        const {styleFirstCard, styleButtonCard} = styles;
+        const {styleButtonCard} = styles;
         const {nameChallenges, description} = this.props;
 
         return(
 
             <View>
-                <Card style={styleFirstCard}>
-                    <CardSection>
-                        <Button onPress={() => {this.chooseImage()}}>
-                            Add Picture
-                        </Button>
-                    </CardSection>
-                </Card>
-
+                    {this.renderPicture()}
                 <Card>
                     <CardSection>
                         <Input
-                            label="name"
+                            label="Name"
                             placeholder ="Name"
                             onChangeText={this.onNameChange.bind(this)}
                             value={nameChallenges}
@@ -113,7 +135,12 @@ styles = {
 
 
     },
-    
+    imageStyle: {
+        height: 300,
+        flex:1,
+        width: null
+    }
+
 
 };
 
