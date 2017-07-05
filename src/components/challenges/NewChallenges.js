@@ -2,13 +2,13 @@ import React, {Component} from 'react';
 import {Text, Image, ScrollView, View} from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import {connect} from 'react-redux';
-import {Button, Input, Card, CardSection} from './common';
+import {Button, Input, Card, CardSection} from '../common';
 import AddChallengeList from './AddChallengeList';
 import EditChallenge from './EditChallenge';
 import {nameChange,
     descriptionChange,
     addImage,
-}from '../Actions';
+}from '../../Actions';
 
 
 
@@ -109,6 +109,7 @@ class NewChallenges extends Component {
                     </Card>
 
                     <AddChallengeList/>
+
                     <EditChallenge
                         button1 = 'Add Challenge'
                         button2 = 'Submit'

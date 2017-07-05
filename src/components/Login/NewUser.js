@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {Text, View} from 'react-native';
 import {connect} from 'react-redux';
-import {Input, CardSection, Card, Button, Spinner} from './common';
-import {newEmailChange, newPasswordChange, createUser} from '../Actions';
+import {Input, CardSection, Card, Button, Spinner} from '../common';
+import {newEmailChange, newPasswordChange, createUser} from '../../Actions';
 
 class NewUser extends Component {
 

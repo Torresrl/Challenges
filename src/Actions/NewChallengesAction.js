@@ -3,7 +3,8 @@ import {CHALLENGES_NAME,
         CHALLENGES_IMAGE,
         ADD_CHALLENGE,
         CHALLENG_NAME,
-        CHALLENG_DES
+        CHALLENG_DES,
+        UPDATE_LIST
 } from './types';
 
 
@@ -48,4 +49,10 @@ export const addChallenge = (text) => {
         type: ADD_CHALLENGE,
         payload: text
     };
+};
+
+export const updateListView = () => {
+    return {
+        type: UPDATE_LIST
+    }
 };

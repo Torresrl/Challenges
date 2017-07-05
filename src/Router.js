@@ -1,12 +1,12 @@
 import React from 'react';
 import {Scene, Router} from 'react-native-router-flux';
 import {Text} from 'react-native';
-import LoginForm from './components/LoginForm';
-import NewUser from './components/NewUser';
+import LoginForm from './components/Login/LoginForm';
+import NewUser from './components/Login/NewUser';
 import Feed from './components/Feed';
 import Profile from './components/Profile';
-import Challenges from './components/Challenges';
-import NewChallenges from './components/NewChallenges';
+import Challenges from './components/challenges/Challenges';
+import NewChallenges from './components/challenges/NewChallenges';
 
 const RouterComponent = () => {
 

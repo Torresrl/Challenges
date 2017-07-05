@@ -4,7 +4,8 @@ import {CHALLENGES_NAME,
         CHALLENGES_IMAGE,
         ADD_CHALLENGE,
         CHALLENG_NAME,
-        CHALLENG_DES
+        CHALLENG_DES,
+    UPDATE_LIST
 } from '../Actions/types';
 
 const INITIAL_STATE = {
@@ -30,7 +31,13 @@ export default (state = INITIAL_STATE, action) => {
         case CHALLENG_DES:
             return {...state, challengeDes: action.payload};
         case ADD_CHALLENGE:
-            return{...state, challenges: [...state.challenges, action.payload]};
+            return{...state,
+                challenges: [...state.challenges, action.payload],
+                challengeName:"",
+                challengeDes:""
+            };
+        case UPDATE_LIST:
+            return {...state, challenges: [...state.challenges]};
         default:
             return state;
     }

@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {View} from 'react-native';
-import {Card, CardSection, Input, Button} from './common';
+import {Card, CardSection, Input, Button} from '../common';
 import {
     challengeNameChange,
     challengeDesChange,
     addChallenge
-}from '../Actions';
+}from '../../Actions';
 
 class EditChallenge extends Component{
 
@@ -100,5 +100,5 @@ const mapStateToProps = ({newChallenges}) =>{
 export default connect(mapStateToProps, {
     challengeNameChange,
     challengeDesChange,
-    addChallenge
+    addChallenge,
 })(EditChallenge);

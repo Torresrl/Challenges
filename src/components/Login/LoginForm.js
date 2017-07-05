@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import {View, Text} from 'react-native';
 import {connect} from 'react-redux';
 import {Actions} from 'react-native-router-flux';
-import {Input, CardSection, Card, Button, Spinner} from './common';
-import {emailChange, passwordChange, loginUser} from '../Actions';
+import {Input, CardSection, Card, Button, Spinner} from '../common';
+import {emailChange, passwordChange, loginUser} from '../../Actions';
 
 
 class LoginForm extends Component {
