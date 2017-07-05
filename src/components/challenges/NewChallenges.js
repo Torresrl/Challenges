@@ -4,12 +4,10 @@ import ImagePicker from 'react-native-image-picker';
 import {connect} from 'react-redux';
 import {Button, Input, Card, CardSection} from './common';
 import AddChallengeList from './AddChallengeList';
+import EditChallenge from './EditChallenge';
 import {nameChange,
     descriptionChange,
     addImage,
-    challengeNameChange,
-    challengeDesChange,
-    addChallenge
 }from '../Actions';
 
 
@@ -28,23 +26,6 @@ class NewChallenges extends Component {
         this.props.addImage(text);
 
     }
-
-    onChalNameChang(text){
-        this.props.challengeNameChange(text);
-
-    }
-
-    onChalDesChang(text){
-        this.props.challengeDesChange(text);
-
-    }
-
-
-    onAddChallenge(){
-        const {challengeName, challengeDes} = this.props;
-        this.props.addChallenge({name: challengeName, description: challengeDes})
-    }
-
 
 
     renderPicture(){
@@ -102,8 +83,7 @@ class NewChallenges extends Component {
 
     render() {
 
-        const {styleButtonCard, styleAddButton} = styles;
-        const {nameChallenges, description, challengeName, challengeDes} = this.props;
+        const {nameChallenges, description} = this.props;
 
         return(
                 <ScrollView >
@@ -129,68 +109,25 @@ class NewChallenges extends Component {
                     </Card>
 
                     <AddChallengeList/>
-
-                    <Card>
-                        <CardSection>
-                            <Input
-                                label="Challenge"
-                                placeholder ="Name"
-                                onChangeText={this.onChalNameChang.bind(this)}
-                                value={challengeName}
-                            />
-
-                        </CardSection>
-                        <CardSection>
-                            <Input
-                                label="Description"
-                                placeholder="Description"
-                                onChangeText={this.onChalDesChang.bind(this)}
-                                value={challengeDes}
-                            />
-                        </CardSection>
-                    </Card>
-
-                    <Card style={styleButtonCard}>
-                        <Button
-                            style={styleAddButton}
-                            onPress={() =>{this.onAddChallenge()}}
-                        >
-                            Add Challeng
-                        </Button>
-                        <Button style={styleAddButton}>
-                            Submit
-                        </Button>
-                    </Card>
+                    <EditChallenge
+                        button1 = 'Add Challenge'
+                        button2 = 'Submit'
+                        />
                 </ScrollView>
         );
     }
 }
 
 styles = {
-    styleAddButton: {
-        borderWidth: 1
-    },
-
-
     styleFirstCard: {
         marginTop: 70
     },
 
-    styleButtonCard: {
-        borderWidth: 0,
-        shadowColor: '#FFF',
-        flexDirection: 'row',
-        marginBottom: 70
-
-
-    },
     imageStyle: {
         height: 300,
         flex:1,
         width: null
     }
-
-
 };
 
 const mapStateToProps = ({newChallenges}) =>{
@@ -203,7 +140,4 @@ export default connect(mapStateToProps, {
         nameChange,
         descriptionChange,
         addImage,
-        challengeNameChange,
-        challengeDesChange,
-        addChallenge
     })(NewChallenges);
