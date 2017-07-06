@@ -47,11 +47,11 @@ export const challengeDesChange = (text) => {
 };
 
 export const addChallenge = (text) => {
-    if(text.name.length !== undefined) {
+    if(text.name.length == null || text.name.length === 0) {
         return {
             type: NOT_VALID_NAME
         }
-    } else if (text.name.description !== undefined){
+    } else if (text.description.length == null || text.description.length === 0){
         return {
             type: NOT_VALID_DESCRIPTION
         }
