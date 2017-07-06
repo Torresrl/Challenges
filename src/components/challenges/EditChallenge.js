@@ -34,8 +34,8 @@ class EditChallenge extends Component{
     }
 
     render() {
-        const {styleButtonCard, styleAddButton} = stylesEditChal;
-        const {challengeName, challengeDes} = this.props;
+        const {styleButtonCard, styleAddButton, errorTextStyle} = stylesEditChal;
+        const {challengeName, challengeDes, error} = this.props;
 
         return (
             <View>
@@ -58,6 +58,8 @@ class EditChallenge extends Component{
                         />
                     </CardSection>
                 </Card>
+
+                <Text style={errorTextStyle}>{error}</Text>
 
                 <Card style={styleButtonCard}>
                     <Button
@@ -88,14 +90,19 @@ stylesEditChal = {
         shadowColor: '#FFF',
         flexDirection: 'row',
         marginBottom: 70
-    }
+    },
+    errorTextStyle: {
+        color: 'red',
+        fontSize: 12,
+        alignSelf: 'center'
+    },
 
 
 };
 
 const mapStateToProps = ({newChallenges}) =>{
-    const {nameChallenges, description, image, challengeName, challengeDes} = newChallenges;
-    return {nameChallenges, description, image, challengeName, challengeDes};
+    const {nameChallenges, description, image, challengeName, challengeDes, error} = newChallenges;
+    return {nameChallenges, description, image, challengeName, challengeDes, error};
 
 };
 

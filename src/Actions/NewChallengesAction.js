@@ -4,7 +4,8 @@ import {CHALLENGES_NAME,
         ADD_CHALLENGE,
         CHALLENG_NAME,
         CHALLENG_DES,
-        NOT_VALID
+        NOT_VALID_NAME,
+        NOT_VALID_DESCRIPTION
 
 } from './types';
 
@@ -46,11 +47,19 @@ export const challengeDesChange = (text) => {
 };
 
 export const addChallenge = (text) => {
+    if(text.name.length !== undefined) {
+        return {
+            type: NOT_VALID_NAME
+        }
+    } else if (text.name.description !== undefined){
+        return {
+            type: NOT_VALID_DESCRIPTION
+        }
+    } else {
         return {
             type: ADD_CHALLENGE,
             payload: text
-
-
+        }
     }
 
 };

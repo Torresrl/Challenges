@@ -5,7 +5,8 @@ import {CHALLENGES_NAME,
         ADD_CHALLENGE,
         CHALLENG_NAME,
         CHALLENG_DES,
-            NOT_VALID
+        NOT_VALID_NAME,
+        NOT_VALID_DESCRIPTION
 } from '../Actions/types';
 
 const INITIAL_STATE = {
@@ -14,7 +15,8 @@ const INITIAL_STATE = {
     image: "",
     challengeName: "",
     challengeDes: "",
-    challenges: []
+    challenges: [],
+    error: ""
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -29,11 +31,16 @@ export default (state = INITIAL_STATE, action) => {
             return{...state, challengeName: action.payload};
         case CHALLENG_DES:
             return {...state, challengeDes: action.payload};
+        case NOT_VALID_NAME:
+            return {...state, error: "Every challenge need a name"};
+        case NOT_VALID_DESCRIPTION:
+            return {...state, error: "Every challenge need a description"};
         case ADD_CHALLENGE:
             return{...state,
                 challenges: [...state.challenges, action.payload],
                 challengeName:"",
-                challengeDes:""
+                challengeDes:"",
+                error: ""
             };
         default:
             return state;
