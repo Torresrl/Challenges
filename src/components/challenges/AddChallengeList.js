@@ -10,10 +10,10 @@ class AddChallengeList extends Component {
         return (
             <Card>
                 <CardSection>
-                    <Text>{rowData.name}</Text>
+                    <Text style={stylesItem.nameStyle}>{rowData.name}</Text>
                 </CardSection>
                 <CardSection>
-                    <Text>{rowData.description}</Text>
+                    <Text style={stylesItem.descriptionStyle}>{rowData.description}</Text>
                 </CardSection>
             </Card>
         );
@@ -33,6 +33,17 @@ class AddChallengeList extends Component {
         );
     }
 }
+
+stylesItem = {
+    nameStyle: {
+        fontSize: 18,
+        fontWeight: 'bold'
+    },
+
+    descriptionStyle: {
+        fontSize: 15
+    }
+};
 
 const mapStateToProps = ({newChallenges}) => {
     const {challenges} = newChallenges;
