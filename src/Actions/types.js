@@ -22,4 +22,4 @@ export const CHALLENGES_IMAGE = 'challenges_image';
 export const ADD_CHALLENGE = 'add_challenge';
 export const CHALLENG_NAME = 'challeng_name';
 export const CHALLENG_DES = 'challeng_des';
-export const UPDATE_LIST = 'update_list';
+export const NOT_VALID = 'not_valid';

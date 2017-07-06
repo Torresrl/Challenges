@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {View} from 'react-native';
+import {View, Text} from 'react-native';
 import {Card, CardSection, Input, Button} from '../common';
 import {
     challengeNameChange,
@@ -28,7 +28,9 @@ class EditChallenge extends Component{
 
     onAddChallenge(){
         const {challengeName, challengeDes} = this.props;
-        this.props.addChallenge({name: challengeName, description: challengeDes})
+        this.props.addChallenge({name: challengeName, description: challengeDes});
+
+
     }
 
     render() {

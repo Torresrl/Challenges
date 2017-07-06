@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {ListView, View, Text} from 'react-native';
-import {updateListView} from '../../Actions';
 import {Card, CardSection} from '../common';
 
 class AddChallengeList extends Component {
@@ -22,7 +21,6 @@ class AddChallengeList extends Component {
 
 
     render() {
-
         const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.dataSource = ds.cloneWithRows(this.props.challenges);
 
@@ -42,4 +40,4 @@ const mapStateToProps = ({newChallenges}) => {
 
 };
 
-export default connect(mapStateToProps, {updateListView})(AddChallengeList);
+export default connect(mapStateToProps)(AddChallengeList);

@@ -4,7 +4,8 @@ import {CHALLENGES_NAME,
         ADD_CHALLENGE,
         CHALLENG_NAME,
         CHALLENG_DES,
-        UPDATE_LIST
+        NOT_VALID
+
 } from './types';
 
 
@@ -45,14 +46,13 @@ export const challengeDesChange = (text) => {
 };
 
 export const addChallenge = (text) => {
-    return {
-        type: ADD_CHALLENGE,
-        payload: text
-    };
+        return {
+            type: ADD_CHALLENGE,
+            payload: text
+
+
+    }
+
 };
 
-export const updateListView = () => {
-    return {
-        type: UPDATE_LIST
-    }
-};
+

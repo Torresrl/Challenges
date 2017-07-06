@@ -5,17 +5,16 @@ import {CHALLENGES_NAME,
         ADD_CHALLENGE,
         CHALLENG_NAME,
         CHALLENG_DES,
-    UPDATE_LIST
+            NOT_VALID
 } from '../Actions/types';
 
 const INITIAL_STATE = {
-    nameChallenges: '',
-    description: '',
-    image: '',
-    challengeName: '',
-    challengeDes: '',
+    nameChallenges: "",
+    description: "",
+    image: "",
+    challengeName: "",
+    challengeDes: "",
     challenges: []
-
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -36,8 +35,6 @@ export default (state = INITIAL_STATE, action) => {
                 challengeName:"",
                 challengeDes:""
             };
-        case UPDATE_LIST:
-            return {...state, challenges: [...state.challenges]};
         default:
             return state;
     }
