@@ -2,21 +2,27 @@
 import {CHALLENGES_NAME,
         CHALLENGES_DESCRIPTION,
         CHALLENGES_IMAGE,
+        CHALLENGES_NAME_NOT_VALID,
+        CHALLENGES_DESCRIPTION_NOT_VALID,
+        TRY_ADD_CHALLENGES,
         ADD_CHALLENGE,
         CHALLENG_NAME,
         CHALLENG_DES,
         NOT_VALID_NAME,
-        NOT_VALID_DESCRIPTION
+        NOT_VALID_DESCRIPTION,
+        CHALLENGES_CREATED
 } from '../Actions/types';
 
 const INITIAL_STATE = {
     nameChallenges: "",
     description: "",
     image: "",
+    challengesError: "",
     challengeName: "",
     challengeDes: "",
     challenges: [],
-    error: ""
+    error: "",
+    load: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -27,6 +33,10 @@ export default (state = INITIAL_STATE, action) => {
             return {...state, description: action.payload};
         case CHALLENGES_IMAGE:
             return {...state, image: action.payload};
+        case CHALLENGES_NAME_NOT_VALID:
+            return {...state, challengesError: "you need to add a name"};
+        case CHALLENGES_DESCRIPTION_NOT_VALID:
+            return {...state, challengesError: "you need to add description"};
         case CHALLENG_NAME:
             return{...state, challengeName: action.payload};
         case CHALLENG_DES:
@@ -35,6 +45,8 @@ export default (state = INITIAL_STATE, action) => {
             return {...state, error: "Every challenge need a name"};
         case NOT_VALID_DESCRIPTION:
             return {...state, error: "Every challenge need a description"};
+        case TRY_ADD_CHALLENGES:
+            return {...state, load: true};
         case ADD_CHALLENGE:
             return{...state,
                 challenges: [...state.challenges, action.payload],
@@ -42,6 +54,8 @@ export default (state = INITIAL_STATE, action) => {
                 challengeDes:"",
                 error: ""
             };
+        case CHALLENGES_CREATED:
+            return INITIAL_STATE;
         default:
             return state;
     }

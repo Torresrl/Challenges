@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Text, Image, ScrollView, View} from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import {connect} from 'react-redux';
-import {Button, Input, Card, CardSection} from '../common';
+import {Button, Input, Card, CardSection, Spinner} from '../common';
 import AddChallengeList from './AddChallengeList';
 import EditChallenge from './EditChallenge';
 import {nameChange,
@@ -57,7 +57,6 @@ class NewChallenges extends Component {
         }
     }
 
-
     chooseImage() {
         ImagePicker.showImagePicker(null, (response) => {
             console.log('Response = ', response);
@@ -78,44 +77,60 @@ class NewChallenges extends Component {
                 this.onAddImage(source);
             }
         });
+    }
 
+    renderContent() {
+        const {nameChallenges, description, challengesError, load} = this.props;
+        if(load) {
+            return (
+                <View style = { styles.spinnerContainerStyle}>
+                    <Spinner size="large"/>
+                </View>
+            );
+        }
+
+        return (
+            <ScrollView >
+                {this.renderPicture()}
+                <Card>
+                    <CardSection>
+                        <Input
+                            label="Name"
+                            placeholder ="Name"
+                            onChangeText={this.onNameChange.bind(this)}
+                            value={nameChallenges}
+                        />
+
+                    </CardSection>
+                    <CardSection>
+                        <Input
+                            label="Description"
+                            placeholder="Description"
+                            onChangeText={this.onDesChange.bind(this)}
+                            value={description}
+                        />
+                    </CardSection>
+                </Card>
+
+                <Text style={styles.errorTextStyle}>{challengesError}</Text>
+                <AddChallengeList/>
+
+                <EditChallenge
+                    button1 = 'Add Challenge'
+                    button2 = 'Submit'
+                />
+            </ScrollView>
+
+        );
     }
 
     render() {
 
-        const {nameChallenges, description} = this.props;
-
         return(
-                <ScrollView >
-                        {this.renderPicture()}
-                    <Card>
-                        <CardSection>
-                            <Input
-                                label="Name"
-                                placeholder ="Name"
-                                onChangeText={this.onNameChange.bind(this)}
-                                value={nameChallenges}
-                            />
-
-                        </CardSection>
-                        <CardSection>
-                            <Input
-                                label="Description"
-                                placeholder="Description"
-                                onChangeText={this.onDesChange.bind(this)}
-                                value={description}
-                            />
-                        </CardSection>
-                    </Card>
-
-                    <AddChallengeList/>
-
-                    <EditChallenge
-                        button1 = 'Add Challenge'
-                        button2 = 'Submit'
-                        />
-                </ScrollView>
-        );
+            <View>
+                {this.renderContent()}
+            </View>
+            );
     }
 }
 
@@ -128,12 +143,31 @@ styles = {
         height: 300,
         flex:1,
         width: null
+    },
+
+    errorTextStyle: {
+        color: 'red',
+        fontSize: 12,
+        alignSelf: 'center'
+    },
+
+    spinnerContainerStyle: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 300
+
     }
 };
 
 const mapStateToProps = ({newChallenges}) =>{
-    const {nameChallenges, description, image, challengeName, challengeDes} = newChallenges;
-    return {nameChallenges, description, image, challengeName, challengeDes};
+    const {nameChallenges, description, image,
+        challengeName, challengeDes,challengesError,
+        load} = newChallenges;
+
+    return {nameChallenges, description, image,
+        challengeName, challengeDes,challengesError,
+        load};
 
 };
 

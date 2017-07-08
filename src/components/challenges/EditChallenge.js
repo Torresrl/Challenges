@@ -5,7 +5,8 @@ import {Card, CardSection, Input, Button} from '../common';
 import {
     challengeNameChange,
     challengeDesChange,
-    addChallenge
+    addChallenge,
+    employeeCreate
 }from '../../Actions';
 
 class EditChallenge extends Component{
@@ -29,7 +30,14 @@ class EditChallenge extends Component{
     onAddChallenge(){
         const {challengeName, challengeDes} = this.props;
         this.props.addChallenge({name: challengeName, description: challengeDes});
+    }
 
+    onSubmitChallenge() {
+        const{nameChallenges, description, challenges} = this.props;
+        this.props.employeeCreate({
+            name: nameChallenges,
+            description: description,
+            challenges: challenges});
 
     }
 
@@ -68,7 +76,10 @@ class EditChallenge extends Component{
                     >
                         {this.props.button1}
                     </Button>
-                    <Button style={styleAddButton}>
+                    <Button
+                        style={styleAddButton}
+                        onPress={() => this.onSubmitChallenge()}
+                    >
                         {this.props.button2}
                     </Button>
                 </Card>
@@ -101,8 +112,8 @@ stylesEditChal = {
 };
 
 const mapStateToProps = ({newChallenges}) =>{
-    const {nameChallenges, description, image, challengeName, challengeDes, error} = newChallenges;
-    return {nameChallenges, description, image, challengeName, challengeDes, error};
+    const {nameChallenges, description, image, challengeName, challengeDes, error, challenges} = newChallenges;
+    return {nameChallenges, description, image, challengeName, challengeDes, error, challenges};
 
 };
 
@@ -110,4 +121,5 @@ export default connect(mapStateToProps, {
     challengeNameChange,
     challengeDesChange,
     addChallenge,
+    employeeCreate
 })(EditChallenge);

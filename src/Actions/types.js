@@ -19,6 +19,11 @@ export const WEAK_PASSWORD = "weak_password";
 export const CHALLENGES_NAME = 'challenges_name';
 export const CHALLENGES_DESCRIPTION ='challenges_description';
 export const CHALLENGES_IMAGE = 'challenges_image';
+export const CHALLENGES_NAME_NOT_VALID = 'challenges_name_not_valid';
+export const CHALLENGES_DESCRIPTION_NOT_VALID = 'challenges_description_not_valid';
+export const TRY_ADD_CHALLENGES = 'try_add_challenges';
+export const CHALLENGES_CREATED = 'challenges_created';
+
 export const ADD_CHALLENGE = 'add_challenge';
 export const CHALLENG_NAME = 'challeng_name';
 export const CHALLENG_DES = 'challeng_des';
