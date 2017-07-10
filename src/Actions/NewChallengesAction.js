@@ -1,5 +1,7 @@
 import firebase from 'firebase';
 import {Actions} from 'react-native-router-flux';
+import RNFetchBlob from 'react-native-fetch-blob';
+import {Platform} from 'react-native';
 
 import {CHALLENGES_NAME,
         CHALLENGES_DESCRIPTION,
@@ -70,8 +72,16 @@ export const addChallenge = (text) => {
 
 };
 
-export const employeeCreate = ({name, description, challenges}) => {
+export const addChallenges = ({name, description, image, challenges}) => {
     const {currentUser} = firebase.auth();
+
+
+    // Prepare Blob support
+    const polyfill = RNFetchBlob.polyfill;
+    const Blob = RNFetchBlob.polyfill.Blob;
+
+    window.XMLHttpRequest = polyfill.XMLHttpRequest;
+    window.Blob = polyfill.Blob;
 
     if(name.length == null || name.length === 0){
         return {
@@ -82,6 +92,11 @@ export const employeeCreate = ({name, description, challenges}) => {
             type: CHALLENGES_DESCRIPTION_NOT_VALID
         }
     }
+    //const imageId = firebase().database().ref().push().key;
+
+    //const postKey = firebase.database().ref().child('posts').push().key;
+    // const myRef = firebase.database().ref(`/users/${currentUser.uid}/challenge/`)
+    //    .push();
 
     return(dispatch) => {
 
@@ -92,9 +107,25 @@ export const employeeCreate = ({name, description, challenges}) => {
         firebase.database().ref(`/users/${currentUser.uid}/challenge/`)
             .push({name, description, challenges})
             .then(() => {
-                dispatch({type: CHALLENGES_CREATED});
-                Actions.challenges({type: 'reset'});
+                Blob.build(image, { type : 'image/png;BASE64' })
+                    .then((blob) => firebase.storage()
+                        .ref(`/users/${currentUser.uid}/challenges/`)
+                        .put(blob, { contentType : 'image/png' })
+                    )
+                    .then(() => {
+                        dispatch({type: CHALLENGES_CREATED});
+                        Actions.challenges({type: 'reset'});
+
+                    });
+
+
+
         });
     };
 };
+
+
+
+
+
 

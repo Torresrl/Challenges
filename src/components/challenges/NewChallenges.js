@@ -35,7 +35,7 @@ class NewChallenges extends Component {
             return (
                 <Card style={styleFirstCard}>
                     <CardSection>
-                        <Image source={image} style={imageStyle}/>
+                        <Image source={{uri: `data:image/gif;base64,${image}`}}  style={imageStyle}/>
                     </CardSection>
                     <CardSection>
                         <Button onPress={() => {this.chooseImage()}}>
@@ -73,8 +73,8 @@ class NewChallenges extends Component {
             else {
                 let source = { uri: response.uri };
                 // You can also display the image using data:
-                // let source = { uri: 'data:image/jpeg;base64,' + response.data };
-                this.onAddImage(source);
+                //let source = { uri: 'data:image/jpeg;base64,' + response.data };
+                this.onAddImage(response.data);
             }
         });
     }

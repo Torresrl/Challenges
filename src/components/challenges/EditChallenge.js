@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {View, Text} from 'react-native';
+import firebase from 'firebase';
 import {Card, CardSection, Input, Button} from '../common';
 import {
     challengeNameChange,
     challengeDesChange,
     addChallenge,
-    employeeCreate
+    addChallenges
 }from '../../Actions';
 
 class EditChallenge extends Component{
@@ -33,12 +34,12 @@ class EditChallenge extends Component{
     }
 
     onSubmitChallenge() {
-        const{nameChallenges, description, challenges} = this.props;
-        this.props.employeeCreate({
+        const{nameChallenges, description, challenges, image} = this.props;
+        this.props.addChallenges({
             name: nameChallenges,
             description: description,
+            image: image,
             challenges: challenges});
-
     }
 
     render() {
@@ -121,5 +122,5 @@ export default connect(mapStateToProps, {
     challengeNameChange,
     challengeDesChange,
     addChallenge,
-    employeeCreate
+    addChallenges
 })(EditChallenge);
