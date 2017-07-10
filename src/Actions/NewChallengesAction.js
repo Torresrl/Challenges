@@ -75,11 +75,9 @@ export const addChallenge = (text) => {
 export const addChallenges = ({name, description, image, challenges}) => {
     const {currentUser} = firebase.auth();
 
-
     // Prepare Blob support
     const polyfill = RNFetchBlob.polyfill;
     const Blob = RNFetchBlob.polyfill.Blob;
-
     window.XMLHttpRequest = polyfill.XMLHttpRequest;
     window.Blob = polyfill.Blob;
 
@@ -92,7 +90,8 @@ export const addChallenges = ({name, description, image, challenges}) => {
             type: CHALLENGES_DESCRIPTION_NOT_VALID
         }
     }
-    //const imageId = firebase().database().ref().push().key;
+    //const imageId = firebase().ref().push().key;
+    const imageId = firebase.database().ref('posts').push().key;
 
     //const postKey = firebase.database().ref().child('posts').push().key;
     // const myRef = firebase.database().ref(`/users/${currentUser.uid}/challenge/`)
@@ -105,11 +104,11 @@ export const addChallenges = ({name, description, image, challenges}) => {
         });
 
         firebase.database().ref(`/users/${currentUser.uid}/challenge/`)
-            .push({name, description, challenges})
+            .push({name, description, imageId, challenges})
             .then(() => {
                 Blob.build(image, { type : 'image/png;BASE64' })
                     .then((blob) => firebase.storage()
-                        .ref(`/users/${currentUser.uid}/challenges/`)
+                        .ref(`/users/${currentUser.uid}/challenges/${imageId}`)
                         .put(blob, { contentType : 'image/png' })
                     )
                     .then(() => {
@@ -123,7 +122,6 @@ export const addChallenges = ({name, description, image, challenges}) => {
         });
     };
 };
-
 
 
 
