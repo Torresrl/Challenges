@@ -20,7 +20,7 @@ stylesListItem = {
         marginTop: 5,
         marginBottom: 5,
         paddingLeft: 5,
-        height: 30,
+        height: 40,
         justifyContent: 'center'
     }
 };

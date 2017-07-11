@@ -3,9 +3,10 @@ import {ListView, View, Text} from 'react-native';
 import {connect} from 'react-redux';
 import {Actions} from 'react-native-router-flux';
 import _ from 'lodash';
-import {Button} from '../common';
+import {Button, Spinner} from '../common';
 import {challengesFetch} from '../../Actions';
 import ChallengesListItem from './ChallengesListItem';
+import ChallengesList from './ChallengesList';
 
 
 
@@ -19,36 +20,23 @@ class Challenges extends Component {
         );
     };
 
-    componentWillMount() {
-        this.props.challengesFetch();
-        this.createDataSource(this.props);
-    }
-
-    componentWillReceiveProps(nextProps){
-        this.createDataSource(nextProps);
-    }
-
-    createDataSource({challengesList}){
-        const ds = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1 !== r2
-        });
-
-        this.dataSource = ds.cloneWithRows(challengesList)
-    }
-
-    renderRow(challenges){
-        return <ChallengesListItem challenges={challenges}/>
+    renderContent () {
+        if(this.props.load) {
+             return (
+                 <Spinner/>
+             );
+        }
+        return (
+            <ChallengesList/>
+        );
     }
 
 
     render() {
+
         return(
             <View style={styles2.containerStyle}>
-                <ListView
-                    enableEmptySections={true}
-                    dataSource={this.dataSource}
-                    renderRow={(rowData) => this.renderRow(rowData)}
-                />
+                {this.renderContent()}
             </View>
         );
     }
@@ -56,7 +44,8 @@ class Challenges extends Component {
 
 styles2 = {
     containerStyle: {
-        marginTop: 70
+        marginTop: 70,
+        flex:1
     },
     styleAddChal: {
         alignItems: 'center',
@@ -65,11 +54,11 @@ styles2 = {
 
 };
 
-const mapStateToProps = state => {
-    const challengesList = _.map(state.challengesList, (val, uid) => {
-        return {...val, uid};
-    });
-    return {challengesList};
+const mapStateToProps = ({challenges}) => {
+    const {load} = challenges;
+    return {load};
+
 };
 
-export default connect(mapStateToProps, {challengesFetch})(Challenges);
+
+export default connect (mapStateToProps) (Challenges);

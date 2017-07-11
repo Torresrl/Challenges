@@ -32,3 +32,4 @@ export const NOT_VALID_DESCRIPTION = 'not_valid_description';
 
 //Challenges List
 export const CHALLENGES_FETCH_SUCCESS = 'challenges_fetch_success';
+export const CHALLENGES_FETCH = 'challenges_fetch';
