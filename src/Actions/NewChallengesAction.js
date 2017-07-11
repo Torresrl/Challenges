@@ -90,12 +90,9 @@ export const addChallenges = ({name, description, image, challenges}) => {
             type: CHALLENGES_DESCRIPTION_NOT_VALID
         }
     }
-    //const imageId = firebase().ref().push().key;
-    const imageId = firebase.database().ref('posts').push().key;
 
-    //const postKey = firebase.database().ref().child('posts').push().key;
-    // const myRef = firebase.database().ref(`/users/${currentUser.uid}/challenge/`)
-    //    .push();
+
+    const imageId = firebase.database().ref('posts').push().key;
 
     return(dispatch) => {
 
@@ -103,7 +100,7 @@ export const addChallenges = ({name, description, image, challenges}) => {
                type: TRY_ADD_CHALLENGES
         });
 
-        firebase.database().ref(`/users/${currentUser.uid}/challenge/`)
+        firebase.database().ref(`/users/${currentUser.uid}/challenges/`)
             .push({name, description, imageId, challenges})
             .then(() => {
                 Blob.build(image, { type : 'image/png;BASE64' })

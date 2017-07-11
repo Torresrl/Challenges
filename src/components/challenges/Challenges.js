@@ -1,7 +1,12 @@
 import React, {Component} from 'react';
-import {View, Text} from 'react-native';
-import {Button} from '../common';
+import {ListView, View, Text} from 'react-native';
+import {connect} from 'react-redux';
 import {Actions} from 'react-native-router-flux';
+import _ from 'lodash';
+import {Button} from '../common';
+import {challengesFetch} from '../../Actions';
+import ChallengesListItem from './ChallengesListItem';
+
 
 
 class Challenges extends Component {
@@ -14,11 +19,36 @@ class Challenges extends Component {
         );
     };
 
+    componentWillMount() {
+        this.props.challengesFetch();
+        this.createDataSource(this.props);
+    }
+
+    componentWillReceiveProps(nextProps){
+        this.createDataSource(nextProps);
+    }
+
+    createDataSource({challengesList}){
+        const ds = new ListView.DataSource({
+            rowHasChanged: (r1, r2) => r1 !== r2
+        });
+
+        this.dataSource = ds.cloneWithRows(challengesList)
+    }
+
+    renderRow(challenges){
+        return <ChallengesListItem challenges={challenges}/>
+    }
+
 
     render() {
         return(
             <View style={styles2.containerStyle}>
-                <Text> Challenges</Text>
+                <ListView
+                    enableEmptySections={true}
+                    dataSource={this.dataSource}
+                    renderRow={(rowData) => this.renderRow(rowData)}
+                />
             </View>
         );
     }
@@ -26,9 +56,7 @@ class Challenges extends Component {
 
 styles2 = {
     containerStyle: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
+        marginTop: 70
     },
     styleAddChal: {
         alignItems: 'center',
@@ -37,4 +65,11 @@ styles2 = {
 
 };
 
-export default Challenges;
+const mapStateToProps = state => {
+    const challengesList = _.map(state.challengesList, (val, uid) => {
+        return {...val, uid};
+    });
+    return {challengesList};
+};
+
+export default connect(mapStateToProps, {challengesFetch})(Challenges);
