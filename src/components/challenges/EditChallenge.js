@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {View, Text} from 'react-native';
-import firebase from 'firebase';
 import {Card, CardSection, Input, Button} from '../common';
 import {
     challengeNameChange,
@@ -43,7 +42,7 @@ class EditChallenge extends Component{
     }
 
     render() {
-        const {styleButtonCard, styleAddButton, errorTextStyle} = stylesEditChal;
+        const {styleButtonCard, styleAddButton, errorTextStyle} = styles;
         const {challengeName, challengeDes, error} = this.props;
 
         return (
@@ -91,7 +90,7 @@ class EditChallenge extends Component{
     }
 }
 
-stylesEditChal = {
+const styles = {
     styleAddButton: {
         borderWidth: 1
     },

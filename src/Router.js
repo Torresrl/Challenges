@@ -7,6 +7,7 @@ import Feed from './components/Feed';
 import Profile from './components/Profile';
 import Challenges from './components/challenges/Challenges';
 import NewChallenges from './components/challenges/NewChallenges';
+import ShowChallenges from './components/challenges/ShowChallenges';
 
 const RouterComponent = () => {
 
@@ -50,6 +51,11 @@ const RouterComponent = () => {
                             key="newChallenges"
                             component={NewChallenges}
                             title="New Challenges"
+                        />
+                        <Scene
+                            key="showChallenges"
+                            component={ShowChallenges}
+                            title="Challenges"
                         />
                     </Scene>
                     <Scene key="tabProfile" title="Profile" icon={TabIcon}>

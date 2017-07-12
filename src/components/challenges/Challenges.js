@@ -2,10 +2,7 @@ import React, {Component} from 'react';
 import {ListView, View, Text} from 'react-native';
 import {connect} from 'react-redux';
 import {Actions} from 'react-native-router-flux';
-import _ from 'lodash';
 import {Button, Spinner} from '../common';
-import {challengesFetch} from '../../Actions';
-import ChallengesListItem from './ChallengesListItem';
 import ChallengesList from './ChallengesList';
 
 
@@ -30,8 +27,6 @@ class Challenges extends Component {
             <ChallengesList/>
         );
     }
-
-
     render() {
 
         return(

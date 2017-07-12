@@ -33,3 +33,7 @@ export const NOT_VALID_DESCRIPTION = 'not_valid_description';
 //Challenges List
 export const CHALLENGES_FETCH_SUCCESS = 'challenges_fetch_success';
 export const CHALLENGES_FETCH = 'challenges_fetch';
+
+//ShowChallenges
+export const CHALLENGES_FETCH_IMAGE_SUCCESS = 'challenges_fetch_image_success';
+export const CHALLENGES_FETCH_IMAGE = 'challenges_fetch_image';
