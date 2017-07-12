@@ -10,10 +10,13 @@ export const TRY_LOGIN = 'try_login';
 //new user
 export const NEW_EMAIL_CHANGE = 'new_email_change';
 export const NEW_PASSWORD_CHANGE = 'new_password_change';
+export const NEW_NAME_CHANGE = 'new_name_change';
 export const CREATE_USER ="create_user";
 export const CREATE_USER_SUCCESS = "create_user_success";
 export const CREATE_USER_FAIL = "create_user_fail";
+export const EMAIL_MISSING = "email_missing";
 export const WEAK_PASSWORD = "weak_password";
+export const NAME_MISSING = "name_missing";
 
 //new Challenges
 export const CHALLENGES_NAME = 'challenges_name';

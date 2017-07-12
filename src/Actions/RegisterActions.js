@@ -2,10 +2,13 @@ import firebase from 'firebase';
 import {Actions} from 'react-native-router-flux';
 import {NEW_EMAIL_CHANGE,
     NEW_PASSWORD_CHANGE,
+    NEW_NAME_CHANGE,
     CREATE_USER,
     CREATE_USER_SUCCESS,
     CREATE_USER_FAIL,
-    WEAK_PASSWORD
+    EMAIL_MISSING,
+    WEAK_PASSWORD,
+    NAME_MISSING
 } from './types';
 
 export const newEmailChange = (text) => {
@@ -23,10 +26,26 @@ export const newPasswordChange = (text) => {
     };
 };
 
-export const createUser = ({email, password}) => {
-    if(password.length < 7){
+export const newNameChange = (text) => {
+    return {
+        type: NEW_NAME_CHANGE,
+        payload: text
+    }
+};
+
+export const createUser = ({email, password, name}) => {
+
+    if(email.length == null || email.length === 0){
+        return {
+            type: EMAIL_MISSING
+        };
+    }else if(password.length < 7){
         return {
             type: WEAK_PASSWORD
+        };
+    } else if(name.length == null || name.length === 0){
+        return {
+            type: NAME_MISSING
         };
     }
 

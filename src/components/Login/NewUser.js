@@ -2,7 +2,12 @@ import React, {Component} from 'react';
 import {Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import {Input, CardSection, Card, Button, Spinner} from '../common';
-import {newEmailChange, newPasswordChange, createUser} from '../../Actions';
+import {
+    newEmailChange,
+    newPasswordChange,
+    createUser,
+    newNameChange
+} from '../../Actions';
 
 class NewUser extends Component {
 
@@ -14,54 +19,77 @@ class NewUser extends Component {
         this.props.newPasswordChange(text);
     }
 
+    onNameChange(text) {
+        this.props.newNameChange(text);
+    }
+
     onSubmit() {
-        const{email, password} = this.props;
-        this.props.createUser({email, password});
+        const{email, password, name} = this.props;
+        this.props.createUser({email, password, name});
     }
 
     renderContent() {
-        const{email, password, load} = this.props;
+        const{email, password, name, load} = this.props;
+        const{spinnerStyle, cardStyle, errorTextStyle, styleButton} = styles;
 
         if(load){
             return(
-                <View style={styles.spinnerStyle}>
+                <View style={spinnerStyle}>
                     <Spinner size="large"/>
                 </View>
             )
         }
 
         return (
-            <Card style={styles.cardStyle}>
-                <CardSection >
-                    <Input
-                        placeholder="user@gmail.com"
-                        label="Email:"
-                        onChangeText={this.onEmailChange.bind(this)}
-                        value={email}
-                    />
-                </CardSection>
 
-                <CardSection >
-                    <Input
-                        secureTextEntry
-                        placeholder="Password"
-                        label="Password:"
-                        onChangeText={this.onPasswordChange.bind(this)}
-                        value={password}
-                    />
-                </CardSection>
+            <View>
+                <Card style={cardStyle}>
+                    <CardSection >
+                        <Input
+                            placeholder="user@gmail.com"
+                            label="Email:"
+                            onChangeText={this.onEmailChange.bind(this)}
+                            value={email}
+                        />
+                    </CardSection>
 
-                <Text style={styles.errorTextStyle}>
-                    {this.props.error}
-                </Text>
+                    <CardSection >
+                        <Input
+                            secureTextEntry
+                            placeholder="Password"
+                            label="Password:"
+                            onChangeText={this.onPasswordChange.bind(this)}
+                            value={password}
+                        />
+                    </CardSection>
+                </Card>
+                <Card>
+                    <CardSection >
+                        <Input
+                            secureTextEntry
+                            placeholder="Ole Nordman"
+                            label="Name:"
+                            onChangeText={this.onNameChange.bind(this)}
+                            value={name}
+                        />
+                    </CardSection>
+                </Card>
 
-                <CardSection>
-                    <Button onPress={ () => {this.onSubmit()}}>
-                        Submit
-                    </Button>
+                    <Text style={errorTextStyle}>
+                        {this.props.error}
+                    </Text>
 
-                </CardSection>
-            </Card>
+                    <CardSection>
+                        <Button
+                            onPress={ () => {this.onSubmit()}}
+                            style={styleButton}
+                        >
+                            Submit
+                        </Button>
+
+                    </CardSection>
+
+            </View>
         );
     }
 
@@ -91,13 +119,16 @@ const styles = {
     },
     cardStyle: {
         marginTop: 70
+    },
+    styleButton: {
+        borderWidth: 1
     }
 };
 
 const mapStateToProps = ({register}) => {
-    const{email, password, error, load} = register;
-    return {email, password, error, load};
+    const{email, password, name, error, load} = register;
+    return {email, password, name, error, load};
 };
 
 
-export default connect(mapStateToProps, {newEmailChange, newPasswordChange, createUser})(NewUser);
+export default connect(mapStateToProps, {newEmailChange, newPasswordChange, newNameChange, createUser})(NewUser);

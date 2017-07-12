@@ -89,7 +89,8 @@ class ShowChallenges extends Component {
 const styles = {
     ContainerStyle: {
         flex: 1,
-        marginTop: 65
+        marginTop: 65,
+        marginBottom: 65
 
     },
     imageStyle: {
