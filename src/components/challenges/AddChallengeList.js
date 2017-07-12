@@ -10,10 +10,10 @@ class AddChallengeList extends Component {
         return (
             <Card>
                 <CardSection>
-                    <Text style={stylesItem.nameStyle}>{rowData.name}</Text>
+                    <Text style={styles.nameStyle}>{rowData.name}</Text>
                 </CardSection>
                 <CardSection>
-                    <Text style={stylesItem.descriptionStyle}>{rowData.description}</Text>
+                    <Text style={styles.descriptionStyle}>{rowData.description}</Text>
                 </CardSection>
             </Card>
         );
@@ -34,7 +34,7 @@ class AddChallengeList extends Component {
     }
 }
 
-stylesItem = {
+ const styles = {
     nameStyle: {
         fontSize: 18,
         fontWeight: 'bold'

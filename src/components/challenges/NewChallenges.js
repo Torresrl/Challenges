@@ -157,7 +157,8 @@ styles = {
         justifyContent: 'center',
         marginTop: 300
 
-    }
+    },
+
 };
 
 const mapStateToProps = ({newChallenges}) =>{

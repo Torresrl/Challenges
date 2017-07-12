@@ -3,7 +3,7 @@ import {CHALLENGES_FETCH_IMAGE_SUCCESS,
 
 const INITIAL_STATE = {
     url: "",
-    load: false
+    load: true
 
 };
 
