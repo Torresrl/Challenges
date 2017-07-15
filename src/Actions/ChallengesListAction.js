@@ -5,14 +5,13 @@ import {
 } from './types';
 
 export const challengesFetch = () => {
-    const {currentUser} = firebase.auth();
 
     return(dispatch) => {
         dispatch({
            type: CHALLENGES_FETCH
         });
 
-        firebase.database().ref(`/users/${currentUser.uid}/challenges/`)
+        firebase.database().ref(`/challenges/`)
             .on('value', snapshot => {
                 dispatch({
                     type: CHALLENGES_FETCH_SUCCESS,

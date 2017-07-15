@@ -26,7 +26,7 @@ const RouterComponent = () => {
                 {/* Scenene for Login*/}
                 <Scene key="auth">
                     <Scene key="login" component={LoginForm} title="Challenges" />
-                    <Scene key="newUser" component={NewUser} title="New User"/>
+                    <Scene key="newUser" component={NewUser} title="Create User"/>
                 </Scene>
 
                 {/* Scenene for for allt innhold etter innloging*/}
@@ -46,6 +46,7 @@ const RouterComponent = () => {
                             component={Challenges}
                             title="Challenges"
                             renderRightButton={Challenges.renderRightButton}
+                            renderLeftButton={Challenges.renderLeftButton}
                         />
                         <Scene
                             key="newChallenges"

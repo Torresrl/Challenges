@@ -11,8 +11,16 @@ class Challenges extends Component {
     //Denne kobles opp i router
     static renderRightButton = () =>{
         return(
-            <Button style={styles2.styleAddChal} onPress={ () => {Actions.newChallenges()}}>
+            <Button style={styles.styleAddChal} onPress={ () => {Actions.newChallenges()}}>
                 +
+            </Button>
+        );
+    };
+
+    static renderLeftButton = () => {
+        return (
+            <Button style={styles.styleAddChal} onPress={ () => {Actions.newChallenges()}}>
+                create new
             </Button>
         );
     };
@@ -30,14 +38,14 @@ class Challenges extends Component {
     render() {
 
         return(
-            <View style={styles2.containerStyle}>
+            <View style={styles.containerStyle}>
                 {this.renderContent()}
             </View>
         );
     }
 }
 
-styles2 = {
+const styles = {
     containerStyle: {
         marginTop: 70,
         flex:1
