@@ -14,7 +14,8 @@ import {CHALLENGES_NAME,
         CHALLENG_DES,
         NOT_VALID_NAME,
         NOT_VALID_DESCRIPTION,
-        CHALLENGES_CREATED
+        CHALLENGES_CREATED,
+        MAKE_MODAL_NOT_VISIBLE
 } from './types';
 
 
@@ -54,6 +55,12 @@ export const challengeDesChange = (text) => {
     };
 };
 
+export const makeModalNotVisible = () => {
+    return{
+        type: MAKE_MODAL_NOT_VISIBLE
+    };
+};
+
 export const addChallenge = (text) => {
     if(text.name.length == null || text.name.length === 0) {
         return {
@@ -74,7 +81,6 @@ export const addChallenge = (text) => {
 
 export const addChallenges = ({name, description, image, challenges}) => {
     const {currentUser} = firebase.auth();
-    const imageId = firebase.database().ref('posts').push().key;
     const challengesId = firebase.database().ref('posts').push().key;
 
     // Prepare Blob support
@@ -97,22 +103,25 @@ export const addChallenges = ({name, description, image, challenges}) => {
     return(dispatch) => {
 
         dispatch({
-               type: TRY_ADD_CHALLENGES
+            type: TRY_ADD_CHALLENGES,
+            payload: challengesId
         });
 
         firebase.database().ref(`/challenges/${challengesId}`)
-            .set({name, description, imageId, challenges})
+            .set({name, description,owner: currentUser.uid, challengesId, challenges})
             .then(() => {
                 firebase.database().ref(`/Users/${currentUser.uid}/myChallenges`).set({challengesId})
             })
             .then(() => {
                 Blob.build(image, { type : 'image/png;BASE64' })
                     .then((blob) => firebase.storage()
-                        .ref(`/challenges/${imageId}`)
+                        .ref(`/challenges/${challengesId}`)
                         .put(blob, { contentType : 'image/png' })
                     )
                     .then(() => {
-                        dispatch({type: CHALLENGES_CREATED});
+                        dispatch({
+                            type: CHALLENGES_CREATED
+                        });
                         Actions.challenges({type: 'reset'});
 
                     });

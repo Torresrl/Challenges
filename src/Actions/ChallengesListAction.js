@@ -5,6 +5,7 @@ import {
 } from './types';
 
 export const challengesFetch = () => {
+    const {currentUser} = firebase.auth();
 
     return(dispatch) => {
         dispatch({
@@ -12,6 +13,8 @@ export const challengesFetch = () => {
         });
 
         firebase.database().ref(`/challenges/`)
+            .orderByChild('owner')
+            .equalTo(currentUser.uid)
             .on('value', snapshot => {
                 dispatch({
                     type: CHALLENGES_FETCH_SUCCESS,

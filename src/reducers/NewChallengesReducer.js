@@ -10,7 +10,8 @@ import {CHALLENGES_NAME,
         CHALLENG_DES,
         NOT_VALID_NAME,
         NOT_VALID_DESCRIPTION,
-        CHALLENGES_CREATED
+        CHALLENGES_CREATED,
+        MAKE_MODAL_NOT_VISIBLE
 } from '../Actions/types';
 
 const INITIAL_STATE = {
@@ -22,7 +23,9 @@ const INITIAL_STATE = {
     challengeDes: "",
     challenges: [],
     error: "",
-    load: false
+    load: false,
+    challengesCode: "",
+    modalVisible: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -46,7 +49,12 @@ export default (state = INITIAL_STATE, action) => {
         case NOT_VALID_DESCRIPTION:
             return {...state, error: "Every challenge need a description"};
         case TRY_ADD_CHALLENGES:
-            return {...state, load: true};
+            return {
+                ...state,
+                load: true,
+                challengesCode: action.payload,
+                modalVisible: true
+            };
         case ADD_CHALLENGE:
             return{...state,
                 challenges: [...state.challenges, action.payload],
@@ -56,6 +64,8 @@ export default (state = INITIAL_STATE, action) => {
             };
         case CHALLENGES_CREATED:
             return INITIAL_STATE;
+        case MAKE_MODAL_NOT_VISIBLE:
+            return {...state, modalVisible: false};
         default:
             return state;
     }

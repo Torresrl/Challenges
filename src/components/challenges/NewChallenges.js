@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, Image, ScrollView, View} from 'react-native';
+import {Text, Image, ScrollView, View, Modal} from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import {connect} from 'react-redux';
 import {Button, Input, Card, CardSection, Spinner} from '../common';
@@ -8,6 +8,7 @@ import EditChallenge from './EditChallenge';
 import {nameChange,
     descriptionChange,
     addImage,
+    makeModalNotVisible
 }from '../../Actions';
 
 
@@ -25,6 +26,10 @@ class NewChallenges extends Component {
     onAddImage(text){
         this.props.addImage(text);
 
+    }
+
+    makeModalNotVisible(){
+        this.props.makeModalNotVisible();
     }
 
 
@@ -79,6 +84,39 @@ class NewChallenges extends Component {
         });
     }
 
+    renderModal(){
+        const {
+            modalVisible,
+            nameChallenges,
+            challengesCode
+        } = this.props;
+
+        const {
+            modalContainerStyle,
+            modalCodeStyle,
+            modalButtonStyle,
+            modalHeaderStyle
+        } = styles;
+        return (
+                <Modal
+                    transparent={false}
+                    visible={modalVisible}
+                >
+                    <View style={modalContainerStyle}>
+                        <Text style={modalHeaderStyle}>{nameChallenges}</Text>
+                        <Text style={modalCodeStyle}>Code: {challengesCode}</Text>
+                        <Button
+                            style={modalButtonStyle}
+                            onPress={() => this.makeModalNotVisible()}
+                        >
+                            OK
+                        </Button>
+                    </View>
+                </Modal>
+        );
+
+    }
+
     renderContent() {
         const {nameChallenges, description, challengesError, load} = this.props;
         if(load) {
@@ -128,13 +166,14 @@ class NewChallenges extends Component {
 
         return(
             <View>
+                {this.renderModal()}
                 {this.renderContent()}
             </View>
             );
     }
 }
 
-styles = {
+const styles = {
     styleFirstCard: {
         marginTop: 70
     },
@@ -159,21 +198,64 @@ styles = {
 
     },
 
+    modalContainerStyle: {
+        flex: 1,
+        alignItems: 'center',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        marginTop: 65,
+
+    },
+
+    modalHeaderStyle: {
+        flex: 5,
+        fontSize: 25
+    },
+
+    modalCodeStyle: {
+        fontSize: 20,
+        color: "red",
+        flex: 8
+    },
+
+    modalButtonStyle: {
+        borderWidth: 1,
+        flex: 1,
+        marginBottom: 10
+
+    }
+
 };
 
 const mapStateToProps = ({newChallenges}) =>{
-    const {nameChallenges, description, image,
-        challengeName, challengeDes,challengesError,
-        load} = newChallenges;
+    const {
+        nameChallenges,
+        description,
+        image,
+        challengeName,
+        challengeDes,
+        challengesError,
+        load,
+        challengesCode,
+        modalVisible
+    } = newChallenges;
 
-    return {nameChallenges, description, image,
-        challengeName, challengeDes,challengesError,
-        load};
-
+    return {
+        nameChallenges,
+        description,
+        image,
+        challengeName,
+        challengeDes,
+        challengesError,
+        load,
+        challengesCode,
+        modalVisible
+    };
 };
 
 export default connect(mapStateToProps, {
         nameChange,
         descriptionChange,
         addImage,
+    makeModalNotVisible
     })(NewChallenges);

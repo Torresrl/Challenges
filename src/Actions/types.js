@@ -33,6 +33,8 @@ export const CHALLENG_DES = 'challeng_des';
 export const NOT_VALID_NAME = 'not_valid_name';
 export const NOT_VALID_DESCRIPTION = 'not_valid_description';
 
+export const MAKE_MODAL_NOT_VISIBLE = 'make_modal_not_visible';
+
 //Challenges List
 export const CHALLENGES_FETCH_SUCCESS = 'challenges_fetch_success';
 export const CHALLENGES_FETCH = 'challenges_fetch';

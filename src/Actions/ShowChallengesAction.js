@@ -6,11 +6,11 @@ import {
 
 
 
-export const getImage = (imageId) => {
+export const getImage = (challengesId) => {
     const {currentUser} = firebase.auth();
 
     const storage = firebase.storage()
-        .ref(`/challenges/${imageId}`);
+        .ref(`/challenges/${challengesId}`);
 
     return (dispatch) => {
         dispatch({

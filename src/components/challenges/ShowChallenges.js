@@ -10,13 +10,13 @@ import {Spinner, Card, CardSection} from '../common';
 class ShowChallenges extends Component {
 
     componentWillMount(){
-        const{imageId, challenges} = this.props.challenges;
+        const{challengesId, challenges} = this.props.challenges;
         const challengeList = _.map(challenges, (val, uid) => {
             return {...val, uid}
         });
         this.state = {challengeList};
 
-        this.props.getImage(imageId);
+        this.props.getImage(challengesId);
     }
 
     createDataSource(){
@@ -61,8 +61,14 @@ class ShowChallenges extends Component {
 
 
     render() {
-        const {name, description} = this.props.challenges;
-        const {ContainerStyle,headerCardStyle,headerStyle} = styles;
+        const {name, description, challengesId} = this.props.challenges;
+        const {
+            ContainerStyle,
+            headerCardStyle,
+            headerStyle,
+            codeStyle
+        } = styles;
+
         this.createDataSource();
 
         return (
@@ -74,6 +80,7 @@ class ShowChallenges extends Component {
                 </Card>
                 <Card style={headerCardStyle}>
                     <Text style={headerStyle}>{name}</Text>
+                    <Text style={codeStyle}>Code: {challengesId}</Text>
                     <Text>{description}</Text>
                 </Card>
                 <ListView
@@ -115,6 +122,10 @@ const styles = {
 
     descriptionStyle: {
         fontSize: 15
+    },
+
+    codeStyle: {
+        color: 'red'
     }
 
 };
