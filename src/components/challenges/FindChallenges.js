@@ -2,8 +2,18 @@ import React, {Component} from 'react';
 import {Modal, View, Text} from 'react-native';
 import {connect} from 'react-redux';
 import {Input, Button, CardSection} from '../common';
+import {codeChange,joinChallenges} from '../../Actions';
 
 class ChallengesModal extends Component{
+
+    onCodeChange(text){
+        this.props.codeChange(text);
+    }
+
+    onAddButtonPress(){
+        const {code} = this.props;
+        this.props.joinChallenges(code);
+    }
 
     render() {
         const {
@@ -12,8 +22,11 @@ class ChallengesModal extends Component{
             inputContainerStyle,
             buttonsContainerStyle,
             buttonStyle,
-            inputLabelStyle
+            inputLabelStyle,
+            errorStyle
         } = styles;
+
+        const {code, error} = this.props;
 
         return (
 
@@ -24,12 +37,20 @@ class ChallengesModal extends Component{
                             label="Code:"
                             style = {inputStyle}
                             labelStyle = {inputLabelStyle}
+                            onChangeText={this.onCodeChange.bind(this)}
+                            value={code}
                         />
+                        <Text style={errorStyle}>{error}</Text>
                     </View>
 
 
                     <CardSection style={buttonsContainerStyle}>
-                        <Button style={buttonStyle}>Add</Button>
+                        <Button
+                            style={buttonStyle}
+                            onPress={() => {this.onAddButtonPress()}}
+                        >
+                            Add
+                        </Button>
                     </CardSection>
                 </View>
 
@@ -73,10 +94,19 @@ const styles = {
 
     buttonStyle: {
         borderWidth: 1
+    },
+
+    errorStyle: {
+        color: 'red'
     }
 
 };
 
+const mapStateToProps = ({findChallenges}) => {
+    const{code, error} = findChallenges;
+    return {code, error};
+};
 
 
-export default connect(null) (ChallengesModal);
+
+export default connect(mapStateToProps, {codeChange, joinChallenges}) (ChallengesModal);

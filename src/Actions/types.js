@@ -42,3 +42,8 @@ export const CHALLENGES_FETCH = 'challenges_fetch';
 //ShowChallenges
 export const CHALLENGES_FETCH_IMAGE_SUCCESS = 'challenges_fetch_image_success';
 export const CHALLENGES_FETCH_IMAGE = 'challenges_fetch_image';
+
+//FindChallenges
+export const CODE_CHANGE ='code_change';
+export const JOIN_CHALLENGE_SUCCESS = 'joind_challenge_success';
+export const JOIN_CHALLENGE_FAIL = 'join_challenge_fail';
