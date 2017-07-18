@@ -12,9 +12,7 @@ export const challengesFetch = () => {
            type: CHALLENGES_FETCH
         });
 
-        firebase.database().ref(`/challenges/`)
-            .orderByChild('owner')
-            .equalTo(currentUser.uid)
+        firebase.database().ref(`/Users/${currentUser.uid}/myChallenges`)
             .on('value', snapshot => {
                 dispatch({
                     type: CHALLENGES_FETCH_SUCCESS,

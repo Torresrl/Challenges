@@ -8,7 +8,6 @@ class ChallengesModal extends Component{
     render() {
         const {
             modalContainerStyle,
-            headerStyle,
             inputStyle,
             inputContainerStyle,
             buttonsContainerStyle,
