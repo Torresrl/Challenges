@@ -9,7 +9,7 @@ import {NEW_EMAIL_CHANGE,
     EMAIL_MISSING,
     WEAK_PASSWORD,
     NAME_MISSING
-} from './types';
+} from '../types';
 
 export const newEmailChange = (text) => {
     return {

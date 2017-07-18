@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {ListView, View, Text} from 'react-native';
-import {Card, CardSection} from '../common';
+import {Card, CardSection} from '../../common';
 
 class AddChallengeList extends Component {
 

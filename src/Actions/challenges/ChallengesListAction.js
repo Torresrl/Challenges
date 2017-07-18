@@ -2,7 +2,7 @@ import firebase from 'firebase';
 import {
     CHALLENGES_FETCH_SUCCESS,
     CHALLENGES_FETCH
-} from './types';
+} from '../types';
 
 export const challengesFetch = () => {
     const {currentUser} = firebase.auth();

@@ -2,14 +2,14 @@ import React, {Component} from 'react';
 import {Text, Image, ScrollView, View, Modal} from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import {connect} from 'react-redux';
-import {Button, Input, Card, CardSection, Spinner} from '../common';
+import {Button, Input, Card, CardSection, Spinner} from '../../common';
 import AddChallengeList from './AddChallengeList';
 import EditChallenge from './EditChallenge';
 import {nameChange,
     descriptionChange,
     addImage,
     makeModalNotVisible
-}from '../../Actions';
+}from '../../../Actions';
 
 
 

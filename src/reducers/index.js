@@ -1,10 +1,11 @@
 import {combineReducers} from 'redux';
-import AuthReducer from './AuthReducer';
-import RegisterReducer from './RegisterReducer';
-import NewChallengesReducer from './NewChallengesReducer';
-import ChallengesListReducer from './ChallengesListReducer';
-import ChallengesReducer from './ChallengesReducer';
-import ShowChallengesReducer from './ShowChallengesReducer'
+import AuthReducer from './login/AuthReducer';
+import RegisterReducer from './login/RegisterReducer';
+import NewChallengesReducer from './challenges/NewChallengesReducer';
+import ChallengesListReducer from './challenges/ChallengesListReducer';
+import ChallengesReducer from './challenges/ChallengesReducer';
+import ShowChallengesReducer from './challenges/ShowChallengesReducer';
+import FindChallengesReducer from './challenges/FindChallengesReducer';
 
 export default combineReducers ({
     auth: AuthReducer,
@@ -12,5 +13,6 @@ export default combineReducers ({
     newChallenges: NewChallengesReducer,
     challengesList: ChallengesListReducer,
     challenges: ChallengesReducer,
-    showChallenges: ShowChallengesReducer
+    showChallenges: ShowChallengesReducer,
+    findChallenges: FindChallengesReducer
 });

@@ -7,11 +7,17 @@ import ChallengesList from './ChallengesList';
 
 
 
+
 class Challenges extends Component {
+
+
+
     //Denne kobles opp i router
     static renderRightButton = () =>{
         return(
-            <Button style={styles.styleAddChal} onPress={ () => {Actions.newChallenges()}}>
+            <Button
+                style={styles.styleAddChal}
+                onPress={ () => {Actions.findChallenges()}}>
                 +
             </Button>
         );
@@ -19,7 +25,9 @@ class Challenges extends Component {
 
     static renderLeftButton = () => {
         return (
-            <Button style={styles.styleAddChal} onPress={ () => {Actions.newChallenges()}}>
+            <Button
+                style={styles.styleAddChal}
+                onPress={ () => {Actions.newChallenges()}}>
                 create new
             </Button>
         );
@@ -44,6 +52,7 @@ class Challenges extends Component {
         );
     }
 }
+
 
 const styles = {
     containerStyle: {

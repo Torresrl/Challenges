@@ -1,6 +1,6 @@
 import {
     CHALLENGES_FETCH_SUCCESS,
-    CHALLENGES_FETCH} from '../Actions/types';
+    CHALLENGES_FETCH} from '../../Actions/types';
 
 const INITIAL_STATE = {
     load: false

@@ -9,7 +9,7 @@ import {
     WEAK_PASSWORD,
     NAME_MISSING
 
-} from '../Actions/types';
+} from '../../Actions/types';
 
 const INITIAL_STATE = {
     email: "",

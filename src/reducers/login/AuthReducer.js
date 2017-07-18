@@ -4,7 +4,7 @@ import {EMAIL_CHANGE,
     LOGIN_SUCCESS,
     LOGIN_FAIL,
     TRY_LOGIN
-} from '../Actions/types';
+} from '../../Actions/types';
 
 const INITIAL_STATE = {
     email: "test@test.com",

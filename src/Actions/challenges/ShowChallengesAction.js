@@ -2,7 +2,7 @@ import firebase from 'firebase';
 import {
     CHALLENGES_FETCH_IMAGE_SUCCESS,
     CHALLENGES_FETCH_IMAGE
-} from './types';
+} from '../types';
 
 
 

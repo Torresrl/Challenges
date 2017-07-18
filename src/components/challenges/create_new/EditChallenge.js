@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {View, Text} from 'react-native';
-import {Card, CardSection, Input, Button} from '../common';
+import {Card, CardSection, Input, Button} from '../../common';
 import {
     challengeNameChange,
     challengeDesChange,
     addChallenge,
     addChallenges
-}from '../../Actions';
+}from '../../../Actions';
 
 class EditChallenge extends Component{
 

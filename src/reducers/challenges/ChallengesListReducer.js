@@ -1,4 +1,4 @@
-import {CHALLENGES_FETCH_SUCCESS} from '../Actions/types';
+import {CHALLENGES_FETCH_SUCCESS} from '../../Actions/types';
 
 const INITIAL_STATE = {
 };

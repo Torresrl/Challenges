@@ -5,7 +5,7 @@ import {EMAIL_CHANGE,
     LOGIN_SUCCESS,
     LOGIN_FAIL,
     TRY_LOGIN
-} from './types';
+} from '../types';
 
 
 export const emailChange = (text) => {

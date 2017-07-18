@@ -16,7 +16,7 @@ import {CHALLENGES_NAME,
         NOT_VALID_DESCRIPTION,
         CHALLENGES_CREATED,
         MAKE_MODAL_NOT_VISIBLE
-} from './types';
+} from '../types';
 
 
 export const nameChange = (text) => {

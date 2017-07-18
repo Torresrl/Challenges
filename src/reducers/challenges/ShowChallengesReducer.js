@@ -1,5 +1,5 @@
 import {CHALLENGES_FETCH_IMAGE_SUCCESS,
-    CHALLENGES_FETCH_IMAGE} from '../Actions/types';
+    CHALLENGES_FETCH_IMAGE} from '../../Actions/types';
 
 const INITIAL_STATE = {
     url: "",

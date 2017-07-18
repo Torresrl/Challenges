@@ -6,7 +6,8 @@ import NewUser from './components/Login/NewUser';
 import Feed from './components/Feed';
 import Profile from './components/Profile';
 import Challenges from './components/challenges/Challenges';
-import NewChallenges from './components/challenges/NewChallenges';
+import NewChallenges from './components/challenges/create_new/NewChallenges';
+import FindChallenges from './components/challenges/FindChallenges';
 import ShowChallenges from './components/challenges/ShowChallenges';
 
 const RouterComponent = () => {
@@ -52,6 +53,11 @@ const RouterComponent = () => {
                             key="newChallenges"
                             component={NewChallenges}
                             title="New Challenges"
+                        />
+                        <Scene
+                            key="findChallenges"
+                            component={FindChallenges}
+                            title="Join a Challenge"
                         />
                         <Scene
                             key="showChallenges"

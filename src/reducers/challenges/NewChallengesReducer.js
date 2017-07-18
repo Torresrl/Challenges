@@ -12,7 +12,7 @@ import {CHALLENGES_NAME,
         NOT_VALID_DESCRIPTION,
         CHALLENGES_CREATED,
         MAKE_MODAL_NOT_VISIBLE
-} from '../Actions/types';
+} from '../../Actions/types';
 
 const INITIAL_STATE = {
     nameChallenges: "",
