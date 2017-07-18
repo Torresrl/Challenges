@@ -1,9 +1,17 @@
 import React, {Component} from 'react';
-import {Text, ScrollView, Image, ListView} from 'react-native';
+import {
+    Text,
+    ScrollView,
+    Image,
+    ListView,
+    TouchableWithoutFeedback
+} from 'react-native';
 import {connect} from 'react-redux';
 import _ from 'lodash';
-import {getImage} from '../../Actions';
-import {Spinner, Card, CardSection} from '../common';
+import {getImage} from '../../../Actions';
+import {Spinner, Card, CardSection} from '../../common';
+import ShowChallengesListItem from './ShowChallengesListItem';
+
 
 
 
@@ -29,14 +37,7 @@ class ShowChallenges extends Component {
 
     renderRow(challenge){
         return (
-            <Card>
-                <CardSection>
-                    <Text style={styles.nameStyle}>{challenge.name}</Text>
-                </CardSection>
-                <CardSection>
-                    <Text style={styles.descriptionStyle}>{challenge.description}</Text>
-                </CardSection>
-            </Card>
+            <ShowChallengesListItem challenge={challenge}/>
         );
     }
 

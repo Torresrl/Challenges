@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {ListView, View, Text} from 'react-native';
 import {connect} from 'react-redux';
 import {Actions} from 'react-native-router-flux';
-import {Button, Spinner} from '../common';
+import {Button, Spinner} from '../../common';
 import ChallengesList from './ChallengesList';
 
 

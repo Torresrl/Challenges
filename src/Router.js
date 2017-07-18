@@ -5,10 +5,11 @@ import LoginForm from './components/Login/LoginForm';
 import NewUser from './components/Login/NewUser';
 import Feed from './components/Feed';
 import Profile from './components/Profile';
-import Challenges from './components/challenges/Challenges';
+import Challenges from './components/challenges/challenges_list/Challenges';
 import NewChallenges from './components/challenges/create_new/NewChallenges';
 import FindChallenges from './components/challenges/FindChallenges';
-import ShowChallenges from './components/challenges/ShowChallenges';
+import ShowChallenges from './components/challenges/show_challenges/ShowChallenges';
+import DoAChallenge from './components/challenges/show_challenges/DoAChallenge';
 
 const RouterComponent = () => {
 
@@ -63,6 +64,11 @@ const RouterComponent = () => {
                             key="showChallenges"
                             component={ShowChallenges}
                             title="Challenges"
+                        />
+                        <Scene
+                            key="doAChallenge"
+                            component={DoAChallenge}
+                            title="Challenge"
                         />
                     </Scene>
                     <Scene key="tabProfile" title="Profile" icon={TabIcon}>

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {Text,View, TouchableWithoutFeedback} from 'react-native';
+import {Text,View, TouchableOpacity} from 'react-native';
 import {Actions} from 'react-native-router-flux';
-import {Card} from '../common';
+import {Card} from '../../common';
 
 class ChallengesListItem extends Component {
 
@@ -13,13 +13,13 @@ class ChallengesListItem extends Component {
         const {name} = this.props.challenges;
 
         return (
-            <TouchableWithoutFeedback onPress={this.onRowPress.bind(this)}>
+            <TouchableOpacity onPress={this.onRowPress.bind(this)}>
                 <View>
                     <Card style={styles.cardStyle}>
                         <Text>{name}</Text>
                     </Card>
                 </View>
-            </TouchableWithoutFeedback>
+            </TouchableOpacity>
         );
     }
 }

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {ListView} from 'react-native';
 import {connect} from 'react-redux';
 import _ from 'lodash';
-import {challengesFetch} from '../../Actions';
+import {challengesFetch} from '../../../Actions';
 import ChallengesListItem from './ChallengesListItem';
 
 class ChallengesList extends Component{
