@@ -71,9 +71,10 @@ class DoAChallenge extends Component {
         const{name, description, comment} = this.props.challenge;
         const {
             headerStyle,
-            descriptionStyle,
             headerCardStyle,
-            CommentCardStyle
+            CommentCardStyle,
+            styleButtonCard,
+            styleButton
 
         } = styles;
 
@@ -84,7 +85,7 @@ class DoAChallenge extends Component {
                         <Text style={headerStyle}>{name}</Text>
                     </CardSection>
                     <CardSection>
-                        <Text style={descriptionStyle}>{description}</Text>
+                        <Text>{description}</Text>
                     </CardSection>
                 </Card>
 
@@ -99,6 +100,15 @@ class DoAChallenge extends Component {
                     />
                 </Card>
 
+                <Card style={styleButtonCard}>
+                    <Button
+                        style={styleButton}
+                    >
+                        Confirme
+                    </Button>
+                </Card>
+
+
             </ScrollView>
         );
     }
@@ -111,11 +121,6 @@ const styles = {
         fontSize: 22,
 
     },
-
-    descriptionStyle: {
-
-    },
-
 
     headerCardStyle: {
         marginTop: 70,
@@ -135,6 +140,16 @@ const styles = {
         height: 300,
         flex:1,
         width: null
+    },
+
+    styleButtonCard: {
+        borderWidth: 0,
+        shadowColor: '#FFF',
+        flexDirection: 'row',
+        marginBottom: 70
+    },
+    styleButton: {
+        borderWidth: 1
     },
 
 

@@ -83,8 +83,6 @@ class EditChallenge extends Component{
                         {this.props.button2}
                     </Button>
                 </Card>
-
-
             </View>
         );
     }
