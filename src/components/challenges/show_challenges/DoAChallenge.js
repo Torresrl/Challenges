@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ScrollView, Text} from 'react-native';
+import {ScrollView, Text, Image} from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import {connect} from 'react-redux';
 import {Button, LargInput, Card, CardSection} from '../../common';
@@ -9,6 +9,10 @@ class DoAChallenge extends Component {
 
     commentOnChange(text){
         this.props.commentChange(text);
+    }
+
+    onAddImage(text){
+        this.props.addImageChallenge(text);
     }
 
     chooseImage() {
@@ -28,15 +32,44 @@ class DoAChallenge extends Component {
                 let source = { uri: response.uri };
                 // You can also display the image using data:
                 //let source = { uri: 'data:image/jpeg;base64,' + response.data };
+                this.onAddImage(response.data);
 
             }
         });
     }
 
+    renderPicture() {
+        const {image} = this.props;
+        const{imageStyle} = styles;
+        if(image){
+            return (
+                <Card>
+                    <CardSection>
+                        <Image source={{uri: `data:image/gif;base64,${image}`}}  style={imageStyle}/>
+                    </CardSection>
+                    <CardSection>
+                        <Button onPress={() => {this.chooseImage()}}>
+                            Change Picture
+                        </Button>
+                    </CardSection>
+                </Card>
+            );
+        } else {
+            return (
+                <Card>
+                    <CardSection>
+                        <Button onPress={() => {this.chooseImage()}}>
+                            Add Image
+                        </Button>
+                    </CardSection>
+                </Card>
+            );
+        }
+    }
+
     render(){
         const{name, description, comment} = this.props.challenge;
         const {
-            buttonStyle,
             headerStyle,
             descriptionStyle,
             headerCardStyle,
@@ -54,14 +87,9 @@ class DoAChallenge extends Component {
                         <Text style={descriptionStyle}>{description}</Text>
                     </CardSection>
                 </Card>
-                <CardSection>
-                <Button
-                    style={buttonStyle}
-                    onPress={() => this.chooseImage()}
-                >
-                    Add image
-                </Button>
-                </CardSection>
+
+                {this.renderPicture()}
+
                 <Card style={CommentCardStyle}>
                     <LargInput
                         label="Comment"
@@ -88,10 +116,6 @@ const styles = {
 
     },
 
-    buttonStyle: {
-        borderWidth: 1,
-        flex: 1
-    },
 
     headerCardStyle: {
         marginTop: 70,
@@ -106,7 +130,12 @@ const styles = {
         marginLeft: 5,
         marginRight: 5,
         flex: 3
-    }
+    },
+    imageStyle: {
+        height: 300,
+        flex:1,
+        width: null
+    },
 
 
 };
