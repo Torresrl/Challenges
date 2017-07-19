@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {View, Text} from 'react-native';
-import {Card, CardSection, Input, Button} from '../../common';
+import {Card, CardSection, Input, Button, LargInput} from '../../common';
 import {
     challengeNameChange,
     challengeDesChange,
@@ -58,7 +58,7 @@ class EditChallenge extends Component{
 
                     </CardSection>
                     <CardSection>
-                        <Input
+                        <LargInput
                             label="Description"
                             placeholder="Description"
                             onChangeText={this.onChalDesChang.bind(this)}

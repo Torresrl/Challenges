@@ -6,6 +6,7 @@ import ChallengesListReducer from './challenges/ChallengesListReducer';
 import ChallengesReducer from './challenges/ChallengesReducer';
 import ShowChallengesReducer from './challenges/ShowChallengesReducer';
 import FindChallengesReducer from './challenges/FindChallengesReducer';
+import DoAChallengeReducer from './challenges/DoAChallengeReducer';
 
 export default combineReducers ({
     auth: AuthReducer,
@@ -14,5 +15,6 @@ export default combineReducers ({
     challengesList: ChallengesListReducer,
     challenges: ChallengesReducer,
     showChallenges: ShowChallengesReducer,
-    findChallenges: FindChallengesReducer
+    findChallenges: FindChallengesReducer,
+    doAChallenge: DoAChallengeReducer
 });

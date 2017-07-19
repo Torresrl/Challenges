@@ -47,3 +47,7 @@ export const CHALLENGES_FETCH_IMAGE = 'challenges_fetch_image';
 export const CODE_CHANGE ='code_change';
 export const JOIN_CHALLENGE_SUCCESS = 'joind_challenge_success';
 export const JOIN_CHALLENGE_FAIL = 'join_challenge_fail';
+
+//DoAChallenge
+export const COMMENT_CHANGE = 'comment_change';
+export const DO_CHALLENG_ADD_IMAGE= 'do_a_chllenge_add_image';
