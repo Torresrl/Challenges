@@ -104,7 +104,7 @@ class DoAChallenge extends Component {
                     <Button
                         style={styleButton}
                     >
-                        Confirme
+                        Confirm
                     </Button>
                 </Card>
 
