@@ -4,6 +4,8 @@ import ImagePicker from 'react-native-image-picker';
 import {connect} from 'react-redux';
 import {Button, LargInput, Card, CardSection} from '../../common';
 import {commentChange, addImageChallenge, challengDone} from '../../../Actions';
+import DoAChallengeTimeline from './DoAChallengeTimeline';
+
 
 class DoAChallenge extends Component {
 
@@ -73,13 +75,15 @@ class DoAChallenge extends Component {
     }
 
     render(){
-        const{name, description, comment} = this.props.challenge;
+        const{name, description, comment, challengeId} = this.props.challenge;
+        const {challengesId} = this.props;
         const {
             headerStyle,
             headerCardStyle,
             CommentCardStyle,
             styleButtonCard,
-            styleButton
+            styleButton,
+            styleTimeline
 
         } = styles;
 
@@ -113,7 +117,13 @@ class DoAChallenge extends Component {
                         Confirm
                     </Button>
                 </Card>
+                <CardSection>
+                    <DoAChallengeTimeline
+                        challengesId={challengesId}
+                        challengeId={challengeId}
 
+                    />
+                </CardSection>
 
             </ScrollView>
         );
@@ -157,6 +167,7 @@ const styles = {
     styleButton: {
         borderWidth: 1
     },
+
 
 
 };

@@ -52,3 +52,6 @@ export const JOIN_CHALLENGE_FAIL = 'join_challenge_fail';
 //DoAChallenge
 export const COMMENT_CHANGE = 'comment_change';
 export const DO_CHALLENG_ADD_IMAGE= 'do_a_chllenge_add_image';
+
+//DoAChallengeTimeline
+export const DO_CHALLENGE_TIMELINE_FETCH = 'do_challenge_timelibe_fetch';

@@ -1,6 +1,9 @@
 import firebase from 'firebase';
 import RNFetchBlob from 'react-native-fetch-blob';
-import {COMMENT_CHANGE, DO_CHALLENG_ADD_IMAGE} from '../types';
+import {COMMENT_CHANGE,
+    DO_CHALLENG_ADD_IMAGE,
+    DO_CHALLENGE_TIMELINE_FETCH
+} from '../types';
 
 export const commentChange = (text) => {
     return {
@@ -44,10 +47,31 @@ export const challengDone = (object) => {
 
     return (dispatch) => {
         uploadImage(image,challengesId, challengeId );
-        database.ref().update(fanoutObj); //prøv å få mer av pathen her
+        database.ref().update(fanoutObj);
 
     }
 
+
+};
+
+
+export const fetchTimeline = (challengesId, challengeId) => {
+    const {currentUser} = firebase.auth();
+
+    return (dispatch) => {
+        firebase.database()
+            .ref('/Users/' +
+                currentUser.uid + '/myChallenges/' +
+                challengesId +'/challenges/' +
+                challengeId + '/timeline')
+
+            .on('value', snapshot => {
+                dispatch({
+                    type: DO_CHALLENGE_TIMELINE_FETCH,
+                    payload: snapshot.val()
+                });
+            });
+    }
 
 };
 
