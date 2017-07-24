@@ -19,22 +19,21 @@ export const addImageChallenge = (image) => {
 
 //Atm er dette et bra eksempel på hvordan men oppdaterer en post
 export const challengDone = (object) => {
+    const {currentUser} = firebase.auth();
     const {image, comment, challengeId, challengesId, owner} = object;
     const database = firebase.database();
 
-    /*
-    // Prepare Blob support
-    const polyfill = RNFetchBlob.polyfill;
-    const Blob = RNFetchBlob.polyfill.Blob;
-    window.XMLHttpRequest = polyfill.XMLHttpRequest;
-    window.Blob = polyfill.Blob;
-    */
 
     let followers = {};
     database
         .ref(`challenges/${challengesId}/followers`)
         .on('value', (snap) => followers = snap.val());
-    let post = {comment: comment};
+    let post = {comment: comment,
+                image: '/challenges/'
+                +challengesId + '/'
+                + challengeId+
+                '/timeline'
+                + currentUser.uid};
     let fanoutObj = fanoutPost({
         challengeId: challengeId,
         challengesId: challengesId,
@@ -44,6 +43,7 @@ export const challengDone = (object) => {
     });
 
     return (dispatch) => {
+        uploadImage(image,challengesId, challengeId );
         database.ref().update(fanoutObj); //prøv å få mer av pathen her
 
     }
@@ -58,18 +58,21 @@ const fanoutPost =({challengeId, challengesId, followersSnapshot, post, owner}) 
     //problemt er at me ikke får rett verdi fra followersSnapshot
     let followers = Object.keys(followersSnapshot);
     let fanoutObj = {};
-    // write to each follower's timeline
 
+    // write to each follower's timeline
     followers.forEach((key) => fanoutObj[
         '/Users/' + key +
         '/myChallenges/' + challengesId +
         '/challenges/' +challengeId +
         '/timeline/' + currentUser.uid] = post);
 
+
+    //legger til challenges som nye personer kopierer til sin egen
     fanoutObj['challenges/'+ challengesId +
     '/challenges/' +challengeId +
     '/timeline/' + currentUser.uid] = post;
 
+    //oppdaterer eieren sin timeline
     fanoutObj[
     '/Users/' + owner +
     '/myChallenges/' + challengesId +
@@ -77,4 +80,24 @@ const fanoutPost =({challengeId, challengesId, followersSnapshot, post, owner}) 
     '/timeline/' + currentUser.uid] = post;
 
     return fanoutObj;
+};
+
+const uploadImage = (image, challengesId, challengeId) => {
+    const{currentUser} = firebase.auth();
+
+    // Prepare Blob support
+    const polyfill = RNFetchBlob.polyfill;
+    const Blob = RNFetchBlob.polyfill.Blob;
+    window.XMLHttpRequest = polyfill.XMLHttpRequest;
+    window.Blob = polyfill.Blob;
+
+    console.log('Se her: ' + challengesId);
+    console.log('Se her: ' + challengeId);
+
+
+    Blob.build(image, {type: 'image/png;BASE64'})
+        .then((blob) => firebase.storage()
+        .ref(`/challenges/${challengesId}/${challengeId}/timeline/${currentUser.uid}`)
+        .put(blob, {contentType: 'image/png'})
+        );
 };
