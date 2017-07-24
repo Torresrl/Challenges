@@ -37,7 +37,10 @@ class ShowChallenges extends Component {
 
     renderRow(challenge){
         return (
-            <ShowChallengesListItem challenge={challenge}/>
+            <ShowChallengesListItem
+                challenge={challenge}
+                challenges={this.props.challenges}
+            />
         );
     }
 

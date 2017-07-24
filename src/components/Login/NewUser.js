@@ -66,7 +66,6 @@ class NewUser extends Component {
                 <Card>
                     <CardSection >
                         <Input
-                            secureTextEntry
                             placeholder="Ole Nordman"
                             label="Name:"
                             onChangeText={this.onNameChange.bind(this)}

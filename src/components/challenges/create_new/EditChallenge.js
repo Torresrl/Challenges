@@ -6,7 +6,8 @@ import {
     challengeNameChange,
     challengeDesChange,
     addChallenge,
-    addChallenges
+    addChallenges,
+    challengeCounter
 }from '../../../Actions';
 
 class EditChallenge extends Component{
@@ -28,8 +29,13 @@ class EditChallenge extends Component{
 
 
     onAddChallenge(){
-        const {challengeName, challengeDes} = this.props;
-        this.props.addChallenge({name: challengeName, description: challengeDes});
+        const {challengeName, challengeDes, challengeNr} = this.props;
+        this.props.addChallenge({
+            name: challengeName,
+            description: challengeDes,
+            challengeId: challengeNr
+        });
+        this.props.challengeCounter(challengeCounter);
     }
 
     onSubmitChallenge() {
@@ -110,8 +116,25 @@ const styles = {
 };
 
 const mapStateToProps = ({newChallenges}) =>{
-    const {nameChallenges, description, image, challengeName, challengeDes, error, challenges} = newChallenges;
-    return {nameChallenges, description, image, challengeName, challengeDes, error, challenges};
+    const {nameChallenges,
+        description,
+        image,
+        challengeName,
+        challengeDes,
+        error,
+        challenges,
+        challengeNr,
+    } = newChallenges;
+
+    return {nameChallenges,
+        description,
+        image,
+        challengeName,
+        challengeDes,
+        error,
+        challenges,
+        challengeNr
+    };
 
 };
 
@@ -119,5 +142,6 @@ export default connect(mapStateToProps, {
     challengeNameChange,
     challengeDesChange,
     addChallenge,
-    addChallenges
+    addChallenges,
+    challengeCounter
 })(EditChallenge);

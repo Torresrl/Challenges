@@ -12,6 +12,7 @@ import {CHALLENGES_NAME,
         ADD_CHALLENGE,
         CHALLENG_NAME,
         CHALLENG_DES,
+        CHALLENGE_COUNTER,
         NOT_VALID_NAME,
         NOT_VALID_DESCRIPTION,
         CHALLENGES_CREATED,
@@ -55,6 +56,14 @@ export const challengeDesChange = (text) => {
     };
 };
 
+export const challengeCounter = (nr) => {
+    const counter = nr +1;
+    return {
+        type: CHALLENGE_COUNTER,
+        payload: counter
+    };
+};
+
 export const makeModalNotVisible = () => {
     return{
         type: MAKE_MODAL_NOT_VISIBLE
@@ -62,6 +71,7 @@ export const makeModalNotVisible = () => {
 };
 
 export const addChallenge = (text) => {
+
     if(text.name.length == null || text.name.length === 0) {
         return {
             type: NOT_VALID_NAME
@@ -111,14 +121,16 @@ export const addChallenges = ({name, description, image, challenges}) => {
             .ref(`/challenges/${challengesId}`)
             .set({name, description,owner: currentUser.uid, challengesId, challenges})
             .then(() => {
+
+
                 firebase.database()
                     .ref(`/Users/${currentUser.uid}/myChallenges/${challengesId}`)
-                    .set({name, description,owner: currentUser.uid, challengesId, challenges})
+                    .set({name, description,owner: currentUser.uid, challengesId, challenges, timeline: null})
             })
             .then(() => {
                 Blob.build(image, { type : 'image/png;BASE64' })
                     .then((blob) => firebase.storage()
-                        .ref(`/challenges/${challengesId}`)
+                        .ref(`/challenges/${challengesId}/mainImage`)
                         .put(blob, { contentType : 'image/png' })
                     )
                     .then(() => {

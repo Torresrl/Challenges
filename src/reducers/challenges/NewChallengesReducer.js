@@ -11,7 +11,8 @@ import {CHALLENGES_NAME,
         NOT_VALID_NAME,
         NOT_VALID_DESCRIPTION,
         CHALLENGES_CREATED,
-        MAKE_MODAL_NOT_VISIBLE
+        MAKE_MODAL_NOT_VISIBLE,
+        CHALLENGE_COUNTER
 } from '../../Actions/types';
 
 const INITIAL_STATE = {
@@ -22,6 +23,7 @@ const INITIAL_STATE = {
     challengeName: "",
     challengeDes: "",
     challenges: [],
+    challengeNr: 0,
     error: "",
     load: false,
     challengesCode: "",
@@ -44,6 +46,8 @@ export default (state = INITIAL_STATE, action) => {
             return{...state, challengeName: action.payload};
         case CHALLENG_DES:
             return {...state, challengeDes: action.payload};
+        case CHALLENGE_COUNTER:
+            return {...state, challengeNr: action.payload};
         case NOT_VALID_NAME:
             return {...state, error: "Every challenge need a name"};
         case NOT_VALID_DESCRIPTION:

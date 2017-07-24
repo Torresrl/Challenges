@@ -23,8 +23,11 @@ export const joinChallenges = (code) => {
         return {type: JOIN_CHALLENGE_FAIL};
     }
 
-    //flyter en challenges fra Challenges til Useres/userId/myChallenges
+    //kopierer en challenges fra Challenges til Useres/userId/myChallenges
     return (dispatch) => {
+        database.ref(`challenges/${code}/followers/${currentUser.uid}`)
+            .set(true);
+
         database.ref(`challenges/${code}`).once('value', function(snap) {
             if(snap.hasChild("challengesId")) {
                 database.ref(`Users/${currentUser.uid}/myChallenges/${code}`)

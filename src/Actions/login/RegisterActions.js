@@ -54,6 +54,7 @@ export const createUser = ({email, password, name}) => {
         dispatch({type: CREATE_USER});
 
         firebase.auth().createUserWithEmailAndPassword(email, password)
+            .then(user => user.updateProfile({displayName: name}))
             .then(user => createUserSuccess(dispatch, user))
             .catch(() => createUserFail(dispatch));
     };

@@ -10,7 +10,7 @@ export const getImage = (challengesId) => {
     const {currentUser} = firebase.auth();
 
     const storage = firebase.storage()
-        .ref(`/challenges/${challengesId}`);
+        .ref(`/challenges/${challengesId}/mainImage`);
 
     return (dispatch) => {
         dispatch({

@@ -7,7 +7,7 @@ import {EMAIL_CHANGE,
 } from '../../Actions/types';
 
 const INITIAL_STATE = {
-    email: "test@test.com",
+    email: "torres.lande@gmail.com",
     password: "1234567",
     user: null,
     load: false,

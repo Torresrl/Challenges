@@ -3,7 +3,7 @@ import {ScrollView, Text, Image} from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import {connect} from 'react-redux';
 import {Button, LargInput, Card, CardSection} from '../../common';
-import {commentChange, addImageChallenge} from '../../../Actions';
+import {commentChange, addImageChallenge, challengDone} from '../../../Actions';
 
 class DoAChallenge extends Component {
 
@@ -13,6 +13,11 @@ class DoAChallenge extends Component {
 
     onAddImage(text){
         this.props.addImageChallenge(text);
+    }
+
+    onChallengeFinished(){
+        const {image, comment, challengesId, challenge, owner} = this.props;
+        this.props.challengDone({image, comment,challengeId: challenge.challengeId, challengesId, owner});
     }
 
     chooseImage() {
@@ -103,6 +108,7 @@ class DoAChallenge extends Component {
                 <Card style={styleButtonCard}>
                     <Button
                         style={styleButton}
+                        onPress={() => this.onChallengeFinished()}
                     >
                         Confirm
                     </Button>
@@ -160,4 +166,4 @@ const mapStateToProps = ({doAChallenge}) => {
     return {image, comment};
 };
 
-export default connect(mapStateToProps, {commentChange, addImageChallenge}) (DoAChallenge);
+export default connect(mapStateToProps, {commentChange, addImageChallenge, challengDone}) (DoAChallenge);
