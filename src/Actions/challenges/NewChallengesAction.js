@@ -57,7 +57,7 @@ export const challengeDesChange = (text) => {
 };
 
 export const challengeCounter = (nr) => {
-    const counter = nr +1;
+    let counter = nr + 1;
     return {
         type: CHALLENGE_COUNTER,
         payload: counter

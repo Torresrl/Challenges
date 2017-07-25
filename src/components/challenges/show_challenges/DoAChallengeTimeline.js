@@ -27,7 +27,9 @@ class DoAChallengeTimeline extends Component {
     }
 
     renderRow(timelineItem){
-        return <TimelineItem post={timelineItem}/>
+        return <TimelineItem
+            post={timelineItem}
+        />
     }
 
 

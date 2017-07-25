@@ -20,7 +20,7 @@ export const addImageChallenge = (image) => {
 };
 
 
-//Atm er dette et bra eksempel på hvordan men oppdaterer en post
+//brukes til å oppdatere flere poster samtidig
 export const challengDone = (object) => {
     const {currentUser} = firebase.auth();
     const {image, comment, challengeId, challengesId, owner} = object;
@@ -35,7 +35,7 @@ export const challengDone = (object) => {
                 image: '/challenges/'
                 +challengesId + '/'
                 + challengeId+
-                '/timeline'
+                '/timeline/'
                 + currentUser.uid};
     let fanoutObj = fanoutPost({
         challengeId: challengeId,
@@ -54,7 +54,7 @@ export const challengDone = (object) => {
 
 };
 
-
+//henter ut en liste men informasjon om hver challenge
 export const fetchTimeline = (challengesId, challengeId) => {
     const {currentUser} = firebase.auth();
 
@@ -87,7 +87,7 @@ const fanoutPost =({challengeId, challengesId, followersSnapshot, post, owner}) 
     followers.forEach((key) => fanoutObj[
         '/Users/' + key +
         '/myChallenges/' + challengesId +
-        '/challenges/' +challengeId +
+        '/challenges/' + challengeId +
         '/timeline/' + currentUser.uid] = post);
 
 
