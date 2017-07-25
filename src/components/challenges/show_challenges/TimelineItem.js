@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {View, Text, Image} from 'react-native';
 import firebase from 'firebase';
-import {Card} from '../../common';
+import {Card, Spinner, CardSection} from '../../common';
 
 
 class TimelineItem extends Component {
@@ -11,11 +11,7 @@ class TimelineItem extends Component {
         this.state = {
             imageUrl: ''
         };
-
-
-
     }
-
 
     componentWillMount(){
         const {image} = this.props.post;
@@ -29,18 +25,39 @@ class TimelineItem extends Component {
 
     }
 
+    renderImage(){
+        const {imageUrl} = this.state;
+        const {imageStyle} = styles;
+        if(imageUrl.length == null || imageUrl.length === 0){
+            return (
+                    <Spinner
+                        size="small"
+                        style={imageStyle}
+                    />
+            )
+        } else {
+            return (
+                    <Image
+                        source={{uri: this.state.imageUrl}}
+                        style={imageStyle}
+                    />
+
+            )
+        }
+
+    }
+
 
     render(){
-        const {comment, image} = this.props.post;
-        const {imageStyle} = styles;
-
+        const {comment, textStyle} = this.props.post;
         return (
             <Card>
-                <Image
-                source={{uri: this.state.imageUrl}}
-                style={imageStyle}
-                />
-                <Text >{comment}</Text>
+                {this.renderImage()}
+                <CardSection>
+                    <Text style={textStyle}>
+                        {comment}
+                    </Text>
+                </CardSection>
             </Card>
         )
     }
@@ -51,6 +68,12 @@ const styles = {
         flex: 1,
         height: 300
     },
+
+    textStyle: {
+        fontSize: 13,
+        padding: 10
+    }
+
 };
 
 

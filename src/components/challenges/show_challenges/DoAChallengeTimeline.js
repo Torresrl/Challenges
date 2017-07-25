@@ -34,17 +34,26 @@ class DoAChallengeTimeline extends Component {
 
 
     render() {
+        const {containerStyle} = styles;
+
         return (
             <ListView
                 enableEmptySections={true}
                 dataSource={this.dataSource}
                 renderRow={(rowData) => this.renderRow(rowData)}
+                style={containerStyle}
             />
 
         );
     }
 
 }
+
+const styles = {
+    containerStyle: {
+        marginBottom: 65
+    }
+};
 
 
 
