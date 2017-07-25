@@ -40,7 +40,6 @@ class DoAChallenge extends Component {
                 // You can also display the image using data:
                 //let source = { uri: 'data:image/jpeg;base64,' + response.data };
                 this.onAddImage(response.data);
-
             }
         });
     }
@@ -83,8 +82,6 @@ class DoAChallenge extends Component {
             CommentCardStyle,
             styleButtonCard,
             styleButton,
-            styleTimeline
-
         } = styles;
 
         return(
@@ -162,7 +159,7 @@ const styles = {
         borderWidth: 0,
         shadowColor: '#FFF',
         flexDirection: 'row',
-        marginBottom: 70
+        marginBottom: 10
     },
     styleButton: {
         borderWidth: 1

@@ -29,8 +29,9 @@ export const challengDone = (object) => {
 
     let followers = {};
     database
-        .ref(`challenges/${challengesId}/followers`)
+        .ref('/challenges/' + challengesId + '/followers')
         .on('value', (snap) => followers = snap.val());
+
     let post = {comment: comment,
                 image: '/challenges/'
                 +challengesId + '/'
@@ -45,7 +46,7 @@ export const challengDone = (object) => {
         owner: owner
     });
 
-    return (dispatch) => {
+    return () => {
         uploadImage(image,challengesId, challengeId );
         database.ref().update(fanoutObj);
 
@@ -84,6 +85,7 @@ const fanoutPost =({challengeId, challengesId, followersSnapshot, post, owner}) 
     let fanoutObj = {};
 
     // write to each follower's timeline
+    //denne virker ikke sikkelig!
     followers.forEach((key) => fanoutObj[
         '/Users/' + key +
         '/myChallenges/' + challengesId +
@@ -92,16 +94,22 @@ const fanoutPost =({challengeId, challengesId, followersSnapshot, post, owner}) 
 
 
     //legger til challenges som nye personer kopierer til sin egen
-    fanoutObj['challenges/'+ challengesId +
-    '/challenges/' +challengeId +
-    '/timeline/' + currentUser.uid] = post;
+    fanoutObj[
+        'challenges/'+ challengesId +
+        '/challenges/' +challengeId +
+        '/timeline/' + currentUser.uid] = post;
 
     //oppdaterer eieren sin timeline
     fanoutObj[
-    '/Users/' + owner +
-    '/myChallenges/' + challengesId +
-    '/challenges/' +challengeId +
-    '/timeline/' + currentUser.uid] = post;
+        '/Users/' + owner +
+        '/myChallenges/' + challengesId +
+        '/challenges/' +challengeId +
+        '/timeline/' + currentUser.uid] = post;
+
+    fanoutObj[
+        '/Users/' + currentUser.uid +
+        '/myChallenges/' + challengesId +
+        '/challenges/' +challengeId + '/done'] = true;
 
     return fanoutObj;
 };
@@ -114,9 +122,6 @@ const uploadImage = (image, challengesId, challengeId) => {
     const Blob = RNFetchBlob.polyfill.Blob;
     window.XMLHttpRequest = polyfill.XMLHttpRequest;
     window.Blob = polyfill.Blob;
-
-    console.log('Se her: ' + challengesId);
-    console.log('Se her: ' + challengeId);
 
 
     Blob.build(image, {type: 'image/png;BASE64'})

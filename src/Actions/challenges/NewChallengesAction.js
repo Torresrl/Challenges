@@ -125,7 +125,13 @@ export const addChallenges = ({name, description, image, challenges}) => {
 
                 firebase.database()
                     .ref(`/Users/${currentUser.uid}/myChallenges/${challengesId}`)
-                    .set({name, description,owner: currentUser.uid, challengesId, challenges, timeline: null})
+                    .set({name,
+                        description,
+                        owner: currentUser.uid,
+                        challengesId,
+                        challenges,
+                        timeline: null
+                    })
             })
             .then(() => {
                 Blob.build(image, { type : 'image/png;BASE64' })

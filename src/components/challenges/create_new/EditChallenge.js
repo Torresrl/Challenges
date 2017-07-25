@@ -33,7 +33,8 @@ class EditChallenge extends Component{
         this.props.addChallenge({
             name: challengeName,
             description: challengeDes,
-            challengeId: challengeNr
+            challengeId: challengeNr,
+            done: false
         });
         this.props.challengeCounter(challengeNr);
     }
