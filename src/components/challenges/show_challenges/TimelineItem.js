@@ -9,6 +9,12 @@ Read me:
 Denne bruker ikke redux, så allt som skjer er inni denne filen.
 Grunnen er at jeg ikke vil at staten skal være like i alle list items.
 
+
+for gjenbruk trenger den propsene:
+chellengeId,
+challengesId
+owner
+post = {alle propsene i en challenge}
  */
 
 
@@ -34,8 +40,69 @@ class TimelineItem extends Component {
     }
 
 
+    //Database funskjoner:
+    updateVotes(upVote){
+        const {challengesId} = this.props;
+        let votes = parseInt(this.props.post.votes);
+        const database = firebase.database();
+        let followers = {};
+
+        if(upVote){
+            votes = votes + 1;
+        } else {
+            votes = votes - 1;
+        }
+
+        database
+            .ref('/challenges/' + challengesId + '/followers')
+            .on('value', (snap) => followers = snap.val());
 
 
+
+        let fanoutObj = this.fanoutPost({
+            followersSnapshot: followers,
+            votes: votes
+        });
+
+        database.ref().update(fanoutObj);
+
+    }
+
+    //lager fanout object, gjør sånn du får atmoic update
+  fanoutPost = ({followersSnapshot, votes}) => {
+      const {currentUser} = firebase.auth();
+      const {challengesId, challengeId, owner} = this.props;
+
+      if(followersSnapshot && followersSnapshot !== 'null' && followersSnapshot !== 'undefined') {
+          let followers = Object.keys(followersSnapshot);
+      }
+      let fanoutObj = {};
+
+      if(followersSnapshot && followersSnapshot !== 'null' && followersSnapshot !== 'undefined') {
+          followers.forEach((key) => fanoutObj[
+          '/Users/' + key +
+          '/myChallenges/' + challengesId +
+          '/challenges/' + challengeId +
+          '/timeline/' + currentUser.uid +
+          '/votes'] = votes);
+      }
+
+      fanoutObj['/Users/' + currentUser.uid +
+      '/myChallenges/' + challengesId +
+      '/challenges/' + challengeId +
+      '/timeline/' + currentUser.uid +
+      '/voted'] = true;
+
+      fanoutObj[
+      '/Users/' + owner +
+      '/myChallenges/' + challengesId +
+      '/challenges/' +challengeId +
+      '/timeline/' + currentUser.uid +
+      '/votes'] = votes;
+
+      return fanoutObj;
+
+  };
 
 
     getWeekDay(dayInWeek){
@@ -175,10 +242,10 @@ class TimelineItem extends Component {
                         </Button>
                     </View>
                     <View style={buttonContainer}>
-                        <Button>
+                        <Button onPress={() => {this.updateVotes(true)}}>
                             Up
                         </Button>
-                        <Button>
+                        <Button onPress={() => {this.updateVotes(false)}}>
                             Down
                         </Button>
                     </View>

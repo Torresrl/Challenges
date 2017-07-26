@@ -27,8 +27,13 @@ class DoAChallengeTimeline extends Component {
     }
 
     renderRow(timelineItem){
+        const {challengesId, challengeId, owner} = this.props;
+
         return <TimelineItem
             post={timelineItem}
+            challengesId={challengesId}
+            challengeId={challengeId}
+            owner={owner}
         />
     }
 

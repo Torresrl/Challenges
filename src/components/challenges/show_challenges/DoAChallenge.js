@@ -181,7 +181,7 @@ class DoAChallenge extends Component {
 
     render(){
         const{name, description, challengeId} = this.props.challenge;
-        const {challengesId} = this.props;
+        const {challengesId, owner} = this.props;
         const {
             headerStyle,
             headerCardStyle,
@@ -213,6 +213,7 @@ class DoAChallenge extends Component {
                     <DoAChallengeTimeline
                         challengesId={challengesId}
                         challengeId={challengeId}
+                        owner={owner}
 
                     />
                 </CardSection>
