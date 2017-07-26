@@ -3,7 +3,13 @@ import firebase from 'firebase';
 import {ScrollView, Text, Image, View} from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import {connect} from 'react-redux';
-import {Button, LargInput, Card, CardSection} from '../../common';
+import {
+    Button,
+    LargInput,
+    Card,
+    CardSection,
+    Spinner
+} from '../../common';
 import {
     commentChange,
     addImageChallenge,
@@ -74,7 +80,7 @@ class DoAChallenge extends Component {
         });
     }
 
-    renderPicture() {
+    renderPictureNotDone() {
         const {image} = this.props;
         const{imageStyle} = styles;
         if(image){
@@ -103,6 +109,26 @@ class DoAChallenge extends Component {
         }
     }
 
+    renderPictureDone() {
+        const {imageUrl} = this.state;
+        const {imageStyle} = styles;
+
+        if(imageUrl.length == null || imageUrl.length === 0){
+            return (
+                <Spinner
+                    size="small"
+                    style={imageStyle}
+                />
+            )
+        } else {
+            return(
+                <Image
+                    source={{uri: this.state.imageUrl}}
+                    style={imageStyle}/>
+            )
+        }
+    }
+
     renderContentDoneOrNot() {
         const{done} = this.props.challenge;
         const{comment} = this.props;
@@ -110,7 +136,6 @@ class DoAChallenge extends Component {
             CommentCardStyle,
             styleButtonCard,
             styleButton,
-            imageStyle
         } = styles;
 
         if(done){
@@ -118,9 +143,7 @@ class DoAChallenge extends Component {
                 <View>
                     <Card>
                         <CardSection>
-                            <Image
-                                source={{uri: this.state.imageUrl}}
-                                style={imageStyle}/>
+                            {this.renderPictureDone()}
                         </CardSection>
                         <CardSection>
                             <Text>
@@ -133,10 +156,7 @@ class DoAChallenge extends Component {
         } else {
             return (
                 <View>
-
-
-                    {this.renderPicture()}
-
+                    {this.renderPictureNotDone()}
                     <Card style={CommentCardStyle}>
                         <LargInput
                             label="Comment"

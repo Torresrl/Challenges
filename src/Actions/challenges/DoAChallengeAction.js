@@ -57,7 +57,8 @@ export const challengDone = (object) => {
                 +challengesId + '/'
                 + challengeId+
                 '/timeline/'
-                + currentUser.uid};
+                + currentUser.uid
+    };
     let fanoutObj = fanoutPost({
         challengeId: challengeId,
         challengesId: challengesId,
