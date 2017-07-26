@@ -52,8 +52,10 @@ export const challengDone = (object) => {
         .ref('/challenges/' + challengesId + '/followers')
         .on('value', (snap) => followers = snap.val());
 
-    let post = {comment: comment,
-                image: '/challenges/'
+    let post = {
+            userName: currentUser.displayName,
+            comment: comment,
+            image: '/challenges/'
                 +challengesId + '/'
                 + challengeId+
                 '/timeline/'

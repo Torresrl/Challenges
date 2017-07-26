@@ -49,12 +49,18 @@ class TimelineItem extends Component {
 
 
     render(){
-        const {comment, textStyle} = this.props.post;
+        const {comment, userName} = this.props.post;
+
         return (
             <Card>
+                <CardSection>
+                    <Text>
+                        {userName}
+                    </Text>
+                </CardSection>
                 {this.renderImage()}
                 <CardSection>
-                    <Text style={textStyle}>
+                    <Text >
                         {comment}
                     </Text>
                 </CardSection>
@@ -68,11 +74,6 @@ const styles = {
         flex: 1,
         height: 300
     },
-
-    textStyle: {
-        fontSize: 13,
-        padding: 10
-    }
 
 };
 
