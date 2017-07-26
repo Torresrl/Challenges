@@ -199,6 +199,17 @@ class DoAChallenge extends Component {
                 </Card>
                 {this.renderContentDoneOrNot()}
                 <CardSection>
+                    <Button>
+                        All
+                    </Button>
+                    <Button>
+                        friends
+                    </Button>
+                    <Button>
+                        Top
+                    </Button>
+                </CardSection>
+                <CardSection>
                     <DoAChallengeTimeline
                         challengesId={challengesId}
                         challengeId={challengeId}
