@@ -1,13 +1,43 @@
 import React, {Component} from 'react';
-import {ScrollView, Text, Image} from 'react-native';
+import firebase from 'firebase';
+import {ScrollView, Text, Image, View} from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import {connect} from 'react-redux';
 import {Button, LargInput, Card, CardSection} from '../../common';
-import {commentChange, addImageChallenge, challengDone} from '../../../Actions';
+import {
+    commentChange,
+    addImageChallenge,
+    challengDone,
+    getCurrentUserComment
+} from '../../../Actions';
 import DoAChallengeTimeline from './DoAChallengeTimeline';
 
 
 class DoAChallenge extends Component {
+
+    constructor() {
+        super();
+        this.state = {
+            imageUrl: ''
+        };
+    }
+
+    componentWillMount(){
+        const{challengesId} = this.props;
+        const{challengeId, done} = this.props.challenge;
+        const {currentUser} = firebase.auth();
+
+        if(done){
+            this.props.getCurrentUserComment(challengesId, challengeId);
+
+            firebase.storage()
+                .ref('challenges/' + challengesId + '/'+ challengeId +
+                    '/timeline/' + currentUser.uid).getDownloadURL()
+                .then((url) => {
+                    this.setState({imageUrl: url});
+                });
+        }
+    }
 
     commentOnChange(text){
         this.props.commentChange(text);
@@ -73,15 +103,68 @@ class DoAChallenge extends Component {
         }
     }
 
+    renderContentDoneOrNot() {
+        const{done} = this.props.challenge;
+        const{comment} = this.props;
+        const {
+            CommentCardStyle,
+            styleButtonCard,
+            styleButton,
+            imageStyle
+        } = styles;
+
+        if(done){
+            return (
+                <View>
+                    <Card>
+                        <CardSection>
+                            <Image
+                                source={{uri: this.state.imageUrl}}
+                                style={imageStyle}/>
+                        </CardSection>
+                        <CardSection>
+                            <Text>
+                                {comment}
+                            </Text>
+                        </CardSection>
+                    </Card>
+                </View>
+            )
+        } else {
+            return (
+                <View>
+
+
+                    {this.renderPicture()}
+
+                    <Card style={CommentCardStyle}>
+                        <LargInput
+                            label="Comment"
+                            placeholder="Give a comment"
+                            onChangeText={this.commentOnChange.bind(this)}
+                            value={comment}
+                        />
+                    </Card>
+
+                    <Card style={styleButtonCard}>
+                        <Button
+                            style={styleButton}
+                            onPress={() => this.onChallengeFinished()}
+                        >
+                            Confirm
+                        </Button>
+                    </Card>
+                </View>
+            )
+        }
+    }
+
     render(){
-        const{name, description, comment, challengeId} = this.props.challenge;
+        const{name, description, challengeId} = this.props.challenge;
         const {challengesId} = this.props;
         const {
             headerStyle,
             headerCardStyle,
-            CommentCardStyle,
-            styleButtonCard,
-            styleButton,
         } = styles;
 
         return(
@@ -94,26 +177,7 @@ class DoAChallenge extends Component {
                         <Text>{description}</Text>
                     </CardSection>
                 </Card>
-
-                {this.renderPicture()}
-
-                <Card style={CommentCardStyle}>
-                    <LargInput
-                        label="Comment"
-                        placeholder="Give a comment"
-                        onChangeText={this.commentOnChange.bind(this)}
-                        value={comment}
-                    />
-                </Card>
-
-                <Card style={styleButtonCard}>
-                    <Button
-                        style={styleButton}
-                        onPress={() => this.onChallengeFinished()}
-                    >
-                        Confirm
-                    </Button>
-                </Card>
+                {this.renderContentDoneOrNot()}
                 <CardSection>
                     <DoAChallengeTimeline
                         challengesId={challengesId}
@@ -174,4 +238,10 @@ const mapStateToProps = ({doAChallenge}) => {
     return {image, comment};
 };
 
-export default connect(mapStateToProps, {commentChange, addImageChallenge, challengDone}) (DoAChallenge);
+export default connect(mapStateToProps,
+    {
+        commentChange,
+        addImageChallenge,
+        challengDone,
+        getCurrentUserComment
+    }) (DoAChallenge);

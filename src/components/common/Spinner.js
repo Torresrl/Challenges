@@ -16,5 +16,5 @@ const styles = {
         alignItems: 'center'
     }
 };
-// hei
+
 export {Spinner};

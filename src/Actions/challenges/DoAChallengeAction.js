@@ -20,6 +20,26 @@ export const addImageChallenge = (image) => {
 };
 
 
+//hente ut kommenteren du hadde til en challenge
+export const getCurrentUserComment = (challengesId, challengeId) => {
+    const {currentUser} = firebase.auth();
+
+    return (dispatch) => {
+        firebase.database()
+            .ref('/Users/' +
+                currentUser.uid + '/myChallenges/' +
+                challengesId +'/challenges/' +
+                challengeId + '/timeline/' +
+                currentUser.uid)
+            .on('value', snap => {
+                dispatch({
+                    type: COMMENT_CHANGE,
+                    payload: snap.val().comment
+                })
+            });
+    }
+};
+
 //brukes til å oppdatere flere poster samtidig
 export const challengDone = (object) => {
     const {currentUser} = firebase.auth();
