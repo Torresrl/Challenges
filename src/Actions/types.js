@@ -17,6 +17,7 @@ export const CREATE_USER_FAIL = "create_user_fail";
 export const EMAIL_MISSING = "email_missing";
 export const WEAK_PASSWORD = "weak_password";
 export const NAME_MISSING = "name_missing";
+export const NEW_PROFILE_IMAGE = 'profile_image'
 
 //new Challenges
 export const CHALLENGES_NAME = 'challenges_name';
