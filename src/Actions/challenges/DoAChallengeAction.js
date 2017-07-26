@@ -55,6 +55,10 @@ export const challengDone = (object) => {
     let post = {
             userName: currentUser.displayName,
             comment: comment,
+            voted: false,
+            votes: 0,
+            //firebse server gir tiden posten blir lagt til databasen
+            postedAt: firebase.database.ServerValue.TIMESTAMP,
             image: '/challenges/'
                 +challengesId + '/'
                 + challengeId+
