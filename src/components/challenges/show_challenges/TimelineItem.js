@@ -43,6 +43,7 @@ class TimelineItem extends Component {
     //Database funskjoner:
     updateVotes(upVote){
         const {challengesId} = this.props;
+
         let votes = parseInt(this.props.post.votes);
         const database = firebase.database();
         let followers = {};
@@ -72,33 +73,40 @@ class TimelineItem extends Component {
   fanoutPost = ({followersSnapshot, votes}) => {
       const {currentUser} = firebase.auth();
       const {challengesId, challengeId, owner} = this.props;
+      const {userId} = this.props.post;
 
-      if(followersSnapshot && followersSnapshot !== 'null' && followersSnapshot !== 'undefined') {
-          let followers = Object.keys(followersSnapshot);
-      }
       let fanoutObj = {};
 
       if(followersSnapshot && followersSnapshot !== 'null' && followersSnapshot !== 'undefined') {
+          let followers = Object.keys(followersSnapshot);
           followers.forEach((key) => fanoutObj[
           '/Users/' + key +
           '/myChallenges/' + challengesId +
           '/challenges/' + challengeId +
-          '/timeline/' + currentUser.uid +
+          '/timeline/' + userId +
           '/votes'] = votes);
       }
 
       fanoutObj['/Users/' + currentUser.uid +
       '/myChallenges/' + challengesId +
       '/challenges/' + challengeId +
-      '/timeline/' + currentUser.uid +
+      '/timeline/' + userId +
       '/voted'] = true;
 
       fanoutObj[
       '/Users/' + owner +
       '/myChallenges/' + challengesId +
       '/challenges/' +challengeId +
-      '/timeline/' + currentUser.uid +
+      '/timeline/' + userId +
       '/votes'] = votes;
+
+      fanoutObj[
+      '/challenges/' + challengesId +
+      '/challenges/' +challengeId +
+      '/timeline/' + userId +
+      '/votes'] = votes;
+
+
 
       return fanoutObj;
 

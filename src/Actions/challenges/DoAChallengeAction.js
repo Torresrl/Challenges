@@ -54,6 +54,7 @@ export const challengDone = (object) => {
 
     let post = {
             userName: currentUser.displayName,
+            userId: currentUser.uid,
             comment: comment,
             voted: false,
             votes: 0,
@@ -108,16 +109,20 @@ const fanoutPost =({challengeId, challengesId, followersSnapshot, post, owner}) 
     const {currentUser} = firebase.auth();
     // Turn the hash of followers to an array of each id as the string
     //problemt er at me ikke får rett verdi fra followersSnapshot
-    let followers = Object.keys(followersSnapshot);
+
     let fanoutObj = {};
 
-    // write to each follower's timeline
-    //denne virker ikke sikkelig!
-    followers.forEach((key) => fanoutObj[
+    if(followersSnapshot && followersSnapshot !== 'null' && followersSnapshot !== 'undefined') {
+        let followers = Object.keys(followersSnapshot);
+
+        // write to each follower's timeline
+        //denne virker ikke sikkelig!
+        followers.forEach((key) => fanoutObj[
         '/Users/' + key +
         '/myChallenges/' + challengesId +
         '/challenges/' + challengeId +
         '/timeline/' + currentUser.uid] = post);
+    }
 
 
     //legger til challenges som nye personer kopierer til sin egen
