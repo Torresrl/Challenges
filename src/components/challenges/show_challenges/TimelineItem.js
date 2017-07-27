@@ -188,8 +188,8 @@ class TimelineItem extends Component {
 
 
     render(){
-        const {comment, userName, postedAt} = this.props.post;
-        const {buttonContainer, commentContainer, styleDate} = styles;
+        const {comment, userName, postedAt, votes} = this.props.post;
+        const {buttonContainer, commentContainer, styleDate, styleVotes} = styles;
 
         //datoene er i millisekunder
         const postDate = parseInt(postedAt);
@@ -256,6 +256,9 @@ class TimelineItem extends Component {
                         <Button onPress={() => {this.updateVotes(false)}}>
                             Down
                         </Button>
+                        <Text style={styleVotes}>
+                            {votes}
+                        </Text>
                     </View>
                 </CardSection>
 
@@ -283,6 +286,11 @@ const styles = {
     styleDate: {
         fontSize: 12,
         fontStyle: 'italic'
+    },
+
+    styleVotes: {
+        paddingTop: 10,
+        paddingBottom: 10
     }
 
 };
