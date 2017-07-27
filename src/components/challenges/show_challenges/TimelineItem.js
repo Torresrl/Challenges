@@ -185,11 +185,41 @@ class TimelineItem extends Component {
 
     }
 
+    renderVotes(){
+        const {voted, votes} = this.props.post;
+        const {buttonContainer, styleVotes} = styles;
+
+        if(voted){
+            return (
+                <View style={buttonContainer}>
+                    <Text style={styleVotes}>
+                        votes: {votes}
+                    </Text>
+                </View>
+            );
+
+        } else {
+            return (
+                <View style={buttonContainer}>
+                    <Button onPress={() => {this.updateVotes(true)}}>
+                        Up
+                    </Button>
+                    <Button onPress={() => {this.updateVotes(false)}}>
+                        Down
+                    </Button>
+                    <Text style={styleVotes}>
+                        {votes}
+                    </Text>
+                </View>
+            );
+        }
+    }
+
 
 
     render(){
-        const {comment, userName, postedAt, votes} = this.props.post;
-        const {buttonContainer, commentContainer, styleDate, styleVotes} = styles;
+        const {comment, userName, postedAt} = this.props.post;
+        const {buttonContainer, commentContainer, styleDate} = styles;
 
         //datoene er i millisekunder
         const postDate = parseInt(postedAt);
@@ -249,17 +279,7 @@ class TimelineItem extends Component {
                             comment
                         </Button>
                     </View>
-                    <View style={buttonContainer}>
-                        <Button onPress={() => {this.updateVotes(true)}}>
-                            Up
-                        </Button>
-                        <Button onPress={() => {this.updateVotes(false)}}>
-                            Down
-                        </Button>
-                        <Text style={styleVotes}>
-                            {votes}
-                        </Text>
-                    </View>
+                    {this.renderVotes()}
                 </CardSection>
 
             </Card>
@@ -290,7 +310,7 @@ const styles = {
 
     styleVotes: {
         paddingTop: 10,
-        paddingBottom: 10
+        paddingBottom: 10,
     }
 
 };
