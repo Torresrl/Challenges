@@ -46,11 +46,11 @@ export const challengDone = (object) => {
     const {image, comment, challengeId, challengesId, owner} = object;
     const database = firebase.database();
 
-
     let followers = {};
     database
         .ref('/challenges/' + challengesId + '/followers')
         .on('value', (snap) => followers = snap.val());
+
 
     let post = {
             userName: currentUser.displayName,
@@ -61,11 +61,12 @@ export const challengDone = (object) => {
             //firebse server gir tiden posten blir lagt til databasen
             postedAt: firebase.database.ServerValue.TIMESTAMP,
             image: '/challenges/'
-                +challengesId + '/'
-                + challengeId+
+                + challengesId + '/'
+                + challengeId +
                 '/timeline/'
                 + currentUser.uid
     };
+
     let fanoutObj = fanoutPost({
         challengeId: challengeId,
         challengesId: challengesId,
@@ -111,10 +112,10 @@ const fanoutPost =({challengeId, challengesId, followersSnapshot, post, owner}) 
     //problemt er at me ikke får rett verdi fra followersSnapshot
 
     let fanoutObj = {};
+    if(followersSnapshot && followersSnapshot !== 'null' &&
+        followersSnapshot !== 'undefined') {
 
-    if(followersSnapshot && followersSnapshot !== 'null' && followersSnapshot !== 'undefined') {
         let followers = Object.keys(followersSnapshot);
-
         // write to each follower's timeline
         //denne virker ikke sikkelig!
         followers.forEach((key) => fanoutObj[
@@ -123,7 +124,6 @@ const fanoutPost =({challengeId, challengesId, followersSnapshot, post, owner}) 
         '/challenges/' + challengeId +
         '/timeline/' + currentUser.uid] = post);
     }
-
 
     //legger til challenges som nye personer kopierer til sin egen
     fanoutObj[

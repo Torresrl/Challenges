@@ -27,7 +27,9 @@ export const joinChallenges = (code) => {
     return (dispatch) => {
 
         database.ref(`challenges/${code}`).once('value', function(snap) {
+
             if(snap.hasChild("challengesId")) {
+
                 database.ref(`challenges/${code}/followers/${currentUser.uid}`)
                     .set(true);
 
