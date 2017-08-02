@@ -1,4 +1,4 @@
-import {combineReducers} from 'redux';
+import { combineReducers } from 'redux';
 import AuthReducer from './login/AuthReducer';
 import RegisterReducer from './login/RegisterReducer';
 import NewChallengesReducer from './challenges/NewChallengesReducer';

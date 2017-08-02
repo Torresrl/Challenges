@@ -1,17 +1,29 @@
-import React, {Component} from 'react';
-import {View, Text} from 'react-native';
+import React, { Component } from 'react';
+import { View, Text } from 'react-native';
 
-class Feed extends Component {
-    render() {
-        return(
-            <View style={styles.containerStyle}>
-                <Text> Profile</Text>
-            </View>
-        );
-    }
+class Profile extends Component {
+
+  constructor() {
+    super();
+    this.state = { profile_pic_url: '' };
+  }
+
+  getProfilePictureFromBase() {
+
+  }
+
+
+  render() {
+    const { containerStyle } = styles;
+      return (
+          <View style={containerStyle}>
+              <Text>Profile</Text>
+          </View>
+      );
+  }
 }
 
-styles = {
+const styles = {
     containerStyle: {
         flex: 1,
         alignItems: 'center',
@@ -20,4 +32,4 @@ styles = {
 
 };
 
-export default Feed;
+export default Profile;

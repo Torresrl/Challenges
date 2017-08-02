@@ -29,9 +29,9 @@ const RouterComponent = () => {
             <Scene key="root">
                 {/* Scenene for Login*/}
                 <Scene key="auth">
-                  <Scene key="newProfilePicture" component={AddProfilePicture} title="Add Profile Picture"/>
                     <Scene key="login" component={LoginForm} title="Challenges" />
                     <Scene key="newUser" component={NewUser} title="Create User"/>
+                    <Scene key="newProfilePicture" component={AddProfilePicture} title="Add Profile Picture"/>
                 </Scene>
 
                 {/* Scenene for for allt innhold etter innloging*/}

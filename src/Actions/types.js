@@ -11,17 +11,19 @@ export const TRY_LOGIN = 'try_login';
 export const NEW_EMAIL_CHANGE = 'new_email_change';
 export const NEW_PASSWORD_CHANGE = 'new_password_change';
 export const NEW_NAME_CHANGE = 'new_name_change';
-export const CREATE_USER ="create_user";
-export const CREATE_USER_SUCCESS = "create_user_success";
-export const CREATE_USER_FAIL = "create_user_fail";
-export const EMAIL_MISSING = "email_missing";
-export const WEAK_PASSWORD = "weak_password";
-export const NAME_MISSING = "name_missing";
-export const NEW_PROFILE_IMAGE = 'profile_image'
+export const CREATE_USER = 'create_user';
+export const CREATE_USER_SUCCESS = 'create_user_success';
+export const CREATE_USER_FAIL = 'create_user_fail';
+export const EMAIL_MISSING = 'email_missing';
+export const WEAK_PASSWORD = 'weak_password';
+export const NAME_MISSING = 'name_missing';
+export const NEW_PROFILE_IMAGE = 'profile_image';
+export const UPLOAD_PROFILE_PICTURE = 'upload_profile_picture';
+export const UPLOAD_PROFILE_PICTURE_FAILED = 'upload_profile_picture_failed';
 
 //new Challenges
 export const CHALLENGES_NAME = 'challenges_name';
-export const CHALLENGES_DESCRIPTION ='challenges_description';
+export const CHALLENGES_DESCRIPTION = 'challenges_description';
 export const CHALLENGES_IMAGE = 'challenges_image';
 export const CHALLENGES_NAME_NOT_VALID = 'challenges_name_not_valid';
 export const CHALLENGES_DESCRIPTION_NOT_VALID = 'challenges_description_not_valid';
