@@ -58,3 +58,6 @@ export const DO_CHALLENG_ADD_IMAGE= 'do_a_chllenge_add_image';
 
 //DoAChallengeTimeline
 export const DO_CHALLENGE_TIMELINE_FETCH = 'do_challenge_timelibe_fetch';
+
+//Profile
+export const USER_INFO_FETCH_SUCCESS = 'profile_picture_fetch_success';

@@ -9,7 +9,7 @@ import FindChallengesReducer from './challenges/FindChallengesReducer';
 import DoAChallengeReducer from './challenges/DoAChallengeReducer';
 import AddProfilePictureReducer from './login/AddProfilePictureReducer';
 
-export default combineReducers ({
+export default combineReducers({
     auth: AuthReducer,
     register: RegisterReducer,
     newChallenges: NewChallengesReducer,

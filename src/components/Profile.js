@@ -1,24 +1,50 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { Image, Text } from 'react-native';
+import { connect } from 'react-redux';
+import { userInfoFetch } from '../Actions';
+import { Card, CardSection } from './common';
+
+
+//Enable componentWillMount method for
+//fetching user specific profile picture
+//
+//Currently setting default profile image
+
 
 class Profile extends Component {
 
-  constructor() {
-    super();
-    this.state = { profile_pic_url: '' };
+
+  componentWillMount() {
+    this.props.userInfoFetch();
+    console.log('Profile picture fetch successful');
   }
-
-  getProfilePictureFromBase() {
-
-  }
-
 
   render() {
-    const { containerStyle } = styles;
+    const { imageStyle, textStyle } = styles;
       return (
-          <View style={containerStyle}>
-              <Text>Profile</Text>
-          </View>
+          <Card>
+            <CardSection>
+              <Image
+              source={{ uri: this.props.profilePicture }}
+              style={imageStyle}
+              />
+            </CardSection>
+            <CardSection>
+              <Text style={textStyle}>Name: {this.props.name}</Text>
+            </CardSection>
+            <CardSection>
+              <Text style={textStyle}>Display random stuff here</Text>
+            </CardSection>
+            <CardSection>
+              <Text style={textStyle}>Display random stuff here</Text>
+            </CardSection>
+            <CardSection>
+              <Text style={textStyle}>Display random stuff here</Text>
+            </CardSection>
+            <CardSection>
+              <Text style={textStyle}>Peace out</Text>
+            </CardSection>
+          </Card>
       );
   }
 }
@@ -28,8 +54,25 @@ const styles = {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+
+    imageStyle: {
+        height: 300,
+        flex: 1,
+        width: null
+    },
+
+    textStyle: {
+      fontSize: 18,
+      paddingLeft: 6
     }
 
 };
 
-export default Profile;
+const mapStateToProps = ({ addProfilePicture }) => {
+  const { profilePicture, name } = addProfilePicture;
+
+  return { profilePicture, name };
+};
+
+export default connect(mapStateToProps, { userInfoFetch })(Profile);
