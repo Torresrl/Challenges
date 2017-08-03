@@ -18,7 +18,6 @@ export const uploadProfilePicture = (uri) => {
 
   return (dispatch) => {
     currentUser.updateProfile({
-      displayName: 'Thomas',
       photoURL: uri
     })
     .catch(() => {
