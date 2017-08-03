@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Image, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { userInfoFetch } from '../Actions';
-import { Card, CardSection } from './common';
+import { userInfoFetch } from '../../Actions';
+import { Card, CardSection } from '../common';
 
 
 //Enable componentWillMount method for

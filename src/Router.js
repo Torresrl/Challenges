@@ -1,10 +1,11 @@
 import React from 'react';
-import {Scene, Router} from 'react-native-router-flux';
+import { Scene, Router, Actions } from 'react-native-router-flux';
 import {Text} from 'react-native';
 import LoginForm from './components/Login/LoginForm';
 import NewUser from './components/Login/NewUser';
 import Feed from './components/Feed';
-import Profile from './components/Profile';
+import Profile  from './components/Profile/Profile';
+import ProfileEdit from './components/Profile/ProfileEdit'
 import Challenges from './components/challenges/challenges_list/Challenges';
 import NewChallenges from './components/challenges/create_new/NewChallenges';
 import FindChallenges from './components/challenges/FindChallenges';
@@ -20,8 +21,6 @@ const RouterComponent = () => {
             <Text style={{color:'black'}}>{title}</Text>
         );
     };
-
-
 
     return (
 
@@ -76,9 +75,16 @@ const RouterComponent = () => {
                     </Scene>
                     <Scene key="tabProfile" title="Profile" icon={TabIcon}>
                         <Scene
+                            onRight={() => Actions.profileEdit()}
+                            rightTitle="Edit"
                             key="profile"
                             component={Profile}
                             title="Profile"
+                        />
+                        <Scene
+                          key="profileEdit"
+                          component={ProfileEdit}
+                          title="Edit Profile"
                         />
                     </Scene>
 
