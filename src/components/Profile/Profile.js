@@ -25,12 +25,12 @@ class Profile extends Component {
           <Card>
             <CardSection>
               <Image
-              source={{ uri: this.props.profilePicture }}
+              source={{ uri: this.props.user.photoURL }}
               style={imageStyle}
               />
             </CardSection>
             <CardSection>
-              <Text style={textStyle}>Name: {this.props.name}</Text>
+              <Text style={textStyle}>Name: {this.props.user.displayName}</Text>
             </CardSection>
             <CardSection>
               <Text style={textStyle}>Display random stuff here</Text>
@@ -69,10 +69,10 @@ const styles = {
 
 };
 
-const mapStateToProps = ({ addProfilePicture }) => {
-  const { profilePicture, name } = addProfilePicture;
+const mapStateToProps = ({ profile }) => {
+  const { profilePicture, user } = profile;
 
-  return { profilePicture, name };
+  return { profilePicture, user };
 };
 
 export default connect(mapStateToProps, { userInfoFetch })(Profile);

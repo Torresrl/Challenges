@@ -134,8 +134,8 @@ const styles = {
 
   };
 
-const mapStateToProps = ({ addProfilePicture }) => {
-  const { render_profile_pic, chosen_picture_uri, error } = addProfilePicture;
+const mapStateToProps = ({ profile }) => {
+  const { render_profile_pic, chosen_picture_uri, error } = profile;
   return { render_profile_pic, chosen_picture_uri, error };
 };
 

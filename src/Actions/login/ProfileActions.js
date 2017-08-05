@@ -3,13 +3,23 @@ import { Actions } from 'react-native-router-flux';
 import { NEW_PROFILE_IMAGE,
           UPLOAD_PROFILE_PICTURE,
           UPLOAD_PROFILE_PICTURE_FAILED,
-          USER_INFO_FETCH_SUCCESS } from '../types';
+          USER_INFO_FETCH_SUCCESS,
+          USER_UPDATE } from '../types';
 
 
 export const addProfilePic = (text) => {
   return {
     type: NEW_PROFILE_IMAGE,
     payload: text
+  };
+};
+
+export const userUpdate = ({ prop, value }) => {
+  console.log(prop);
+  console.log(value);
+  return {
+    type: USER_UPDATE,
+    payload: { prop, value }
   };
 };
 
@@ -38,6 +48,6 @@ export const userInfoFetch = () => {
 
     return {
       type: USER_INFO_FETCH_SUCCESS,
-      payload: [currentUser.photoURL || 'content://com.challenges.provider/app_images/Android/data/com.challenges/files/Pictures/image-7fe7afff-c3bf-4791-8599-86554c471778.jpg', currentUser.displayName]
+      payload: currentUser
   };
 };
