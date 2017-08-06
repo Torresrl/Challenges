@@ -46,24 +46,30 @@ export const challengDone = (object) => {
     const {currentUser} = firebase.auth();
     const {image, comment, challengeId, challengesId, owner} = object;
     const database = firebase.database();
+    let followers = {};
 
 
-    if(image != null) {
+    if (image != null) {
 
-
-        let followers = {};
         database
             .ref('/challenges/' + challengesId + '/followers')
             .on('value', (snap) => followers = snap.val());
 
         let post = {
+            userName: currentUser.displayName,
+            userId: currentUser.uid,
             comment: comment,
+            voted: false,
+            votes: 0,
+            //firebse server gir tiden posten blir lagt til databasen
+            postedAt: firebase.database.ServerValue.TIMESTAMP,
             image: '/challenges/'
             + challengesId + '/'
             + challengeId +
             '/timeline/'
             + currentUser.uid
         };
+
         let fanoutObj = fanoutPost({
             challengeId: challengeId,
             challengesId: challengesId,
@@ -81,44 +87,7 @@ export const challengDone = (object) => {
         return {
             type: NO_IMAGE_ADDED
         };
-
-    let followers = {};
-    database
-        .ref('/challenges/' + challengesId + '/followers')
-        .on('value', (snap) => followers = snap.val());
-
-
-    let post = {
-            userName: currentUser.displayName,
-            userId: currentUser.uid,
-            comment: comment,
-            voted: false,
-            votes: 0,
-            //firebse server gir tiden posten blir lagt til databasen
-            postedAt: firebase.database.ServerValue.TIMESTAMP,
-            image: '/challenges/'
-                + challengesId + '/'
-                + challengeId +
-                '/timeline/'
-                + currentUser.uid
-    };
-
-    let fanoutObj = fanoutPost({
-        challengeId: challengeId,
-        challengesId: challengesId,
-        followersSnapshot: followers,
-        post:post,
-        owner: owner
-    });
-
-    return () => {
-        uploadImage(image,challengesId, challengeId );
-        database.ref().update(fanoutObj);
-
-
     }
-
-
 };
 
 //henter ut en liste men informasjon om hver challenge

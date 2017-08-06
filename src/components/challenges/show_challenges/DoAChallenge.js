@@ -109,11 +109,6 @@ class DoAChallenge extends Component {
         }
     }
 
-
-    render(){
-        const{name, description, comment, challengeId} = this.props.challenge;
-        const {challengesId, error} = this.props;
-
     renderPictureDone() {
         const {imageUrl} = this.state;
         const {imageStyle} = styles;
@@ -137,12 +132,10 @@ class DoAChallenge extends Component {
     renderContentDoneOrNot() {
         const{done} = this.props.challenge;
         const{comment} = this.props;
-
         const {
             CommentCardStyle,
             styleButtonCard,
             styleButton,
-            errorTextStyle
         } = styles;
 
         if(done){
@@ -188,10 +181,11 @@ class DoAChallenge extends Component {
 
     render(){
         const{name, description, challengeId} = this.props.challenge;
-        const {challengesId, owner} = this.props;
+        const {challengesId, owner, error} = this.props;
         const {
             headerStyle,
             headerCardStyle,
+            errorTextStyle
         } = styles;
 
         return(
@@ -204,33 +198,11 @@ class DoAChallenge extends Component {
                         <Text>{description}</Text>
                     </CardSection>
                 </Card>
-
-
-                {this.renderPicture()}
-
-                <Card style={CommentCardStyle}>
-                    <LargInput
-                        label="Comment"
-                        placeholder="Give a comment"
-                        onChangeText={this.commentOnChange.bind(this)}
-                        value={comment}
-                    />
-                </Card>
-
-                <Text style={errorTextStyle}>{error}</Text>
-
-                <Card style={styleButtonCard}>
-                    <Button
-                        style={styleButton}
-                        onPress={() => this.onChallengeFinished()}
-                    >
-                        Confirm
-
                 {this.renderContentDoneOrNot()}
+                <Text style={errorTextStyle}>{error}</Text>
                 <CardSection>
                     <Button>
                         All
-
                     </Button>
                     <Button>
                         friends
@@ -290,11 +262,14 @@ const styles = {
     styleButton: {
         borderWidth: 1
     },
+
     errorTextStyle: {
         color: 'red',
         fontSize: 12,
         alignSelf: 'center'
-    },
+    }
+
+
 
 };
 

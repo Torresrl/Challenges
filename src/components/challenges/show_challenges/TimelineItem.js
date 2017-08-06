@@ -232,18 +232,18 @@ class TimelineItem extends Component {
         const postDateObject = new Date(postDate);
 
         //sjekker om posten ble laget innen en dag
-        if(postDate + 86400< todaysDate){
+        if(postDate + 86400000 > todaysDate){
             postDateString = postDateObject.getHours()
                 + '.' + postDateObject.getMinutes();
 
             //sjekker om posten ble laget innen en uke
-        } else if (postDate + 604800000 < todaysDate){
+        } else if (postDate + 604800000 > todaysDate){
             postDateString = this.getWeekDay(postDateObject.getDay())
                 + ' ' + postDateObject.getHours()
                 + '.' + postDateObject.getMinutes();
 
             //sjekker om posten ble laget i år
-        } else if(postDate + 31536000000 < todaysDate) {
+        } else if(postDate + 31536000000 > todaysDate) {
             postDateString = postDateObject.getDay() + ' ' + this.getMonth(postDateObject.getMonth());
 
         } else {
