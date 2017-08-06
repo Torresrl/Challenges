@@ -18,7 +18,7 @@ import {CHALLENGES_NAME,
 const INITIAL_STATE = {
     nameChallenges: "",
     description: "",
-    image: null,
+    image: "",
     challengesError: "",
     challengeName: "",
     challengeDes: "",
@@ -27,7 +27,8 @@ const INITIAL_STATE = {
     error: "",
     load: false,
     challengesCode: "",
-    modalVisible: false
+    modalVisible: false,
+    mainImage: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -37,7 +38,7 @@ export default (state = INITIAL_STATE, action) => {
         case CHALLENGES_DESCRIPTION:
             return {...state, description: action.payload};
         case CHALLENGES_IMAGE:
-            return {...state, image: action.payload};
+            return {...state, image: action.payload, mainImage: true};
         case CHALLENGES_NAME_NOT_VALID:
             return {...state, challengesError: "you need to add a name"};
         case CHALLENGES_DESCRIPTION_NOT_VALID:

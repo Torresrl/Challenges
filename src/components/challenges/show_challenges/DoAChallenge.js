@@ -109,6 +109,11 @@ class DoAChallenge extends Component {
         }
     }
 
+
+    render(){
+        const{name, description, comment, challengeId} = this.props.challenge;
+        const {challengesId, error} = this.props;
+
     renderPictureDone() {
         const {imageUrl} = this.state;
         const {imageStyle} = styles;
@@ -132,10 +137,12 @@ class DoAChallenge extends Component {
     renderContentDoneOrNot() {
         const{done} = this.props.challenge;
         const{comment} = this.props;
+
         const {
             CommentCardStyle,
             styleButtonCard,
             styleButton,
+            errorTextStyle
         } = styles;
 
         if(done){
@@ -197,10 +204,33 @@ class DoAChallenge extends Component {
                         <Text>{description}</Text>
                     </CardSection>
                 </Card>
+
+
+                {this.renderPicture()}
+
+                <Card style={CommentCardStyle}>
+                    <LargInput
+                        label="Comment"
+                        placeholder="Give a comment"
+                        onChangeText={this.commentOnChange.bind(this)}
+                        value={comment}
+                    />
+                </Card>
+
+                <Text style={errorTextStyle}>{error}</Text>
+
+                <Card style={styleButtonCard}>
+                    <Button
+                        style={styleButton}
+                        onPress={() => this.onChallengeFinished()}
+                    >
+                        Confirm
+
                 {this.renderContentDoneOrNot()}
                 <CardSection>
                     <Button>
                         All
+
                     </Button>
                     <Button>
                         friends
@@ -260,14 +290,17 @@ const styles = {
     styleButton: {
         borderWidth: 1
     },
-
-
+    errorTextStyle: {
+        color: 'red',
+        fontSize: 12,
+        alignSelf: 'center'
+    },
 
 };
 
 const mapStateToProps = ({doAChallenge}) => {
-    const {image, comment} = doAChallenge;
-    return {image, comment};
+    const {image, comment, error} = doAChallenge;
+    return {image, comment, error};
 };
 
 export default connect(mapStateToProps,
