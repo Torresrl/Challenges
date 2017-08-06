@@ -75,13 +75,14 @@ class DoAChallenge extends Component {
 
     render(){
         const{name, description, comment, challengeId} = this.props.challenge;
-        const {challengesId} = this.props;
+        const {challengesId, error} = this.props;
         const {
             headerStyle,
             headerCardStyle,
             CommentCardStyle,
             styleButtonCard,
             styleButton,
+            errorTextStyle
         } = styles;
 
         return(
@@ -105,6 +106,8 @@ class DoAChallenge extends Component {
                         value={comment}
                     />
                 </Card>
+
+                <Text style={errorTextStyle}>{error}</Text>
 
                 <Card style={styleButtonCard}>
                     <Button
@@ -164,14 +167,17 @@ const styles = {
     styleButton: {
         borderWidth: 1
     },
-
-
+    errorTextStyle: {
+        color: 'red',
+        fontSize: 12,
+        alignSelf: 'center'
+    },
 
 };
 
 const mapStateToProps = ({doAChallenge}) => {
-    const {image, comment} = doAChallenge;
-    return {image, comment};
+    const {image, comment, error} = doAChallenge;
+    return {image, comment, error};
 };
 
 export default connect(mapStateToProps, {commentChange, addImageChallenge, challengDone}) (DoAChallenge);

@@ -2,7 +2,8 @@ import firebase from 'firebase';
 import RNFetchBlob from 'react-native-fetch-blob';
 import {COMMENT_CHANGE,
     DO_CHALLENG_ADD_IMAGE,
-    DO_CHALLENGE_TIMELINE_FETCH
+    DO_CHALLENGE_TIMELINE_FETCH,
+    NO_IMAGE_ADDED
 } from '../types';
 
 export const commentChange = (text) => {
@@ -26,30 +27,39 @@ export const challengDone = (object) => {
     const {image, comment, challengeId, challengesId, owner} = object;
     const database = firebase.database();
 
+    if(image != null) {
 
-    let followers = {};
-    database
-        .ref('/challenges/' + challengesId + '/followers')
-        .on('value', (snap) => followers = snap.val());
 
-    let post = {comment: comment,
-                image: '/challenges/'
-                +challengesId + '/'
-                + challengeId+
-                '/timeline/'
-                + currentUser.uid};
-    let fanoutObj = fanoutPost({
-        challengeId: challengeId,
-        challengesId: challengesId,
-        followersSnapshot: followers,
-        post:post,
-        owner: owner
-    });
+        let followers = {};
+        database
+            .ref('/challenges/' + challengesId + '/followers')
+            .on('value', (snap) => followers = snap.val());
 
-    return () => {
-        uploadImage(image,challengesId, challengeId );
-        database.ref().update(fanoutObj);
+        let post = {
+            comment: comment,
+            image: '/challenges/'
+            + challengesId + '/'
+            + challengeId +
+            '/timeline/'
+            + currentUser.uid
+        };
+        let fanoutObj = fanoutPost({
+            challengeId: challengeId,
+            challengesId: challengesId,
+            followersSnapshot: followers,
+            post: post,
+            owner: owner
+        });
 
+        return () => {
+            uploadImage(image, challengesId, challengeId);
+            database.ref().update(fanoutObj);
+
+        }
+    } else {
+        return {
+            type: NO_IMAGE_ADDED
+        };
     }
 
 
@@ -116,7 +126,6 @@ const fanoutPost =({challengeId, challengesId, followersSnapshot, post, owner}) 
 
 const uploadImage = (image, challengesId, challengeId) => {
     const{currentUser} = firebase.auth();
-
     // Prepare Blob support
     const polyfill = RNFetchBlob.polyfill;
     const Blob = RNFetchBlob.polyfill.Blob;
