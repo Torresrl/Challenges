@@ -9,7 +9,10 @@ class ShowChallengesListItem extends Component {
         const {challengesId, owner} = this.props.challenges;
         const {challenge} = this.props;
 
-        Actions.doAChallenge({challenge: challenge, challengesId, owner})
+        Actions.doAChallenge({
+            challenge: challenge,
+            challengesId: challengesId,
+            owner: owner})
     }
 
     render(){

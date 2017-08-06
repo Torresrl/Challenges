@@ -21,11 +21,32 @@ export const addImageChallenge = (image) => {
 };
 
 
+//hente ut kommenteren du hadde til en challenge
+export const getCurrentUserComment = (challengesId, challengeId) => {
+    const {currentUser} = firebase.auth();
+
+    return (dispatch) => {
+        firebase.database()
+            .ref('/Users/' +
+                currentUser.uid + '/myChallenges/' +
+                challengesId +'/challenges/' +
+                challengeId + '/timeline/' +
+                currentUser.uid)
+            .on('value', snap => {
+                dispatch({
+                    type: COMMENT_CHANGE,
+                    payload: snap.val().comment
+                })
+            });
+    }
+};
+
 //brukes til å oppdatere flere poster samtidig
 export const challengDone = (object) => {
     const {currentUser} = firebase.auth();
     const {image, comment, challengeId, challengesId, owner} = object;
     const database = firebase.database();
+
 
     if(image != null) {
 
@@ -60,6 +81,41 @@ export const challengDone = (object) => {
         return {
             type: NO_IMAGE_ADDED
         };
+
+    let followers = {};
+    database
+        .ref('/challenges/' + challengesId + '/followers')
+        .on('value', (snap) => followers = snap.val());
+
+
+    let post = {
+            userName: currentUser.displayName,
+            userId: currentUser.uid,
+            comment: comment,
+            voted: false,
+            votes: 0,
+            //firebse server gir tiden posten blir lagt til databasen
+            postedAt: firebase.database.ServerValue.TIMESTAMP,
+            image: '/challenges/'
+                + challengesId + '/'
+                + challengeId +
+                '/timeline/'
+                + currentUser.uid
+    };
+
+    let fanoutObj = fanoutPost({
+        challengeId: challengeId,
+        challengesId: challengesId,
+        followersSnapshot: followers,
+        post:post,
+        owner: owner
+    });
+
+    return () => {
+        uploadImage(image,challengesId, challengeId );
+        database.ref().update(fanoutObj);
+
+
     }
 
 
@@ -91,17 +147,20 @@ const fanoutPost =({challengeId, challengesId, followersSnapshot, post, owner}) 
     const {currentUser} = firebase.auth();
     // Turn the hash of followers to an array of each id as the string
     //problemt er at me ikke får rett verdi fra followersSnapshot
-    let followers = Object.keys(followersSnapshot);
-    let fanoutObj = {};
 
-    // write to each follower's timeline
-    //denne virker ikke sikkelig!
-    followers.forEach((key) => fanoutObj[
+    let fanoutObj = {};
+    if(followersSnapshot && followersSnapshot !== 'null' &&
+        followersSnapshot !== 'undefined') {
+
+        let followers = Object.keys(followersSnapshot);
+        // write to each follower's timeline
+        //denne virker ikke sikkelig!
+        followers.forEach((key) => fanoutObj[
         '/Users/' + key +
         '/myChallenges/' + challengesId +
         '/challenges/' + challengeId +
         '/timeline/' + currentUser.uid] = post);
-
+    }
 
     //legger til challenges som nye personer kopierer til sin egen
     fanoutObj[
