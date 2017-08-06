@@ -115,19 +115,19 @@ class TimelineItem extends Component {
 
     getWeekDay(dayInWeek){
         switch (dayInWeek) {
-            case 1:
+            case 0:
                 return 'Monday';
-            case 2:
+            case 1:
                 return 'Tuesday';
-            case 3:
+            case 2:
                 return 'Wednesday';
-            case 4:
+            case 3:
                 return 'Thursday';
-            case 5:
+            case 4:
                 return 'Friday';
-            case 6:
+            case 5:
                 return 'Saturday';
-            case 7:
+            case 6:
                 return 'Sunday';
             default:
                 return '------';
