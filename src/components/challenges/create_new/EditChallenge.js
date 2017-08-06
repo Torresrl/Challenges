@@ -40,12 +40,15 @@ class EditChallenge extends Component{
     }
 
     onSubmitChallenge() {
-        const{nameChallenges, description, challenges, image} = this.props;
+        const{nameChallenges, description, challenges, image, mainImage} = this.props;
         this.props.addChallenges({
             name: nameChallenges,
             description: description,
             image: image,
-            challenges: challenges});
+            challenges: challenges,
+            mainImage: mainImage
+
+        });
     }
 
     render() {
@@ -125,6 +128,7 @@ const mapStateToProps = ({newChallenges}) =>{
         error,
         challenges,
         challengeNr,
+        mainImage
     } = newChallenges;
 
     return {nameChallenges,
@@ -134,7 +138,8 @@ const mapStateToProps = ({newChallenges}) =>{
         challengeDes,
         error,
         challenges,
-        challengeNr
+        challengeNr,
+        mainImage
     };
 
 };

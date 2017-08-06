@@ -18,13 +18,15 @@ import ShowChallengesListItem from './ShowChallengesListItem';
 class ShowChallenges extends Component {
 
     componentWillMount(){
-        const{challengesId, challenges} = this.props.challenges;
+        const{challengesId, challenges, mainImage} = this.props.challenges;
         const challengeList = _.map(challenges, (val, uid) => {
             return {...val, uid}
         });
         this.state = {challengeList};
 
-        this.props.getImage(challengesId);
+        if(mainImage) {
+            this.props.getImage(challengesId);
+        }
     }
 
     createDataSource(){
@@ -45,21 +47,28 @@ class ShowChallenges extends Component {
     }
 
     renderImage() {
+        const{mainImage} = this.props.challenges;
         const {url, load} = this.props;
         const {imageStyle} = styles;
 
-        if(load){
-            return(
-                <Spinner/>
-            );
+        if(mainImage) {
+            if (load) {
+                return (
+                    <Spinner/>
+                );
 
+            }
+            return (
+                <Image
+                    source={{uri: url}}
+                    style={imageStyle}
+                />
+            );
+        } else {
+            return(
+                <Text>Her kan me ha et dummy bilde</Text>
+            );
         }
-        return(
-            <Image
-                source={{uri: url}}
-                style={imageStyle}
-            />
-        );
 
     }
 

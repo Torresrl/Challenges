@@ -89,7 +89,7 @@ export const addChallenge = (text) => {
 
 };
 
-export const addChallenges = ({name, description, image, challenges}) => {
+export const addChallenges = ({name, description, image, challenges, mainImage}) => {
     const {currentUser} = firebase.auth();
     const challengesId = firebase.database().ref('posts').push().key;
 
@@ -109,48 +109,82 @@ export const addChallenges = ({name, description, image, challenges}) => {
         }
     }
 
+    if(mainImage)  {
+        return (dispatch) => {
 
-    return(dispatch) => {
+            dispatch({
+                type: TRY_ADD_CHALLENGES,
+                payload: challengesId
+            });
 
-        dispatch({
-            type: TRY_ADD_CHALLENGES,
-            payload: challengesId
-        });
-
-        firebase.database()
-            .ref(`/challenges/${challengesId}`)
-            .set({name, description,owner: currentUser.uid, challengesId, challenges})
-            .then(() => {
+            firebase.database()
+                .ref(`/challenges/${challengesId}`)
+                .set({name, description, owner: currentUser.uid, challengesId, challenges, mainImage})
+                .then(() => {
 
 
-                firebase.database()
-                    .ref(`/Users/${currentUser.uid}/myChallenges/${challengesId}`)
-                    .set({name,
-                        description,
-                        owner: currentUser.uid,
-                        challengesId,
-                        challenges,
-                        timeline: null
-                    })
-            })
-            .then(() => {
-                Blob.build(image, { type : 'image/png;BASE64' })
-                    .then((blob) => firebase.storage()
-                        .ref(`/challenges/${challengesId}/mainImage`)
-                        .put(blob, { contentType : 'image/png' })
-                    )
-                    .then(() => {
-                        dispatch({
-                            type: CHALLENGES_CREATED
+                    firebase.database()
+                        .ref(`/Users/${currentUser.uid}/myChallenges/${challengesId}`)
+                        .set({
+                            name,
+                            description,
+                            owner: currentUser.uid,
+                            challengesId,
+                            challenges,
+                            timeline: null,
+                            mainImage
+                        })
+                })
+                .then(() => {
+                    Blob.build(image, {type: 'image/png;BASE64'})
+                        .then((blob) => firebase.storage()
+                            .ref(`/challenges/${challengesId}/mainImage`)
+                            .put(blob, {contentType: 'image/png'})
+                        )
+                        .then(() => {
+                            dispatch({
+                                type: CHALLENGES_CREATED
+                            });
+                            Actions.challenges({type: 'reset'});
+
                         });
-                        Actions.challenges({type: 'reset'});
-
-                    });
 
 
+                });
+        };
+    } else {
+        return (dispatch) => {
+            dispatch({
+                type: TRY_ADD_CHALLENGES,
+                payload: challengesId
+            });
+            firebase.database()
+                .ref(`/challenges/${challengesId}`)
+                .set({name, description, owner: currentUser.uid, challengesId, challenges, mainImage})
+                .then(() => {
 
-        });
-    };
+                    firebase.database()
+                        .ref(`/Users/${currentUser.uid}/myChallenges/${challengesId}`)
+                        .set({
+                            name,
+                            description,
+                            owner: currentUser.uid,
+                            challengesId,
+                            challenges,
+                            timeline: null,
+                            mainImage
+                        })
+                })
+                .then(() => {
+                dispatch({
+                    type: CHALLENGES_CREATED
+                });
+                Actions.challenges({type: 'reset'});
+
+            });
+        };
+
+    }
 };
 
 
