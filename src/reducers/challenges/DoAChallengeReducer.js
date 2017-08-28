@@ -9,7 +9,6 @@ const INITIAL_STATE = {
     comment: "",
     timeline: {},
     error: "",
-    followers: {}
 };
 
 export default (state = INITIAL_STATE, action) => {

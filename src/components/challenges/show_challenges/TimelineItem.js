@@ -57,7 +57,6 @@ class TimelineItem extends Component {
 
         let votes = parseInt(this.props.post.votes);
         const database = firebase.database();
-        let followers = {};
 
         if(upVote){
             votes = votes + 1;
@@ -77,7 +76,6 @@ class TimelineItem extends Component {
             } );
 
         let fanoutObj = this.fanoutPost({
-            followersSnapshot: followers,
             votes: votes
         });
 
@@ -86,7 +84,7 @@ class TimelineItem extends Component {
     }
 
     //lager fanout object, gjør sånn du får atmoic update
-    fanoutPost = ({followersSnapshot, votes}) => {
+    fanoutPost = ({votes}) => {
         const {currentUser} = firebase.auth();
         const {challengesId, challengeId, owner} = this.props;
         const {userId} = this.props.post;

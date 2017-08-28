@@ -44,16 +44,12 @@ export const getCurrentUserComment = (challengesId, challengeId) => {
 //brukes til å oppdatere flere poster samtidig
 export const challengDone = (object) => {
     const {currentUser} = firebase.auth();
-    const {image, comment, challengeId, challengesId, owner} = object;
+    const {image, comment, challengeId, challengesId, owner, followers} = object;
     const database = firebase.database();
-    let followers = {};
 
 
     if (image != null) {
         // prøv denne metoden: https://gist.github.com/davideast/e68aa87ea6f0e7a4dc08
-        database
-            .ref('/challenges/' + challengesId + '/followers')
-            .on('value', (snap) => followers = snap.val());
 
         let post = {
             userName: currentUser.displayName,
@@ -73,7 +69,7 @@ export const challengDone = (object) => {
         let fanoutObj = fanoutPost({
             challengeId: challengeId,
             challengesId: challengesId,
-            followersSnapshot: followers,
+            followers: followers,
             post: post,
             owner: owner
         });
@@ -112,16 +108,15 @@ export const fetchTimeline = (challengesId, challengeId) => {
 };
 
 
-const fanoutPost =({challengeId, challengesId, followersSnapshot, post, owner}) => {
+const fanoutPost =({challengeId, challengesId, followers, post, owner}) => {
     const {currentUser} = firebase.auth();
     // Turn the hash of followers to an array of each id as the string
     //problemt er at me ikke får rett verdi fra followersSnapshot
 
     let fanoutObj = {};
-    if(followersSnapshot && followersSnapshot !== 'null' &&
-        followersSnapshot !== 'undefined') {
+    if(followers && followers !== 'null' &&
+        followers !== 'undefined') {
 
-        let followers = Object.keys(followersSnapshot);
         // write to each follower's timeline
         //denne virker ikke sikkelig!
         followers.forEach((key) => fanoutObj[
@@ -133,8 +128,8 @@ const fanoutPost =({challengeId, challengesId, followersSnapshot, post, owner}) 
 
     //legger til challenges som nye personer kopierer til sin egen
     fanoutObj[
-        'challenges/'+ challengesId +
-        '/challenges/' +challengeId +
+        'challenges/' + challengesId +
+        '/challenges/' + challengeId +
         '/timeline/' + currentUser.uid] = post;
 
     //oppdaterer eieren sin timeline

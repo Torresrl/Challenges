@@ -24,7 +24,8 @@ class DoAChallenge extends Component {
     constructor() {
         super();
         this.state = {
-            imageUrl: ''
+            imageUrl: '',
+            followers: {}
         };
     }
 
@@ -45,6 +46,18 @@ class DoAChallenge extends Component {
         }
     }
 
+    componentDidMount() {
+        const {challengesId} = this.props;
+        const database = firebase.database();
+        database
+            .ref('/challenges/' + challengesId + '/followers')
+            .on('value', snap => {
+                this.setState({
+                    followers: Object.keys(snap.val())
+                });
+            } );
+    }
+
     commentOnChange(text){
         this.props.commentChange(text);
     }
@@ -55,7 +68,23 @@ class DoAChallenge extends Component {
 
     onChallengeFinished(){
         const {image, comment, challengesId, challenge, owner} = this.props;
-        this.props.challengDone({image, comment,challengeId: challenge.challengeId, challengesId, owner});
+        const database = firebase.database();
+
+        database
+            .ref('/challenges/' + challengesId + '/followers')
+            .on('value', snap => {
+                this.setState({
+                    followers: Object.keys(snap.val())
+                });
+            } );
+
+        this.props.challengDone({
+            image,
+            comment,
+            challengeId: challenge.challengeId,
+            challengesId,
+            owner,
+            followers: this.state.followers});
     }
 
     chooseImage() {
