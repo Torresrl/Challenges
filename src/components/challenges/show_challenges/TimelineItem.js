@@ -23,7 +23,8 @@ class TimelineItem extends Component {
     constructor(){
         super();
         this.state = {
-            imageUrl: ''
+            imageUrl: '',
+            followers: {}
         };
     }
 
@@ -35,8 +36,18 @@ class TimelineItem extends Component {
             .then((url) => {
                 this.setState({imageUrl: url});
             });
+    }
 
-
+    componentDidMount() {
+        const {challengesId} = this.props;
+        const database = firebase.database();
+        database
+            .ref('/challenges/' + challengesId + '/followers')
+            .on('value', snap => {
+                this.setState({
+                    followers: Object.keys(snap.val())
+                });
+            } );
     }
 
 
@@ -54,11 +65,16 @@ class TimelineItem extends Component {
             votes = votes - 1;
         }
 
+
+        //denne linjen henter ikke ut daten sikkelig ....
+        //legge det til i component vil mount med en dispatcher, da vil vell staten bli soten når det passer den
         database
             .ref('/challenges/' + challengesId + '/followers')
-            .on('value', (snap) => followers = snap.val());
-
-
+            .on('value', snap => {
+                this.setState({
+                    followers: Object.keys(snap.val())
+                });
+            } );
 
         let fanoutObj = this.fanoutPost({
             followersSnapshot: followers,
@@ -70,47 +86,47 @@ class TimelineItem extends Component {
     }
 
     //lager fanout object, gjør sånn du får atmoic update
-  fanoutPost = ({followersSnapshot, votes}) => {
-      const {currentUser} = firebase.auth();
-      const {challengesId, challengeId, owner} = this.props;
-      const {userId} = this.props.post;
+    fanoutPost = ({followersSnapshot, votes}) => {
+        const {currentUser} = firebase.auth();
+        const {challengesId, challengeId, owner} = this.props;
+        const {userId} = this.props.post;
+        const {followers} = this.state;
 
-      let fanoutObj = {};
+        let fanoutObj = {};
 
-      if(followersSnapshot && followersSnapshot !== 'null' && followersSnapshot !== 'undefined') {
-          let followers = Object.keys(followersSnapshot);
-          followers.forEach((key) => fanoutObj[
-          '/Users/' + key +
-          '/myChallenges/' + challengesId +
-          '/challenges/' + challengeId +
-          '/timeline/' + userId +
-          '/votes'] = votes);
-      }
+        if(followers && followers !== 'null' && followers !== 'undefined') {
+            followers.forEach((key) => fanoutObj[
+            '/Users/' + key +
+            '/myChallenges/' + challengesId +
+            '/challenges/' + challengeId +
+            '/timeline/' + userId +
+            '/votes'] = votes);
+        }
 
-      fanoutObj['/Users/' + currentUser.uid +
-      '/myChallenges/' + challengesId +
-      '/challenges/' + challengeId +
-      '/timeline/' + userId +
-      '/voted'] = true;
+        fanoutObj['/Users/' + currentUser.uid +
+        '/myChallenges/' + challengesId +
+        '/challenges/' + challengeId +
+        '/timeline/' + userId +
+        '/voted'] = true;
 
-      fanoutObj[
-      '/Users/' + owner +
-      '/myChallenges/' + challengesId +
-      '/challenges/' +challengeId +
-      '/timeline/' + userId +
-      '/votes'] = votes;
+        fanoutObj[
+        '/Users/' + owner +
+        '/myChallenges/' + challengesId +
+        '/challenges/' +challengeId +
+        '/timeline/' + userId +
+        '/votes'] = votes;
 
-      fanoutObj[
-      '/challenges/' + challengesId +
-      '/challenges/' +challengeId +
-      '/timeline/' + userId +
-      '/votes'] = votes;
-
+        fanoutObj[
+        '/challenges/' + challengesId +
+        '/challenges/' +challengeId +
+        '/timeline/' + userId +
+        '/votes'] = votes;
 
 
-      return fanoutObj;
 
-  };
+        return fanoutObj;
+
+    };
 
 
     getWeekDay(dayInWeek){
@@ -244,7 +260,10 @@ class TimelineItem extends Component {
 
             //sjekker om posten ble laget i år
         } else if(postDate + 31536000000 > todaysDate) {
-            postDateString = postDateObject.getDay() + ' ' + this.getMonth(postDateObject.getMonth());
+            postDateString = postDateObject.getDay()
+                + ' ' + this.getMonth(postDateObject.getMonth())
+                + ' ' + postDateObject.getHours()
+                + '.' + postDateObject.getMinutes();
 
         } else {
             postDateString = postDateObject.getDay() + '/' +

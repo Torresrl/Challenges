@@ -8,7 +8,8 @@ const INITIAL_STATE = {
     image: null,
     comment: "",
     timeline: {},
-    error: ""
+    error: "",
+    followers: {}
 };
 
 export default (state = INITIAL_STATE, action) => {

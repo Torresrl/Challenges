@@ -50,7 +50,7 @@ export const challengDone = (object) => {
 
 
     if (image != null) {
-
+        // prøv denne metoden: https://gist.github.com/davideast/e68aa87ea6f0e7a4dc08
         database
             .ref('/challenges/' + challengesId + '/followers')
             .on('value', (snap) => followers = snap.val());
