@@ -56,9 +56,11 @@ export const JOIN_CHALLENGE_FAIL = 'join_challenge_fail';
 export const COMMENT_CHANGE = 'comment_change';
 export const DO_CHALLENG_ADD_IMAGE= 'do_a_chllenge_add_image';
 export const NO_IMAGE_ADDED = 'no_image_added';
+export const DO_A_CHALLENGE_NAV_BAR = 'do_a_challenge_nav_bar';
 
 //DoAChallengeTimeline
 export const DO_CHALLENGE_TIMELINE_FETCH = 'do_challenge_timelibe_fetch';
+export const DO_CHALLENGE_TIMELINE_TOP_FETCH = 'do_challenge_timeline_top_fetch';
 
 //Profile
 export const USER_INFO_FETCH_SUCCESS = 'profile_picture_fetch_success';

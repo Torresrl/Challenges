@@ -9,14 +9,16 @@ import {
     Card,
     CardSection,
     Spinner
-} from '../../common';
+} from '../../../common';
 import {
     commentChange,
     addImageChallenge,
     challengDone,
-    getCurrentUserComment
-} from '../../../Actions';
+    getCurrentUserComment,
+    doAChallengeNavBar
+} from '../../../../Actions';
 import DoAChallengeTimeline from './DoAChallengeTimeline';
+import DoAChallengeTimelineTop from './DoAChallengeTimelineTop';
 
 
 class DoAChallenge extends Component {
@@ -56,6 +58,10 @@ class DoAChallenge extends Component {
                     followers: Object.keys(snap.val())
                 });
             } );
+    }
+
+    navBar(chooseList){
+        this.props.doAChallengeNavBar(chooseList);
     }
 
     commentOnChange(text){
@@ -208,6 +214,46 @@ class DoAChallenge extends Component {
         }
     }
 
+    renderList(){
+        const {navBar} = this.props;
+        const{challengeId} = this.props.challenge;
+        const {challengesId, owner} = this.props;
+
+        switch (navBar) {
+            case "all":
+                return (
+                    <DoAChallengeTimeline
+                challengesId={challengesId}
+                challengeId={challengeId}
+                owner={owner}
+                    />
+            );
+            case "friends":
+                return (
+                    <View>
+                        <Text>Frinds</Text>
+                    </View>
+                    );
+            case "top":
+                return(
+                    <DoAChallengeTimelineTop
+                        challengesId={challengesId}
+                        challengeId={challengeId}
+                        owner={owner}
+                    />
+                );
+            default:
+                return(
+                    <DoAChallengeTimeline
+                        challengesId={challengesId}
+                        challengeId={challengeId}
+                        owner={owner}
+                    />
+                );
+
+        }
+    }
+
     render(){
         const{name, description, challengeId} = this.props.challenge;
         const {challengesId, owner, error} = this.props;
@@ -230,23 +276,18 @@ class DoAChallenge extends Component {
                 {this.renderContentDoneOrNot()}
                 <Text style={errorTextStyle}>{error}</Text>
                 <CardSection>
-                    <Button>
+                    <Button onPress={() => this.navBar('all')}>
                         All
                     </Button>
-                    <Button>
-                        friends
+                    <Button onPress= {() => this.navBar('friends')}>
+                        Friends
                     </Button>
-                    <Button>
+                    <Button onPress= {() => this.navBar('top')}>
                         Top
                     </Button>
                 </CardSection>
                 <CardSection>
-                    <DoAChallengeTimeline
-                        challengesId={challengesId}
-                        challengeId={challengeId}
-                        owner={owner}
-
-                    />
+                    {this.renderList()}
                 </CardSection>
 
             </ScrollView>
@@ -303,8 +344,8 @@ const styles = {
 };
 
 const mapStateToProps = ({doAChallenge}) => {
-    const {image, comment, error} = doAChallenge;
-    return {image, comment, error};
+    const {image, comment, error, navBar} = doAChallenge;
+    return {image, comment, error, navBar};
 };
 
 export default connect(mapStateToProps,
@@ -312,5 +353,6 @@ export default connect(mapStateToProps,
         commentChange,
         addImageChallenge,
         challengDone,
-        getCurrentUserComment
+        getCurrentUserComment,
+        doAChallengeNavBar
     }) (DoAChallenge);

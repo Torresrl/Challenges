@@ -3,7 +3,9 @@ import RNFetchBlob from 'react-native-fetch-blob';
 import {COMMENT_CHANGE,
     DO_CHALLENG_ADD_IMAGE,
     DO_CHALLENGE_TIMELINE_FETCH,
-    NO_IMAGE_ADDED
+    NO_IMAGE_ADDED,
+    DO_A_CHALLENGE_NAV_BAR,
+    DO_CHALLENGE_TIMELINE_TOP_FETCH
 } from '../types';
 
 export const commentChange = (text) => {
@@ -17,6 +19,14 @@ export const addImageChallenge = (image) => {
     return {
         type: DO_CHALLENG_ADD_IMAGE,
         payload: image
+    };
+};
+
+//Vilken liste som er valgt (all, frinds, top)
+export const doAChallengeNavBar= (buttonValue) => {
+    return{
+        type: DO_A_CHALLENGE_NAV_BAR,
+        payload: buttonValue
     };
 };
 
@@ -86,9 +96,10 @@ export const challengDone = (object) => {
     }
 };
 
-//henter ut en liste men informasjon om hver challenge
+//henter ut en liste men informasjon om hver challenge sortert etter tid
 export const fetchTimeline = (challengesId, challengeId) => {
     const {currentUser} = firebase.auth();
+    let sortedList = {};
 
     return (dispatch) => {
         firebase.database()
@@ -96,11 +107,47 @@ export const fetchTimeline = (challengesId, challengeId) => {
                 currentUser.uid + '/myChallenges/' +
                 challengesId +'/challenges/' +
                 challengeId + '/timeline')
+            .orderByChild('postedAt')
+
+            //se link for sortering
+            //https://stackoverflow.com/questions/33893866/orderbychild-not-working-in-firebase
 
             .on('value', snapshot => {
+                snapshot.forEach( function(child){
+                    sortedList[child.key] = child.val();
+
+                });
+
                 dispatch({
                     type: DO_CHALLENGE_TIMELINE_FETCH,
-                    payload: snapshot.val()
+                    payload: sortedList
+                });
+            });
+    }
+
+};
+
+//henter ut liste med info om hver challenge sortert etter poengsum
+export const fetchTimelineTop = (challengesId, challengeId) => {
+    const {currentUser} = firebase.auth();
+    let sortedList = {};
+
+    return (dispatch) => {
+        firebase.database()
+            .ref('/Users/' +
+                currentUser.uid + '/myChallenges/' +
+                challengesId +'/challenges/' +
+                challengeId + '/timeline')
+            .orderByChild('votes')
+            .on('value', snapshot => {
+                snapshot.forEach( function(child){
+                    sortedList[child.key] = child.val();
+                });
+                //se link for sortering
+                //https://stackoverflow.com/questions/33893866/orderbychild-not-working-in-firebase
+                dispatch({
+                    type: DO_CHALLENGE_TIMELINE_TOP_FETCH,
+                    payload: sortedList
                 });
             });
     }

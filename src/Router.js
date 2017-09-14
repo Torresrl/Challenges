@@ -9,7 +9,7 @@ import Challenges from './components/challenges/challenges_list/Challenges';
 import NewChallenges from './components/challenges/create_new/NewChallenges';
 import FindChallenges from './components/challenges/FindChallenges';
 import ShowChallenges from './components/challenges/show_challenges/ShowChallenges';
-import DoAChallenge from './components/challenges/show_challenges/DoAChallenge';
+import DoAChallenge from './components/challenges/show_challenges/DoAChallenge/DoAChallenge';
 import AddProfilePicture from './components/Login/AddProfilePicture';
 
 

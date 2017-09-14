@@ -52,7 +52,7 @@ class TimelineItem extends Component {
 
 
     //Database funskjoner:
-    updateVotes(upVote){
+    updateVotes(upVote){ //upVote
         const {challengesId} = this.props;
 
         let votes = parseInt(this.props.post.votes);
