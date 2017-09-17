@@ -1,27 +1,23 @@
-import React, {Component} from 'react';
-import {Provider} from 'react-redux';
-import {createStore, applyMiddleware} from 'redux';
+import React, { Component } from 'react';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
 import firebase from 'firebase';
 import ReduxThunk from 'redux-thunk';
 import reducers from './reducers';
 import Router from './Router';
 
-
-
-
 class App extends Component {
 
     componentWillMount() {
-        var config = {
-            apiKey: "AIzaSyAjlvAZ8yEUUJx49W06WNfa0Skt3pzTav4",
-            authDomain: "challenges-840a4.firebaseapp.com",
-            databaseURL: "https://challenges-840a4.firebaseio.com",
-            projectId: "challenges-840a4",
-            storageBucket: "challenges-840a4.appspot.com",
-            messagingSenderId: "637891220380"
+        const config = {
+            apiKey: 'AIzaSyAjlvAZ8yEUUJx49W06WNfa0Skt3pzTav4',
+            authDomain: 'challenges-840a4.firebaseapp.com',
+            databaseURL: 'https://challenges-840a4.firebaseio.com',
+            projectId: 'challenges-840a4',
+            storageBucket: 'challenges-840a4.appspot.com',
+            messagingSenderId: '637891220380'
         };
         firebase.initializeApp(config);
-
     }
 
     render() {
@@ -29,7 +25,7 @@ class App extends Component {
 
         return (
             <Provider store={store}>
-                <Router/>
+                <Router />
             </Provider>
 
         );

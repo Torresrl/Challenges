@@ -9,14 +9,16 @@ import {
     Card,
     CardSection,
     Spinner
-} from '../../common';
+} from '../../../common';
 import {
     commentChange,
     addImageChallenge,
     challengDone,
-    getCurrentUserComment
-} from '../../../Actions';
+    getCurrentUserComment,
+    doAChallengeNavBar
+} from '../../../../Actions';
 import DoAChallengeTimeline from './DoAChallengeTimeline';
+import DoAChallengeTimelineTop from './DoAChallengeTimelineTop';
 
 
 class DoAChallenge extends Component {
@@ -24,7 +26,8 @@ class DoAChallenge extends Component {
     constructor() {
         super();
         this.state = {
-            imageUrl: ''
+            imageUrl: '',
+            followers: {}
         };
     }
 
@@ -45,6 +48,22 @@ class DoAChallenge extends Component {
         }
     }
 
+    componentDidMount() {
+        const {challengesId} = this.props;
+        const database = firebase.database();
+        database
+            .ref('/challenges/' + challengesId + '/followers')
+            .on('value', snap => {
+                this.setState({
+                    followers: Object.keys(snap.val())
+                });
+            } );
+    }
+
+    navBar(chooseList){
+        this.props.doAChallengeNavBar(chooseList);
+    }
+
     commentOnChange(text){
         this.props.commentChange(text);
     }
@@ -55,7 +74,23 @@ class DoAChallenge extends Component {
 
     onChallengeFinished(){
         const {image, comment, challengesId, challenge, owner} = this.props;
-        this.props.challengDone({image, comment,challengeId: challenge.challengeId, challengesId, owner});
+        const database = firebase.database();
+
+        database
+            .ref('/challenges/' + challengesId + '/followers')
+            .on('value', snap => {
+                this.setState({
+                    followers: Object.keys(snap.val())
+                });
+            } );
+
+        this.props.challengDone({
+            image,
+            comment,
+            challengeId: challenge.challengeId,
+            challengesId,
+            owner,
+            followers: this.state.followers});
     }
 
     chooseImage() {
@@ -179,12 +214,53 @@ class DoAChallenge extends Component {
         }
     }
 
+    renderList(){
+        const {navBar} = this.props;
+        const{challengeId} = this.props.challenge;
+        const {challengesId, owner} = this.props;
+
+        switch (navBar) {
+            case "all":
+                return (
+                    <DoAChallengeTimeline
+                challengesId={challengesId}
+                challengeId={challengeId}
+                owner={owner}
+                    />
+            );
+            case "friends":
+                return (
+                    <View>
+                        <Text>Frinds</Text>
+                    </View>
+                    );
+            case "top":
+                return(
+                    <DoAChallengeTimelineTop
+                        challengesId={challengesId}
+                        challengeId={challengeId}
+                        owner={owner}
+                    />
+                );
+            default:
+                return(
+                    <DoAChallengeTimeline
+                        challengesId={challengesId}
+                        challengeId={challengeId}
+                        owner={owner}
+                    />
+                );
+
+        }
+    }
+
     render(){
         const{name, description, challengeId} = this.props.challenge;
-        const {challengesId, owner} = this.props;
+        const {challengesId, owner, error} = this.props;
         const {
             headerStyle,
             headerCardStyle,
+            errorTextStyle
         } = styles;
 
         return(
@@ -198,24 +274,20 @@ class DoAChallenge extends Component {
                     </CardSection>
                 </Card>
                 {this.renderContentDoneOrNot()}
+                <Text style={errorTextStyle}>{error}</Text>
                 <CardSection>
-                    <Button>
+                    <Button onPress={() => this.navBar('all')}>
                         All
                     </Button>
-                    <Button>
-                        friends
+                    <Button onPress= {() => this.navBar('friends')}>
+                        Friends
                     </Button>
-                    <Button>
+                    <Button onPress= {() => this.navBar('top')}>
                         Top
                     </Button>
                 </CardSection>
                 <CardSection>
-                    <DoAChallengeTimeline
-                        challengesId={challengesId}
-                        challengeId={challengeId}
-                        owner={owner}
-
-                    />
+                    {this.renderList()}
                 </CardSection>
 
             </ScrollView>
@@ -261,13 +333,19 @@ const styles = {
         borderWidth: 1
     },
 
+    errorTextStyle: {
+        color: 'red',
+        fontSize: 12,
+        alignSelf: 'center'
+    }
+
 
 
 };
 
 const mapStateToProps = ({doAChallenge}) => {
-    const {image, comment} = doAChallenge;
-    return {image, comment};
+    const {image, comment, error, navBar} = doAChallenge;
+    return {image, comment, error, navBar};
 };
 
 export default connect(mapStateToProps,
@@ -275,5 +353,6 @@ export default connect(mapStateToProps,
         commentChange,
         addImageChallenge,
         challengDone,
-        getCurrentUserComment
+        getCurrentUserComment,
+        doAChallengeNavBar
     }) (DoAChallenge);

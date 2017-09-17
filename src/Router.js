@@ -9,7 +9,9 @@ import Challenges from './components/challenges/challenges_list/Challenges';
 import NewChallenges from './components/challenges/create_new/NewChallenges';
 import FindChallenges from './components/challenges/FindChallenges';
 import ShowChallenges from './components/challenges/show_challenges/ShowChallenges';
-import DoAChallenge from './components/challenges/show_challenges/DoAChallenge';
+import DoAChallenge from './components/challenges/show_challenges/DoAChallenge/DoAChallenge';
+import AddProfilePicture from './components/Login/AddProfilePicture';
+
 
 const RouterComponent = () => {
 
@@ -29,6 +31,7 @@ const RouterComponent = () => {
                 <Scene key="auth">
                     <Scene key="login" component={LoginForm} title="Challenges" />
                     <Scene key="newUser" component={NewUser} title="Create User"/>
+                    <Scene key="newProfilePicture" component={AddProfilePicture} title="Add Profile Picture"/>
                 </Scene>
 
                 {/* Scenene for for allt innhold etter innloging*/}

@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import _ from 'lodash';
-import {fetchTimeline} from '../../../Actions';
+import {fetchTimeline} from '../../../../Actions';
 import {ListView} from 'react-native';
-import TimelineItem from './TimelineItem';
+import TimelineItem from '../TimelineItem';
 
 
 class DoAChallengeTimeline extends Component {
