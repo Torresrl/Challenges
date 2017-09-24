@@ -9,7 +9,7 @@ import {
 import {connect} from 'react-redux';
 import _ from 'lodash';
 import {getImage} from '../../../Actions';
-import {Spinner, Card, CardSection} from '../../common';
+import {Spinner, Card, CardSection, Button} from '../../common';
 import ShowChallengesListItem from './ShowChallengesListItem';
 
 
@@ -23,22 +23,69 @@ class ShowChallenges extends Component {
             return {...val, uid}
         });
         this.state = {challengeList};
+        console.log(challengeList);
 
         if(mainImage) {
             this.props.getImage(challengesId);
         }
     }
 
+    //Sorterer listen etter hva brukeren vil se (all, done eller notDone)
+    navBar(chooseList){
+        const{challenges} = this.props.challenges;
+        let challengeList = null;
+
+
+        console.log(challenges);
+
+        if (chooseList == 'all') {
+            challengeList = _.map(challenges, (val, uid) => {
+                return {...val, uid}
+            });
+        }
+
+        else if(chooseList == 'done'){
+            challengeList = challenges.filter(challenges => {
+                if (challenges.done == true) {
+                    return challenges;
+                }
+            });
+
+        } else if(chooseList == 'notDone'){
+            challengeList = challenges.filter(challenges => {
+                if (challenges.done == false) {
+                    return challenges;
+                }
+            });
+
+        }
+
+
+
+        console.log('@@@@@@@@@@@@@@@@AFTER SWICHE@@@@@@@@@@@@@@@@@@@@');
+
+        const challengeList2 = _.map(challengeList, (val, uid) => {
+            return {...val, uid};
+        });
+
+        this.setState({challengeList: challengeList2});
+
+    }
+
+
     createDataSource(){
         const {challengeList} = this.state;
         const ds = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2
         });
-        this.dataSource = ds.cloneWithRows(challengeList)
+
+        this.dataSource = ds.cloneWithRows(challengeList);
+
     }
 
-    renderRow(challenge){
-        return (
+
+    renderRow(challenge){ //det er denne som må sjekke om challengen er done eller ikke
+        return ( //bruk DoAChallenge som insperasjon, linje 217 til 251
             <ShowChallengesListItem
                 challenge={challenge}
                 challenges={this.props.challenges}
@@ -96,6 +143,18 @@ class ShowChallenges extends Component {
                     <Text style={codeStyle}>Code: {challengesId}</Text>
                     <Text>{description}</Text>
                 </Card>
+                <CardSection>
+                    <Button onPress={() => this.navBar('all')}>
+                        All
+                    </Button>
+                    <Button onPress={() => this.navBar('done')}>
+                        Done
+                    </Button>
+                    <Button onPress={() => this.navBar('notDone')}>
+                        Not Done
+                    </Button>
+                </CardSection>
+
                 <ListView
                     enableEmptySections
                     dataSource={this.dataSource}
@@ -144,8 +203,8 @@ const styles = {
 };
 
 const mapStateToProps = ({showChallenges}) => {
-    const {url, load} = showChallenges;
-    return {url, load};
+    const {url, load, navBar} = showChallenges;
+    return {url, load, navBar};
 
 };
 

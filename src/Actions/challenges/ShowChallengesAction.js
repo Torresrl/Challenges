@@ -1,7 +1,8 @@
 import firebase from 'firebase';
 import {
     CHALLENGES_FETCH_IMAGE_SUCCESS,
-    CHALLENGES_FETCH_IMAGE
+    CHALLENGES_FETCH_IMAGE,
+    SHOW_CHALLEGES_NAV_BAR
 } from '../types';
 
 

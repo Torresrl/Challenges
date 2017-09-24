@@ -1,9 +1,11 @@
 import {CHALLENGES_FETCH_IMAGE_SUCCESS,
-    CHALLENGES_FETCH_IMAGE} from '../../Actions/types';
+    CHALLENGES_FETCH_IMAGE,
+
+} from '../../Actions/types';
 
 const INITIAL_STATE = {
     url: "",
-    load: true
+    load: true,
 
 };
 
@@ -13,6 +15,8 @@ export default (state = INITIAL_STATE, action) => {
             return {...state, url: action.payload, load: false};
         case CHALLENGES_FETCH_IMAGE:
             return{...state, load: true};
+
+
         default:
             return state;
     }
