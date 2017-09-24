@@ -62,7 +62,6 @@ class ShowChallenges extends Component {
 
 
 
-        console.log('@@@@@@@@@@@@@@@@AFTER SWICHE@@@@@@@@@@@@@@@@@@@@');
 
         const challengeList2 = _.map(challengeList, (val, uid) => {
             return {...val, uid};

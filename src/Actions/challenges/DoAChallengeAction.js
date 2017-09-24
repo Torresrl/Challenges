@@ -50,7 +50,7 @@ export const getCurrentUserComment = (challengesId, challengeId) => {
             });
     }
 };
-
+//TODO sørg for at når du laster opp bilde begynner den ikke å leite med en gang eller at den venter?
 //brukes til å oppdatere flere poster samtidig
 export const challengDone = (object) => {
     const {currentUser} = firebase.auth();
