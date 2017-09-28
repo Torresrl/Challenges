@@ -83,7 +83,7 @@ class TimelineItem extends Component {
 
     }
 
-    //lager fanout object, gjør sånn du får atmoic update
+    //lager fanout object, gjør sånn du får atmoic update for voting
     fanoutPost = ({votes}) => {
         const {currentUser} = firebase.auth();
         const {challengesId, challengeId, owner} = this.props;

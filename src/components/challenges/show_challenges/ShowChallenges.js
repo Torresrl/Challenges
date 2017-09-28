@@ -61,8 +61,6 @@ class ShowChallenges extends Component {
         }
 
 
-
-
         const challengeList2 = _.map(challengeList, (val, uid) => {
             return {...val, uid};
         });
