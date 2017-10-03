@@ -3,7 +3,8 @@ import { NEW_PROFILE_IMAGE,
   UPLOAD_PROFILE_PICTURE_FAILED,
   USER_INFO_FETCH_SUCCESS,
   NEW_NAME_CHANGE,
-  USER_UPDATE } from '../../Actions/types';
+  USER_UPDATE,
+  USER_UPLOAD_UPDATE_SUCCESS } from '../../Actions/types';
 
 
 const INITIAL_STATE = {
@@ -31,6 +32,8 @@ export default (state = INITIAL_STATE, action) => {
         return { ...state, name: action.payload };
     case USER_UPDATE:
         return { ...state, [action.payload.prop]: action.payload.value };
+    case USER_UPLOAD_UPDATE_SUCCESS:
+        return { ...state, render_profile_pic: true };
     default:
       return state;
   }

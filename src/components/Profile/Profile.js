@@ -19,6 +19,10 @@ class Profile extends Component {
     console.log('Profile picture fetch successful');
   }
 
+  componentWillReceiveProps(nextprop) {
+    nextprop.userInfoFetch();
+  }
+
   render() {
     const { imageStyle, textStyle } = styles;
       return (

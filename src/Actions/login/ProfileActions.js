@@ -4,7 +4,8 @@ import { NEW_PROFILE_IMAGE,
           UPLOAD_PROFILE_PICTURE,
           UPLOAD_PROFILE_PICTURE_FAILED,
           USER_INFO_FETCH_SUCCESS,
-          USER_UPDATE } from '../types';
+          USER_UPDATE,
+          USER_UPLOAD_UPDATE_SUCCESS } from '../types';
 
 
 export const addProfilePic = (text) => {
@@ -15,11 +16,25 @@ export const addProfilePic = (text) => {
 };
 
 export const userUpdate = ({ prop, value }) => {
-  console.log(prop);
-  console.log(value);
   return {
     type: USER_UPDATE,
     payload: { prop, value }
+  };
+};
+
+export const saveUserUpdate = (name, email, phone) => {
+  const { currentUser } = firebase.auth();
+
+  return (dispatch) => {
+    currentUser.updateProfile({
+      displayName: name,
+      email,
+      phoneNumber: phone
+    })
+    .then(() => {
+      dispatch({ type: USER_UPLOAD_UPDATE_SUCCESS });
+    })
+    .then(Actions.profile({ type: 'reset' }));
   };
 };
 

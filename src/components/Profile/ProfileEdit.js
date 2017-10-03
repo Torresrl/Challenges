@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
 import { CardSection, Input, Button } from '../common';
-import { userUpdate } from '../../Actions/';
+import { userUpdate, saveUserUpdate } from '../../Actions/';
 
 class ProfileEdit extends Component {
 
@@ -38,7 +38,11 @@ class ProfileEdit extends Component {
             />
           </CardSection>
           <CardSection>
-            <Button styles={{ marginTop: 20 }}>
+            <Button
+              styles={{ marginTop: 20 }} onPress={() =>
+              this.props.saveUserUpdate(this.props.displayName,
+              this.props.email, this.props.phoneNumber)}
+            >
               Save
             </Button>
           </CardSection>
@@ -68,4 +72,4 @@ const { user, displayName, email } = profile;
 return { user, displayName, email };
 };
 
-export default connect(mapStateToProps, { userUpdate })(ProfileEdit);
+export default connect(mapStateToProps, { userUpdate, saveUserUpdate })(ProfileEdit);

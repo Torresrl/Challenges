@@ -62,3 +62,4 @@ export const DO_CHALLENGE_TIMELINE_FETCH = 'do_challenge_timelibe_fetch';
 //Profile
 export const USER_INFO_FETCH_SUCCESS = 'profile_picture_fetch_success';
 export const USER_UPDATE = 'user_update';
+export const USER_UPLOAD_UPDATE_SUCCESS = 'uploaded_success';
