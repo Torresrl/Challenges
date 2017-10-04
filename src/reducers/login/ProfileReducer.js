@@ -4,18 +4,16 @@ import { NEW_PROFILE_IMAGE,
   USER_INFO_FETCH_SUCCESS,
   NEW_NAME_CHANGE,
   USER_UPDATE,
-  USER_UPLOAD_UPDATE_SUCCESS } from '../../Actions/types';
+  USER_UPLOAD_UPDATE_SUCCESS,
+  INVALID_NAME,
+  INVALID_NUMBER } from '../../Actions/types';
 
 
 const INITIAL_STATE = {
   render_profile_pic: false,
-  profilePicture: 'content://com.challenges.provider/app_images/Android/data/com.challenges/files/Pictures/image-7fe7afff-c3bf-4791-8599-86554c471778.jpg',
   user: {},
   chosen_picture_uri: '',
-  error: '',
-  displayName: '',
-  email: '',
-  phoneNumber: ''
+  error: ''
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -23,9 +21,13 @@ export default (state = INITIAL_STATE, action) => {
     case NEW_PROFILE_IMAGE:
       return { ...state, render_profile_pic: true, chosen_picture_uri: action.payload };
     case UPLOAD_PROFILE_PICTURE:
-      return { ...state, ...INITIAL_STATE, profilePicture: action.payload };
+      return { ...state, render_profile_pic: false, profilePicture: action.payload };
     case UPLOAD_PROFILE_PICTURE_FAILED:
       return { ...state, error: 'Failed to upload profile picture' };
+    case INVALID_NUMBER:
+      return { ...state, error: 'Invalid Number' };
+    case INVALID_NAME:
+      return { ...state, error: 'Invalid Name' };
     case USER_INFO_FETCH_SUCCESS:
       return { ...state, user: action.payload };
     case NEW_NAME_CHANGE:
@@ -33,7 +35,7 @@ export default (state = INITIAL_STATE, action) => {
     case USER_UPDATE:
         return { ...state, [action.payload.prop]: action.payload.value };
     case USER_UPLOAD_UPDATE_SUCCESS:
-        return { ...state, render_profile_pic: true };
+        return { ...state, name: action.payload[0], phoneNumber: action.payload[1], error: '' };
     default:
       return state;
   }

@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import { Image, Text, TouchableOpacity } from 'react-native';
+import { Image, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { Actions } from 'react-native-router-flux';
-import {
-  userInfoFetch,
-  addProfilePic,
-  uploadProfilePicture
- } from '../../Actions';
-import { Card, CardSection } from '../common';
+import { userInfoFetch } from '../Actions';
+import { Card, CardSection } from './common';
+
+
+//Enable componentWillMount method for
+//fetching user specific profile picture
+//
+//Currently setting default profile image
+
 
 class Profile extends Component {
 
@@ -16,23 +18,19 @@ class Profile extends Component {
     this.props.userInfoFetch();
     console.log('Profile picture fetch successful');
   }
+
   render() {
     const { imageStyle, textStyle } = styles;
       return (
           <Card>
-            <TouchableOpacity onPress={() => Actions.displayNewProfilePicture()}>
-              <CardSection>
-                <Image
-                source={{ uri: this.props.profilePicture || this.props.user.photoURL }}
-                style={imageStyle}
-                />
-              </CardSection>
-            </TouchableOpacity>
             <CardSection>
-              <Text style={textStyle}>Name: {this.props.name || this.props.user.displayName}</Text>
+              <Image
+              source={{ uri: this.props.user.photoURL }}
+              style={imageStyle}
+              />
             </CardSection>
             <CardSection>
-              <Text style={textStyle}>Phone: {this.props.phoneNumber || this.props.user.phoneNumber}</Text>
+              <Text style={textStyle}>Name: {this.props.user.displayName}</Text>
             </CardSection>
             <CardSection>
               <Text style={textStyle}>Display random stuff here</Text>
@@ -71,11 +69,10 @@ const styles = {
 
 };
 
-
 const mapStateToProps = ({ profile }) => {
-  const { user, name, profilePicture, phoneNumber } = profile;
+  const { user } = profile;
 
-  return { user, name, profilePicture, phoneNumber };
+  return { user };
 };
 
-export default connect(mapStateToProps, { userInfoFetch, addProfilePic, uploadProfilePicture })(Profile);
+export default connect(mapStateToProps, { userInfoFetch })(Profile);

@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { CardSection, Input, Button } from '../common';
-import { userUpdate, saveUserUpdate } from '../../Actions/';
+import {
+  userUpdate,
+  saveUserUpdate,
+  takeNewProfilePicture,
+  addProfilePic,
+  uploadProfilePicture } from '../../Actions/';
+
 
 class ProfileEdit extends Component {
 
@@ -13,7 +19,15 @@ class ProfileEdit extends Component {
    });
  }
 
+ saveUserUpdate = () => {
+   const { displayName, phoneNumber } = this.props;
+   this.props.saveUserUpdate({ displayName, phoneNumber });
+ };
+
+
   renderContent() {
+    const { styleButton } = styles;
+
       return (
         <View style={styles.styleFirstCard}>
           <CardSection>
@@ -25,23 +39,17 @@ class ProfileEdit extends Component {
           </CardSection>
           <CardSection>
             <Input
-              label="Email"
-              value={this.props.email}
-              onChangeText={value => this.props.userUpdate({ prop: 'email', value })}
-            />
-          </CardSection>
-          <CardSection>
-            <Input
               label="Phone"
               value={this.props.phoneNumber}
               onChangeText={value => this.props.userUpdate({ prop: 'phoneNumber', value })}
             />
           </CardSection>
+
+          <Text style={styles.errorTextStyle}>{this.props.error}</Text>
+
           <CardSection>
             <Button
-              styles={{ marginTop: 20 }} onPress={() =>
-              this.props.saveUserUpdate(this.props.displayName,
-              this.props.email, this.props.phoneNumber)}
+              styles={styleButton} onPress={this.saveUserUpdate.bind(this)}
             >
               Save
             </Button>
@@ -62,14 +70,27 @@ class ProfileEdit extends Component {
 const styles = {
   styleFirstCard: {
     marginTop: 70
-  }
-};
+  },
+  styleButton: {
+      borderWidth: 2
+  },
+  errorTextStyle: {
+      color: 'red',
+      fontSize: 12,
+      alignSelf: 'center'
 
+  }
+  };
 
 const mapStateToProps = ({ profile }) => {
-const { user, displayName, email } = profile;
+const { user, displayName, phoneNumber, error } = profile;
 
-return { user, displayName, email };
+return { user, displayName, phoneNumber, error };
 };
 
-export default connect(mapStateToProps, { userUpdate, saveUserUpdate })(ProfileEdit);
+export default connect(mapStateToProps, {
+  userUpdate,
+  saveUserUpdate,
+  takeNewProfilePicture,
+  uploadProfilePicture,
+  addProfilePic })(ProfileEdit);

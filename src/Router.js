@@ -12,6 +12,7 @@ import FindChallenges from './components/challenges/FindChallenges';
 import ShowChallenges from './components/challenges/show_challenges/ShowChallenges';
 import DoAChallenge from './components/challenges/show_challenges/DoAChallenge';
 import AddProfilePicture from './components/Login/AddProfilePicture';
+import DisplayProfilePicture from './components/Profile/DisplayProfilePicture';
 
 
 const RouterComponent = () => {
@@ -82,12 +83,23 @@ const RouterComponent = () => {
                             title="Profile"
                         />
                         <Scene
+                          onRight={() => Actions.displayNewProfilePicture()}
+                          rightTitle="New Photo"
                           key="profileEditForm"
+                          type="reset"
                           component={ProfileEdit}
-                          title="Edit Profile"
-                        />
-                    </Scene>
+                          title="Edit Profile">
 
+                        </Scene>
+
+                        <Scene
+                        key="displayNewProfilePicture"
+                        component={DisplayProfilePicture}
+                        title="Photo"
+                        />
+
+
+                    </Scene>
                 </Scene>
             </Scene>
         </Router>
