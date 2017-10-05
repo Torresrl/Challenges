@@ -1,25 +1,28 @@
 import React, { Component } from 'react';
 import ImagePicker from 'react-native-image-picker';
-import { Text, View, Image } from 'react-native';
-import { Actions } from 'react-native-router-flux';
+import { View, Image, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { CardSection, Card, Button } from '../common';
-import { addProfilePic, uploadProfilePicture } from '../../Actions';
+import { Card, CardSection, Button } from '../common';
+import {
+  addProfilePic,
+  uploadUpdateProfilePicture } from '../../Actions';
 
 
-class AddProfilePicture extends Component {
+class DisplayProfilePicture extends Component {
+
 
   onAddImage(text) {
     this.props.addProfilePic(text);
   }
 
   onUploadPicture(uri) {
-    this.props.uploadProfilePicture(uri);
+    this.props.uploadUpdateProfilePicture(uri);
   }
 
-  skip() {
-    Actions.main({ type: 'reset' });
-  }
+  saveUserUpdate = () => {
+    const { displayName, phoneNumber } = this.props;
+    this.props.saveUserUpdate({ displayName, phoneNumber });
+  };
 
   chooseImage() {
     ImagePicker.showImagePicker(null, (response) => {
@@ -35,16 +38,17 @@ class AddProfilePicture extends Component {
     });
   }
 
-  renderPicture() {
-    const { styleFirstCard, imageStyle, styleButton, styleCard } = styles;
+  render() {
+    const { styleFirstCard, imageStyle, styleButton } = styles;
+
     if (this.props.render_profile_pic) {
       return (
-        <View>
+        <View style={styleFirstCard}>
           <Card>
             <CardSection>
               <Image
               source={{ uri: this.props.chosen_picture_uri }}
-              style={imageStyle}/>
+              style={imageStyle} />
             </CardSection>
 
             <CardSection>
@@ -52,8 +56,10 @@ class AddProfilePicture extends Component {
                 style={styleButton} onPress={() => {
                   this.onUploadPicture(this.props.chosen_picture_uri);
                 }}>
-                  Continue
+                  Allright
                 </Button>
+              </CardSection>
+              <CardSection>
               <Button
                   style={styleButton} onPress={() => {
                     this.chooseImage();
@@ -70,27 +76,19 @@ class AddProfilePicture extends Component {
     }
     return (
       <View style={styleFirstCard}>
-        <Card style={styleCard}>
-            <CardSection>
-              <Button style={styleButton} onPress={() => { this.chooseImage(); }}>
-              Add Picture
-              </Button>
-            </CardSection>
-          </Card>
-          <Card style={styleCard}>
-              <CardSection>
-              <Button style={styleButton} onPress={() => { this.skip(); }}>
-              Skip</Button>
-            </CardSection>
-        </Card>
-      </View>
-    );
-  }
-
-  render() {
-    return (
-      <View>
-        {this.renderPicture()}
+      <CardSection>
+        <Image
+        source={{ uri: this.props.user.photoURL }}
+        style={imageStyle} />
+      </CardSection>
+      <CardSection>
+      <Button
+          style={styleButton} onPress={() => {
+            this.chooseImage();
+          }}>
+          Retake
+        </Button>
+    </CardSection>
       </View>
     );
   }
@@ -135,8 +133,11 @@ const styles = {
   };
 
 const mapStateToProps = ({ profile }) => {
-  const { render_profile_pic, chosen_picture_uri, error } = profile;
-  return { render_profile_pic, chosen_picture_uri, error };
+  const { render_profile_pic, chosen_picture_uri, user } = profile;
+
+  return { render_profile_pic, chosen_picture_uri, user };
 };
 
-export default connect(mapStateToProps, { addProfilePic, uploadProfilePicture })(AddProfilePicture);
+
+export default connect(mapStateToProps,
+  { addProfilePic, uploadUpdateProfilePicture })(DisplayProfilePicture);

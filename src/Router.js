@@ -1,17 +1,21 @@
 import React from 'react';
-import {Scene, Router} from 'react-native-router-flux';
-import {Text} from 'react-native';
+import { Scene, Router, Actions } from 'react-native-router-flux';
+import { Text } from 'react-native';
 import LoginForm from './components/Login/LoginForm';
 import NewUser from './components/Login/NewUser';
 import Feed from './components/Feed';
-import Profile from './components/Profile';
+import Profile from './components/Profile/Profile';
+import ProfileEdit from './components/Profile/ProfileEdit';
 import Challenges from './components/challenges/challenges_list/Challenges';
 import NewChallenges from './components/challenges/create_new/NewChallenges';
 import FindChallenges from './components/challenges/FindChallenges';
 import ShowChallenges from './components/challenges/show_challenges/ShowChallenges';
 import DoAChallenge from './components/challenges/show_challenges/DoAChallenge/DoAChallenge';
 import AddProfilePicture from './components/Login/AddProfilePicture';
-
+import DisplayProfilePicture from './components/Profile/DisplayProfilePicture';
+import ReauthenticateUser from './components/Profile/ReauthenticateUser';
+import NewPasswordForm from './components/Profile/NewPasswordForm';
+import NewEmailForm from './components/Profile/NewEmailForm';
 
 const RouterComponent = () => {
 
@@ -20,8 +24,6 @@ const RouterComponent = () => {
             <Text style={{color:'black'}}>{title}</Text>
         );
     };
-
-
 
     return (
 
@@ -76,12 +78,46 @@ const RouterComponent = () => {
                     </Scene>
                     <Scene key="tabProfile" title="Profile" icon={TabIcon}>
                         <Scene
+                            onRight={() => Actions.profileEditForm()}
+                            rightTitle="Edit"
                             key="profile"
                             component={Profile}
                             title="Profile"
                         />
-                    </Scene>
+                        <Scene
+                        onRight={() => Actions.displayNewProfilePicture()}
+                        rightTitle="New Photo"
+                        key="profileEditForm"
+                        //type="reset"
+                        component={ProfileEdit}
+                        title="Edit Profile">
+                        </Scene>
 
+                        <Scene
+                        key="reauthenticateUser"
+                        component={ReauthenticateUser}
+                        title="Re-authentication"
+                        />
+
+                        <Scene
+                        key="newPasswordForm"
+                        component={NewPasswordForm}
+                        title={'New Password'}
+                        type="reset"
+                        />
+                        <Scene
+                        key="newEmailForm"
+                        component={NewEmailForm}
+                        title={'New Email'}
+                        type="reset"
+                        />
+
+                        <Scene
+                        key="displayNewProfilePicture"
+                        component={DisplayProfilePicture}
+                        title="Photo"
+                        />
+                    </Scene>
                 </Scene>
             </Scene>
         </Router>

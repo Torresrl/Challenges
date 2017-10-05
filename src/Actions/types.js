@@ -6,6 +6,17 @@ export const LOGIN_SUCCESS = 'login_success';
 export const LOGIN_FAIL = 'login_fail';
 export const TRY_LOGIN = 'try_login';
 
+//Re-authentication
+export const RE_AUTHENTICATION_FAIL = 're-authenticaiton-fail';
+export const RE_AUTHENTICATION_SUCCESS = 're-authentication-success';
+export const PASSWORD_UPDATE_SUCCESS = 'passord-update-success';
+export const PASSWORD_UPDATE_FAIL = 'password-update-fail';
+export const CHANGE_EMAIL = 'change-email';
+export const CHANGE_PASSWORD = 'change-password';
+export const EMAIL_UPDATE_FAILED = 'email-failed';
+export const EMAIL_UPDATE_SUCCESS = 'email-success';
+export const USER_CANCEL = 'user-cancel';
+
 
 //new user
 export const NEW_EMAIL_CHANGE = 'new_email_change';
@@ -64,3 +75,7 @@ export const DO_CHALLENGE_TIMELINE_TOP_FETCH = 'do_challenge_timeline_top_fetch'
 
 //Profile
 export const USER_INFO_FETCH_SUCCESS = 'profile_picture_fetch_success';
+export const USER_UPDATE = 'user_update';
+export const USER_UPLOAD_UPDATE_SUCCESS = 'uploaded_success';
+export const INVALID_NAME = 'invalid_name';
+export const INVALID_NUMBER = 'invalid_number';
