@@ -88,7 +88,7 @@ const RouterComponent = () => {
                         onRight={() => Actions.displayNewProfilePicture()}
                         rightTitle="New Photo"
                         key="profileEditForm"
-                        //type="reset"
+                        type="reset"
                         component={ProfileEdit}
                         title="Edit Profile">
                         </Scene>
