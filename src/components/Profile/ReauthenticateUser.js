@@ -15,9 +15,9 @@ class ReauthenticateUser extends Component {
   }
 
   onReauthenticate() {
-    const { email, password } = this.props;
+    const { email, password, changedEmail } = this.props;
 
-    this.props.reAuthenticate({ email, password });
+    this.props.reAuthenticate({ email, password, changedEmail });
   }
 
   render() {
@@ -85,10 +85,11 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ auth }) => {
-  const { email, password, error, load } = auth;
+const mapStateToProps = ({ auth, profile }) => {
+  const { email, password, error, load, changedEmail } = auth;
+  //const { changedEmail } = profile;
 
-  return { email, password, error, load };
+  return { email, password, error, load, changedEmail };
 };
 
 export default connect(mapStateToProps, { emailChange, passwordChange, reAuthenticate })(ReauthenticateUser);

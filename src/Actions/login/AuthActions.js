@@ -18,13 +18,13 @@ export const emailChange = (text) => {
 };
 
 export const passwordChange = (text) => {
-    return{
+    return {
         type: PASSWORD_CHANGE,
         payload: text
     };
 };
 
-export const reAuthenticate = ({ email, password }) => {
+export const reAuthenticate = ({ email, password, changedEmail }) => {
   const { currentUser } = firebase.auth();
   const credential = firebase.auth.EmailAuthProvider.credential(
     email,
@@ -38,20 +38,24 @@ export const reAuthenticate = ({ email, password }) => {
     currentUser.reauthenticateWithCredential(credential)
     .then(user => {
       console.log('Re-authentication success');
-      re_authenticationSucess(dispatch, user);
+      re_authenticationSuccess(dispatch, user, changedEmail);
     })
     .catch(() => {
-      console.log('Re-authenticaiton unsuccessful');
+      console.log('Re-authentication unsuccessful');
       re_authenticationFail(dispatch);
     });
   };
 };
 
-export const re_authenticationSucess = (dispatch, user) => {
+export const re_authenticationSuccess = (dispatch, user, changedEmail) => {
   dispatch({
     type: RE_AUTHENTICATION_SUCCESS, payload: user
   });
-  Actions.profileEditForm();
+  if (changedEmail) {
+    Actions.newEmailForm();
+  } else {
+    Actions.newPasswordForm();
+  }
 };
 
 export const re_authenticationFail = (dispatch) => {

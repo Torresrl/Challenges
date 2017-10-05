@@ -9,7 +9,9 @@ import {
   saveUserUpdate,
   takeNewProfilePicture,
   addProfilePic,
-  uploadProfilePicture } from '../../Actions/';
+  uploadProfilePicture,
+  changeEmail,
+  changePassword } from '../../Actions/';
 
 
 class ProfileEdit extends Component {
@@ -21,10 +23,12 @@ class ProfileEdit extends Component {
  }
 
  onChangeEmail() {
+   this.props.changeEmail();
    Actions.reauthenticateUser();
  }
 
  onNewPassword() {
+   this.props.changePassword();
    Actions.reauthenticateUser();
  }
 
@@ -110,4 +114,6 @@ export default connect(mapStateToProps, {
   saveUserUpdate,
   takeNewProfilePicture,
   uploadProfilePicture,
-  addProfilePic })(ProfileEdit);
+  addProfilePic,
+  changeEmail,
+  changePassword })(ProfileEdit);

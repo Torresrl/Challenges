@@ -9,6 +9,13 @@ export const TRY_LOGIN = 'try_login';
 //Re-authentication
 export const RE_AUTHENTICATION_FAIL = 're-authenticaiton-fail';
 export const RE_AUTHENTICATION_SUCCESS = 're-authentication-success';
+export const PASSWORD_UPDATE_SUCCESS = 'passord-update-success';
+export const PASSWORD_UPDATE_FAIL = 'password-update-fail';
+export const CHANGE_EMAIL = 'change-email';
+export const CHANGE_PASSWORD = 'change-password';
+export const EMAIL_UPDATE_FAILED = 'email-failed';
+export const EMAIL_UPDATE_SUCCESS = 'email-success';
+export const USER_CANCEL = 'user-cancel';
 
 
 //new user

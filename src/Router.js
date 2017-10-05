@@ -14,7 +14,8 @@ import DoAChallenge from './components/challenges/show_challenges/DoAChallenge';
 import AddProfilePicture from './components/Login/AddProfilePicture';
 import DisplayProfilePicture from './components/Profile/DisplayProfilePicture';
 import ReauthenticateUser from './components/Profile/ReauthenticateUser';
-
+import NewPasswordForm from './components/Profile/NewPasswordForm';
+import NewEmailForm from './components/Profile/NewEmailForm';
 
 const RouterComponent = () => {
 
@@ -98,6 +99,18 @@ const RouterComponent = () => {
                         title="Re-authentication"
                         />
 
+                        <Scene
+                        key="newPasswordForm"
+                        component={NewPasswordForm}
+                        title={'New Password'}
+                        type="reset"
+                        />
+                        <Scene
+                        key="newEmailForm"
+                        component={NewEmailForm}
+                        title={'New Email'}
+                        type="reset"
+                        />
 
                         <Scene
                         key="displayNewProfilePicture"

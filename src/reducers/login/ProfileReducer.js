@@ -6,7 +6,8 @@ import { NEW_PROFILE_IMAGE,
   USER_UPDATE,
   USER_UPLOAD_UPDATE_SUCCESS,
   INVALID_NAME,
-  INVALID_NUMBER } from '../../Actions/types';
+  INVALID_NUMBER,
+  WEAK_PASSWORD } from '../../Actions/types';
 
 
 const INITIAL_STATE = {
@@ -24,6 +25,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, render_profile_pic: false, profilePicture: action.payload };
     case UPLOAD_PROFILE_PICTURE_FAILED:
       return { ...state, error: 'Failed to upload profile picture' };
+    case WEAK_PASSWORD:
+      return { ...state, error: 'Password must be at least 7 chars', password: '' };
     case INVALID_NUMBER:
       return { ...state, error: 'Invalid Number' };
     case INVALID_NAME:
