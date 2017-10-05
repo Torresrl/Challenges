@@ -6,6 +6,10 @@ export const LOGIN_SUCCESS = 'login_success';
 export const LOGIN_FAIL = 'login_fail';
 export const TRY_LOGIN = 'try_login';
 
+//Re-authentication
+export const RE_AUTHENTICATION_FAIL = 're-authenticaiton-fail';
+export const RE_AUTHENTICATION_SUCCESS = 're-authentication-success';
+
 
 //new user
 export const NEW_EMAIL_CHANGE = 'new_email_change';

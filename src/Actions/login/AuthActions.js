@@ -4,7 +4,9 @@ import {EMAIL_CHANGE,
     PASSWORD_CHANGE,
     LOGIN_SUCCESS,
     LOGIN_FAIL,
-    TRY_LOGIN
+    TRY_LOGIN,
+    RE_AUTHENTICATION_SUCCESS,
+    RE_AUTHENTICATION_FAIL
 } from '../types';
 
 
@@ -20,6 +22,42 @@ export const passwordChange = (text) => {
         type: PASSWORD_CHANGE,
         payload: text
     };
+};
+
+export const reAuthenticate = ({ email, password }) => {
+  const { currentUser } = firebase.auth();
+  const credential = firebase.auth.EmailAuthProvider.credential(
+    email,
+    password
+  );
+  return (dispatch) => {
+    dispatch({
+      type: TRY_LOGIN
+    });
+
+    currentUser.reauthenticateWithCredential(credential)
+    .then(user => {
+      console.log('Re-authentication success');
+      re_authenticationSucess(dispatch, user);
+    })
+    .catch(() => {
+      console.log('Re-authenticaiton unsuccessful');
+      re_authenticationFail(dispatch);
+    });
+  };
+};
+
+export const re_authenticationSucess = (dispatch, user) => {
+  dispatch({
+    type: RE_AUTHENTICATION_SUCCESS, payload: user
+  });
+  Actions.profileEditForm();
+};
+
+export const re_authenticationFail = (dispatch) => {
+  dispatch({
+    type: RE_AUTHENTICATION_FAIL
+  });
 };
 
 export const loginUser = ({email, password}) => {
@@ -49,4 +87,3 @@ const loginFail = (dispatch) => {
         });
 
 };
-

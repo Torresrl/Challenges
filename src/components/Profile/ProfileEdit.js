@@ -3,6 +3,7 @@ import _ from 'lodash';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { CardSection, Input, Button } from '../common';
+import { Actions } from 'react-native-router-flux';
 import {
   userUpdate,
   saveUserUpdate,
@@ -17,6 +18,14 @@ class ProfileEdit extends Component {
    _.each(this.props.user, (value, prop) => {
      this.props.userUpdate({ prop, value });
    });
+ }
+
+ onChangeEmail() {
+   Actions.reauthenticateUser();
+ }
+
+ onNewPassword() {
+   Actions.reauthenticateUser();
  }
 
  saveUserUpdate = () => {
@@ -37,19 +46,26 @@ class ProfileEdit extends Component {
               onChangeText={value => this.props.userUpdate({ prop: 'displayName', value })}
             />
           </CardSection>
+
           <CardSection>
-            <Input
-              label="Phone"
-              value={this.props.phoneNumber}
-              onChangeText={value => this.props.userUpdate({ prop: 'phoneNumber', value })}
-            />
+            <Button
+              style={styleButton} onPress={this.onChangeEmail.bind(this)}
+            >
+              Change Email
+            </Button>
+
+            <Button
+              style={styleButton} onPress={this.onNewPassword.bind(this)}
+            >
+              New Password
+            </Button>
           </CardSection>
 
           <Text style={styles.errorTextStyle}>{this.props.error}</Text>
 
           <CardSection>
             <Button
-              styles={styleButton} onPress={this.saveUserUpdate.bind(this)}
+              style={styleButton} onPress={this.saveUserUpdate.bind(this)}
             >
               Save
             </Button>
@@ -72,7 +88,7 @@ const styles = {
     marginTop: 70
   },
   styleButton: {
-      borderWidth: 2
+      borderWidth: 1
   },
   errorTextStyle: {
       color: 'red',
@@ -81,6 +97,7 @@ const styles = {
 
   }
   };
+
 
 const mapStateToProps = ({ profile }) => {
 const { user, displayName, phoneNumber, error } = profile;

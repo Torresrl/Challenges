@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { Image, Text, TouchableOpacity } from 'react-native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
+import ImagePicker from 'react-native-image-picker';
 import { Actions } from 'react-native-router-flux';
 import {
   userInfoFetch,
   addProfilePic,
-  uploadProfilePicture
+  uploadUpdateProfilePicture
  } from '../../Actions';
-import { Card, CardSection } from '../common';
+import { Card, CardSection, Button } from '../common';
 
 class Profile extends Component {
 
@@ -16,11 +17,74 @@ class Profile extends Component {
     this.props.userInfoFetch();
     console.log('Profile picture fetch successful');
   }
+
+  onAddImage(text) {
+    this.props.addProfilePic(text);
+  }
+
+  onUploadPicture(uri) {
+    this.props.uploadUpdateProfilePicture(uri);
+  }
+
+  saveUserUpdate = () => {
+    const { displayName, phoneNumber } = this.props;
+    this.props.saveUserUpdate({ displayName, phoneNumber });
+  };
+
+  chooseImage() {
+    ImagePicker.showImagePicker(null, (response) => {
+      if (response.didCancel) {
+        console.log('Cancel by user');
+      } else if (response.error) {
+        console.log('ImagePicker error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+        this.onAddImage(response.uri);
+      }
+    });
+  }
+
   render() {
-    const { imageStyle, textStyle } = styles;
+    const { imageStyle, textStyle, styleFirstCard, styleButton } = styles;
+
+    if (this.props.render_profile_pic) {
+      return (
+        <View style={styleFirstCard}>
+          <Card>
+            <CardSection>
+              <Image
+              source={{ uri: this.props.chosen_picture_uri }}
+              style={imageStyle} />
+            </CardSection>
+
+            <CardSection>
+              <Button
+                style={styleButton} onPress={() => {
+                  this.onUploadPicture(this.props.chosen_picture_uri);
+                }}>
+                  Allright
+                </Button>
+              </CardSection>
+              <CardSection>
+              <Button
+                  style={styleButton} onPress={() => {
+                    this.chooseImage();
+                  }}>
+                  Retake
+                </Button>
+            </CardSection>
+            <Text style={styles.errorTextStyle}>
+              { this.props.error }
+            </Text>
+          </Card>
+        </View>
+      );
+    }
+
       return (
           <Card>
-            <TouchableOpacity onPress={() => Actions.displayNewProfilePicture()}>
+            <TouchableOpacity onPress={() => this.chooseImage()}>
               <CardSection>
                 <Image
                 source={{ uri: this.props.profilePicture || this.props.user.photoURL }}
@@ -67,15 +131,55 @@ const styles = {
     textStyle: {
       fontSize: 18,
       paddingLeft: 6
-    }
+    },
+    styleFirstCard: {
+      marginTop: 70
+    },
+
+    styleCard: {
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+      errorTextStyle: {
+          color: 'red',
+          fontSize: 18,
+          alignSelf: 'center'
+      },
+
+      spinnerStyle: {
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginTop: 250
+
+      },
+      cardStyle: {
+          marginTop: 70
+      },
+      styleButton: {
+          borderWidth: 1
+      },
+
 
 };
 
 
 const mapStateToProps = ({ profile }) => {
-  const { user, name, profilePicture, phoneNumber } = profile;
+  const {
+    user,
+    name,
+    profilePicture,
+    phoneNumber,
+    render_profile_pic,
+    chosen_picture_uri } = profile;
 
-  return { user, name, profilePicture, phoneNumber };
+  return {
+     user,
+     name,
+     profilePicture,
+     phoneNumber,
+     render_profile_pic,
+     chosen_picture_uri };
 };
 
-export default connect(mapStateToProps, { userInfoFetch, addProfilePic, uploadProfilePicture })(Profile);
+export default connect(mapStateToProps, { userInfoFetch, addProfilePic, uploadUpdateProfilePicture })(Profile);
