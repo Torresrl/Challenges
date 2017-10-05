@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import firebase from 'firebase';
 import _ from 'lodash';
 import {fetchTimeline} from '../../../../Actions';
 import {ListView} from 'react-native';
@@ -28,13 +29,27 @@ class DoAChallengeTimeline extends Component {
 
     renderRow(timelineItem){
         const {challengesId, challengeId, owner} = this.props;
+        //TODO forsett her, logen virker ikke (må oppdateres) sjekk vorfor det å sjekke strengen ikke virker.
 
-        return <TimelineItem
-            post={timelineItem}
-            challengesId={challengesId}
-            challengeId={challengeId}
-            owner={owner}
-        />
+        //Sjekker om bilde eksisterer
+        const url = firebase.storage().ref(timelineItem.image).getDownloadURL();
+        //--------------------HER HAR JEG PRØVD Å FIKSE BUGGEN MED AT BILDER LOADES FØR DE ER LASTET OPP------------------
+        console.log('---------------------' + url.toString() + '----------------------------')
+        if(url.length == null || url.length === 0) {
+            return <TimelineItem
+                post={timelineItem}
+                challengesId={challengesId}
+                challengeId={challengeId}
+                owner={owner}
+            />
+        } else {
+            return null
+        }
+
+
+
+
+
     }
 
 
