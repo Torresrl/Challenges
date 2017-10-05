@@ -34,7 +34,7 @@ class DoAChallengeTimeline extends Component {
         //Sjekker om bilde eksisterer
         const url = firebase.storage().ref(timelineItem.image).getDownloadURL();
         //--------------------HER HAR JEG PRØVD Å FIKSE BUGGEN MED AT BILDER LOADES FØR DE ER LASTET OPP------------------
-        console.log('---------------------' + url + '----------------------------')
+        console.log('---------------------' + url.toString() + '----------------------------')
         if(url.length == null || url.length === 0) {
             return <TimelineItem
                 post={timelineItem}
