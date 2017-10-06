@@ -7,7 +7,7 @@ import ChallengesReducer from './challenges/ChallengesReducer';
 import ShowChallengesReducer from './challenges/ShowChallengesReducer';
 import FindChallengesReducer from './challenges/FindChallengesReducer';
 import DoAChallengeReducer from './challenges/DoAChallengeReducer';
-import ProfileReducer from './login/ProfileReducer';
+import ProfileReducer from './Profile/ProfileReducer';
 
 export default combineReducers({
     auth: AuthReducer,

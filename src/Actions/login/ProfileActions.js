@@ -99,7 +99,7 @@ export const emailSetSuccessfully = (dispatch) => {
   dispatch({
     type: EMAIL_UPDATE_SUCCESS
   });
-  Actions.profile();
+  Actions.profile({ type: 'reset' });
 };
 
 export const setEmailFailed = (dispatch) => {
@@ -113,7 +113,7 @@ export const passwordSetSuccessfully = (dispatch) => {
   dispatch({
     type: PASSWORD_UPDATE_SUCCESS
   });
-  Actions.profile();
+  Actions.profile({ type: 'reset' });
 };
 
 export const passwordSetFail = (dispatch) => {

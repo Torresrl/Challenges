@@ -6,3 +6,4 @@ export * from './challenges/ShowChallengesAction';
 export * from './challenges/FindChallengesAction';
 export * from './challenges/DoAChallengeAction';
 export * from './login/ProfileActions';
+export * from './Profile/PrivateFeedItemAction.js';

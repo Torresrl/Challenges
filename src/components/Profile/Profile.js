@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Text, TouchableOpacity, View, FlatList, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import ImagePicker from 'react-native-image-picker';
-import { Actions } from 'react-native-router-flux';
 import {
   userInfoFetch,
   addProfilePic,
   uploadUpdateProfilePicture
  } from '../../Actions';
 import { Card, CardSection, Button } from '../common';
+import PrivateFeed from './PrivateFeed';
 
 class Profile extends Component {
 
@@ -46,7 +46,7 @@ class Profile extends Component {
   }
 
   render() {
-    const { imageStyle, textStyle, styleFirstCard, styleButton } = styles;
+    const { imageStyle, textStyle, styleFirstCard, styleButton, contentContainer } = styles;
 
     if (this.props.render_profile_pic) {
       return (
@@ -83,6 +83,7 @@ class Profile extends Component {
     }
 
       return (
+         <View>
           <Card>
             <TouchableOpacity onPress={() => this.chooseImage()}>
               <CardSection>
@@ -107,10 +108,11 @@ class Profile extends Component {
             <CardSection>
               <Text style={textStyle}>Display random stuff here</Text>
             </CardSection>
-            <CardSection>
-              <Text style={textStyle}>Peace out</Text>
-            </CardSection>
           </Card>
+            <Card>
+              <PrivateFeed />
+            < /Card>
+        </View>
       );
   }
 }
@@ -159,6 +161,9 @@ const styles = {
       styleButton: {
           borderWidth: 1
       },
+      contentContainer: {
+        paddingVertical: 20
+      }
 
 
 };

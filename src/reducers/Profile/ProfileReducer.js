@@ -7,7 +7,9 @@ import { NEW_PROFILE_IMAGE,
   USER_UPLOAD_UPDATE_SUCCESS,
   INVALID_NAME,
   INVALID_NUMBER,
-  WEAK_PASSWORD } from '../../Actions/types';
+  WEAK_PASSWORD,
+  RETRIEVE_CHALLANGE,
+  RETRIEVE_CHALLANGE_SUCCESS } from '../../Actions/types';
 
 
 const INITIAL_STATE = {
@@ -37,6 +39,8 @@ export default (state = INITIAL_STATE, action) => {
         return { ...state, name: action.payload };
     case USER_UPDATE:
         return { ...state, [action.payload.prop]: action.payload.value };
+    case RETRIEVE_CHALLANGE_SUCCESS:
+      return { ...state, retrievedChallenges: action.payload };
     case USER_UPLOAD_UPDATE_SUCCESS:
         return { ...state, name: action.payload[0], phoneNumber: action.payload[1], error: '' };
     default:

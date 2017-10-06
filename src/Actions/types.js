@@ -17,6 +17,10 @@ export const EMAIL_UPDATE_FAILED = 'email-failed';
 export const EMAIL_UPDATE_SUCCESS = 'email-success';
 export const USER_CANCEL = 'user-cancel';
 
+//Private Feed
+export const RETRIEVE_CHALLANGE_SUCCESS = 'retrieve-challenge-success';
+export const RETRIEVE_CHALLANGE = 'retrieve-challenge';
+
 
 //new user
 export const NEW_EMAIL_CHANGE = 'new_email_change';
