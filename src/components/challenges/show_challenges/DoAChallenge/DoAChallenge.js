@@ -54,9 +54,11 @@ class DoAChallenge extends Component {
         database
             .ref('/challenges/' + challengesId + '/followers')
             .on('value', snap => {
-                this.setState({
-                    followers: Object.keys(snap.val())
-                });
+                if(snap.val() != null) {
+                    this.setState({
+                        followers: Object.keys(snap.val())
+                    });
+                }
             } );
     }
 
@@ -214,6 +216,7 @@ class DoAChallenge extends Component {
         }
     }
 
+    //henter liste ut i fra navBar,
     renderList(){
         const {navBar} = this.props;
         const{challengeId} = this.props.challenge;

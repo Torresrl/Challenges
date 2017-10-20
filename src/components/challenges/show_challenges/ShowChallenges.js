@@ -38,20 +38,20 @@ class ShowChallenges extends Component {
 
         console.log(challenges);
 
-        if (chooseList == 'all') {
+        if (chooseList == 'all' && challenges !== undefined) {
             challengeList = _.map(challenges, (val, uid) => {
                 return {...val, uid}
             });
         }
 
-        else if(chooseList == 'done'){
+        else if(chooseList == 'done' && challenges !== undefined){
             challengeList = challenges.filter(challenges => {
                 if (challenges.done == true) {
                     return challenges;
                 }
             });
 
-        } else if(chooseList == 'notDone'){
+        } else if(chooseList == 'notDone' && challenges !== undefined){
             challengeList = challenges.filter(challenges => {
                 if (challenges.done == false) {
                     return challenges;

@@ -35,7 +35,9 @@ class TimelineItem extends Component {
             .ref(image).getDownloadURL()
             .then((url) => {
                 this.setState({imageUrl: url});
-            });
+            }).catch((error) => {
+                this.setState({imageUrl: require('../../../recourses/defaultImages/NoImage.png')})
+        });
     }
 
     componentDidMount() {
@@ -177,6 +179,9 @@ class TimelineItem extends Component {
         }
     }
 
+
+
+
     renderImage(){
         const {imageUrl} = this.state;
         const {imageStyle} = styles;
@@ -189,15 +194,18 @@ class TimelineItem extends Component {
             )
         } else {
             return (
+                //Link: https://github.com/oblador/react-native-image-progress/issues/22
                 <Image
                     source={{uri: this.state.imageUrl}}
                     style={imageStyle}
+
                 />
 
             )
         }
 
     }
+
 
     renderVotes(){
         const {voted, votes} = this.props.post;

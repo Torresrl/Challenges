@@ -68,9 +68,7 @@ const mapStateToProps = ({doAChallenge}) => {
         return {...val, uid};
     });
 
-    console.log(timelineList);
    const data = _.orderBy(timelineList, ['votes','postedAt'], ['desc', 'asc']);
-   console.log(data);
 
     return {data};
 };
