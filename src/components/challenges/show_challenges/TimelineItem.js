@@ -35,7 +35,9 @@ class TimelineItem extends Component {
             .ref(image).getDownloadURL()
             .then((url) => {
                 this.setState({imageUrl: url});
-            });
+            }).catch((error) => {
+                this.setState({imageUrl: require('../../../recourses/defaultImages/NoImage.png')})
+        });
     }
 
     componentDidMount() {
@@ -177,9 +179,7 @@ class TimelineItem extends Component {
         }
     }
 
-    onError(error){
-        this.setState({imageUrl: require('../../../recourses/defaultImages/NoImage.png')})
-    }
+
 
 
     renderImage(){
@@ -194,12 +194,10 @@ class TimelineItem extends Component {
             )
         } else {
             return (
-                //TODO prøv å set in en onError her?
                 //Link: https://github.com/oblador/react-native-image-progress/issues/22
                 <Image
                     source={{uri: this.state.imageUrl}}
                     style={imageStyle}
-                    onError={this.onError.bind(this)}
 
                 />
 

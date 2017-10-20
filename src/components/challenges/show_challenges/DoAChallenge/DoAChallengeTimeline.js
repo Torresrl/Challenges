@@ -19,32 +19,18 @@ class DoAChallengeTimeline extends Component {
         this.createDataSource(nextProps);
     }
 
-    createDataSource({timelineList}){
+    createDataSource({data}){
         const ds = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2
         });
 
-        this.dataSource = ds.cloneWithRows(timelineList)
+        this.dataSource = ds.cloneWithRows(data)
     }
 
 
 
     renderRow(timelineItem){
         const {challengesId, challengeId, owner} = this.props;
-        //TODO forsett her, logen virker ikke (må oppdateres) sjekk vorfor det å sjekke strengen ikke virker.
-
-        //Sjekker om bilde eksisterer
-        /*
-        let url = firebase.storage().ref(timelineItem.image).getDownloadURL().toString();
-        //--------------------HER HAR JEG PRØVD Å FIKSE BUGGEN MED AT BILDER LOADES FØR DE ER LASTET OPP------------------
-        console.log('---------------------' + url.toString() + '----------------------------')
-
-        if(url.length == null || url.length === 0) {
-
-        } else {
-            return null
-        }
-        */
 
         return <TimelineItem
             post={timelineItem}
@@ -85,8 +71,9 @@ const mapStateToProps = ({doAChallenge}) => {
     const timelineList = _.map(timeline, (val, uid) => {
         return {...val, uid};
     });
+    const data = _.orderBy(timelineList, ['postedAt'], ['desc']);
 
-    return {timelineList};
+    return {data};
 };
 
 export default connect(mapStateToProps, {fetchTimeline}) (DoAChallengeTimeline);

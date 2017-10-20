@@ -214,6 +214,7 @@ class DoAChallenge extends Component {
         }
     }
 
+    //henter liste ut i fra navBar,
     renderList(){
         const {navBar} = this.props;
         const{challengeId} = this.props.challenge;
