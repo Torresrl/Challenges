@@ -54,9 +54,11 @@ class DoAChallenge extends Component {
         database
             .ref('/challenges/' + challengesId + '/followers')
             .on('value', snap => {
-                this.setState({
-                    followers: Object.keys(snap.val())
-                });
+                if(snap.val() != null) {
+                    this.setState({
+                        followers: Object.keys(snap.val())
+                    });
+                }
             } );
     }
 
