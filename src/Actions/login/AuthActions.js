@@ -1,6 +1,6 @@
 import firebase from 'firebase';
 import {Actions} from 'react-native-router-flux';
-import {EMAIL_CHANGE,
+import { EMAIL_CHANGE,
     PASSWORD_CHANGE,
     LOGIN_SUCCESS,
     LOGIN_FAIL,

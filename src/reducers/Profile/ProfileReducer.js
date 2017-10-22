@@ -9,14 +9,18 @@ import { NEW_PROFILE_IMAGE,
   INVALID_NUMBER,
   WEAK_PASSWORD,
   RETRIEVE_CHALLANGE,
-  RETRIEVE_CHALLANGE_SUCCESS } from '../../Actions/types';
+  RETRIEVE_CHALLANGE_SUCCESS,
+  SELECTED_CHALLANGE,
+  PROFILE_DETAIL_PRESS
+} from '../../Actions/types';
 
 
 const INITIAL_STATE = {
   render_profile_pic: false,
   user: {},
   chosen_picture_uri: '',
-  error: ''
+  error: '',
+  toggle: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -36,13 +40,17 @@ export default (state = INITIAL_STATE, action) => {
     case USER_INFO_FETCH_SUCCESS:
       return { ...state, user: action.payload };
     case NEW_NAME_CHANGE:
-        return { ...state, name: action.payload };
+      return { ...state, name: action.payload };
     case USER_UPDATE:
-        return { ...state, [action.payload.prop]: action.payload.value };
+      return { ...state, [action.payload.prop]: action.payload.value };
     case RETRIEVE_CHALLANGE_SUCCESS:
       return { ...state, retrievedChallenges: action.payload };
     case USER_UPLOAD_UPDATE_SUCCESS:
-        return { ...state, name: action.payload[0], phoneNumber: action.payload[1], error: '' };
+      return { ...state, name: action.payload[0], phoneNumber: action.payload[1], error: '' };
+    case SELECTED_CHALLANGE:
+      return { ...state, selected_challange: action.payload };
+    case PROFILE_DETAIL_PRESS:
+        return { ...state, toggle: action.payload === state.toggle };
     default:
       return state;
   }

@@ -1,19 +1,36 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { Actions } from 'react-native-router-flux';
+import {
+  Text,
+  TouchableWithoutFeedback,
+  View
+  } from 'react-native';
 import { connect } from 'react-redux';
 import { CardSection } from '../common';
+import { selectChallange } from '../../Actions';
 
 class ListItem extends Component {
 
   render() {
     const { textStyle } = styles;
     const { uid } = this.props.item;
+
     return (
-      <View>
-        <Text style={textStyle}>
-          {uid}
-        </Text>
-      </View>
+      <TouchableWithoutFeedback
+        onPress={() => {
+          this.props.selectChallange(uid);
+          Actions.displaySelectedChallange({ challange: this.props.item });
+          }
+        }
+      >
+        <View style={{ marginTop: 200 }}>
+          <CardSection>
+            <Text style={textStyle}>
+              {uid}
+            </Text>
+          </CardSection>
+        </View>
+      </TouchableWithoutFeedback>
     );
   }
 }
@@ -22,15 +39,14 @@ const styles = {
   textStyle: {
     fontSize: 18,
     paddingLeft: 15
-
   }
 };
 
-const mapStateToProps = ({ profile }) => {
-  const { retrievedChallenge } = profile;
+const mapStateToProps = ({ profile }, ownProps) => {
+  const { selected_challange } = profile;
+  const expanded = selected_challange === ownProps.item.uid;
 
-  return { retrievedChallenge };
+  return { expanded };
 };
 
-
-export default connect()(ListItem);
+export default connect(mapStateToProps, { selectChallange })(ListItem);

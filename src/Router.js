@@ -16,6 +16,7 @@ import DisplayProfilePicture from './components/Profile/DisplayProfilePicture';
 import ReauthenticateUser from './components/Profile/ReauthenticateUser';
 import NewPasswordForm from './components/Profile/NewPasswordForm';
 import NewEmailForm from './components/Profile/NewEmailForm';
+import DisplaySelectedChallange from './components/Profile/DisplaySelectedChallange';
 
 const RouterComponent = () => {
 
@@ -116,6 +117,12 @@ const RouterComponent = () => {
                         key="displayNewProfilePicture"
                         component={DisplayProfilePicture}
                         title="Photo"
+                        />
+
+                        <Scene
+                          key="displaySelectedChallange"
+                          component={DisplaySelectedChallange}
+                          title="Challange"
                         />
                     </Scene>
                 </Scene>

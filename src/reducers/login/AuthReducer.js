@@ -28,12 +28,8 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
-        case RE_AUTHENTICATION_FAIL:
-          return { ...state, error: 'Something went wrong', load: false };
         case WEAK_PASSWORD:
           return { ...state, error: 'Password must be at least 7 chars', password: '' };
-        case RE_AUTHENTICATION_SUCCESS:
-            return { ...state, user: action.payload, load: false, password: '' };
         case EMAIL_MISSING:
           return { ...state, error: 'Invalid email' };
         case EMAIL_CHANGE:

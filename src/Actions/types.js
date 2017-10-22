@@ -20,6 +20,8 @@ export const USER_CANCEL = 'user-cancel';
 //Private Feed
 export const RETRIEVE_CHALLANGE_SUCCESS = 'retrieve-challenge-success';
 export const RETRIEVE_CHALLANGE = 'retrieve-challenge';
+export const SELECTED_CHALLANGE = 'selected-challange';
+export const PROFILE_DETAIL_PRESS = 'profile-detail-press';
 
 
 //new user
