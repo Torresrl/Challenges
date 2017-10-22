@@ -63,7 +63,11 @@ class NewChallenges extends Component {
     }
 
     chooseImage() {
-        ImagePicker.showImagePicker(null, (response) => {
+        const options = {
+            quality: 0
+        };
+
+        ImagePicker.showImagePicker(options, (response) => {
             console.log('Response = ', response);
 
             if (response.didCancel) {

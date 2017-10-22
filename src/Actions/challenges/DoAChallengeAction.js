@@ -161,8 +161,7 @@ const fanoutPost =({challengeId, challengesId, followers, post, owner}) => {
     //problemt er at me ikke får rett verdi fra followersSnapshot
 
     let fanoutObj = {};
-    if(followers && followers !== 'null' &&
-        followers !== 'undefined') {
+    if(followers && followers !== 'null' && followers !== 'undefined') {
 
         // write to each follower's timeline
         //denne virker ikke sikkelig!
