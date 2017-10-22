@@ -25,7 +25,11 @@ class DisplayProfilePicture extends Component {
   };
 
   chooseImage() {
-    ImagePicker.showImagePicker(null, (response) => {
+      const options = {
+          quality: 0
+      };
+
+      ImagePicker.showImagePicker(options, (response) => {
       if (response.didCancel) {
         console.log('Cancel by user');
       } else if (response.error) {
