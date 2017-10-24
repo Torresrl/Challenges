@@ -50,7 +50,6 @@ export const getCurrentUserComment = (challengesId, challengeId) => {
             });
     }
 };
-//TODO sørg for at når du laster opp bilde begynner den ikke å leite med en gang eller at den venter?
 //brukes til å oppdatere flere poster samtidig
 export const challengDone = (object) => {
     const {currentUser} = firebase.auth();
@@ -59,7 +58,6 @@ export const challengDone = (object) => {
 
 
     if (image != null) {
-        // prøv denne metoden: https://gist.github.com/davideast/e68aa87ea6f0e7a4dc08
 
         let post = {
             userName: currentUser.displayName,
@@ -109,8 +107,6 @@ export const fetchTimeline = (challengesId, challengeId) => {
                 challengeId + '/timeline')
             .orderByChild('postedAt')
 
-            //se link for sortering
-            //https://stackoverflow.com/questions/33893866/orderbychild-not-working-in-firebase
 
             .on('value', snapshot => {
                 snapshot.forEach( function(child){
@@ -161,13 +157,6 @@ const fanoutPost =({challengeId, challengesId, followers, post, owner}) => {
     //problemt er at me ikke får rett verdi fra followersSnapshot
 
     let fanoutObj = {};
-    console.log();
-    console.log();
-    console.log("---------------------------se her----------------------------");
-    console.log("follower: " + followers);
-    console.log("follower value: " + followers.val);
-    console.log();
-    console.log();
     if(followers.val && followers.val !== 'null' && followers.val !== 'undefined') {
 
         // write to each follower's timeline

@@ -75,16 +75,14 @@ class DoAChallenge extends Component {
     }
 
     onChallengeFinished(){
-        const {image, comment, challengesId, challenge, owner} = this.props;
-        const database = firebase.database();
+        const {image, comment, challengesId, challenge, owner, followers} = this.props;
 
-        database
-            .ref('/challenges/' + challengesId + '/followers')
-            .on('value', snap => {
-                this.setState({
-                    followers: Object.keys(snap.val())
-                });
-            } );
+        if(followers && followers !== 'null' && followers !== 'undefined') {
+            this.setState({
+                followers: followers
+            });
+        }
+
 
         this.props.challengDone({
             image,

@@ -74,15 +74,6 @@ class TimelineItem extends Component {
                 followers: followers
             });
 
-            /*
-            database
-                .ref('/challenges/' + challengesId + '/followers')
-                .on('value', snap => {
-                    this.setState({
-                        followers: Object.keys(snap.val())
-                    });
-                });
-                */
         }
 
         let fanoutObj = this.fanoutPost({

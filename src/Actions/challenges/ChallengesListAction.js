@@ -4,6 +4,8 @@ import {
     CHALLENGES_FETCH
 } from '../types';
 
+
+//henter en liste av chalenges
 export const challengesFetch = () => {
     const {currentUser} = firebase.auth();
 

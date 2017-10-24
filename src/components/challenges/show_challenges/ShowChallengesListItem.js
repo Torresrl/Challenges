@@ -6,13 +6,17 @@ import {Card, CardSection} from '../../common';
 class ShowChallengesListItem extends Component {
 
     onRowPress(){
-        const {challengesId, owner} = this.props.challenges;
+        const {challengesId, owner, followers} = this.props.challenges;
         const {challenge} = this.props;
+
+        //TODO: kalle en action som tømmer reduceren
 
         Actions.doAChallenge({
             challenge: challenge,
             challengesId: challengesId,
-            owner: owner})
+            owner: owner,
+            followers: followers
+        })
     }
 
     render(){
