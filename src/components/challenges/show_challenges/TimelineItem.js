@@ -39,23 +39,23 @@ class TimelineItem extends Component {
                 this.setState({imageUrl: require('../../../recourses/defaultImages/NoImage.png')})
         });
     }
-
+/*
     componentDidMount() {
-        const {challengesId} = this.props;
-        const database = firebase.database();
-        database
-            .ref('/challenges/' + challengesId + '/followers')
-            .on('value', snap => {
-                this.setState({
-                    followers: Object.keys(snap.val())
-                });
-            } );
+        const {followers} = this.props;
+
+        if(followers && followers !== 'null' && followers !== 'undefined') {
+            this.setState({
+                followers: followers
+            });
+
+        }
     }
+    */
 
 
     //Database funskjoner:
     updateVotes(upVote){ //upVote
-        const {challengesId} = this.props;
+        const {challengesId, followers} = this.props;
 
         let votes = parseInt(this.props.post.votes);
         const database = firebase.database();
@@ -69,13 +69,21 @@ class TimelineItem extends Component {
 
         //denne linjen henter ikke ut daten sikkelig ....
         //legge det til i component vil mount med en dispatcher, da vil vell staten bli soten når det passer den
-        database
-            .ref('/challenges/' + challengesId + '/followers')
-            .on('value', snap => {
-                this.setState({
-                    followers: Object.keys(snap.val())
+        if(followers && followers !== 'null' && followers !== 'undefined') {
+            this.setState({
+                followers: followers
+            });
+
+            /*
+            database
+                .ref('/challenges/' + challengesId + '/followers')
+                .on('value', snap => {
+                    this.setState({
+                        followers: Object.keys(snap.val())
+                    });
                 });
-            } );
+                */
+        }
 
         let fanoutObj = this.fanoutPost({
             votes: votes
@@ -94,7 +102,7 @@ class TimelineItem extends Component {
 
         let fanoutObj = {};
 
-        if(followers && followers !== 'null' && followers !== 'undefined') {
+        if(followers.val && followers.val !== 'null' && followers.val !== 'undefined') {
             followers.forEach((key) => fanoutObj[
             '/Users/' + key +
             '/myChallenges/' + challengesId +
