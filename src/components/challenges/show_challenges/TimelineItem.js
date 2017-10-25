@@ -46,9 +46,12 @@ class TimelineItem extends Component {
         database
             .ref('/challenges/' + challengesId + '/followers')
             .on('value', snap => {
-                this.setState({
-                    followers: Object.keys(snap.val())
-                });
+                console.log("snap.val(): " + snap.val() != null);
+                if(snap.val() != null) {
+                    this.setState({
+                        followers: Object.keys(snap.val())
+                    });
+                }
             } );
     }
 
@@ -72,9 +75,11 @@ class TimelineItem extends Component {
         database
             .ref('/challenges/' + challengesId + '/followers')
             .on('value', snap => {
-                this.setState({
-                    followers: Object.keys(snap.val())
-                });
+                if( snap.val() != null) {
+                    this.setState({
+                        followers: Object.keys(snap.val())
+                    });
+                }
             } );
 
         let fanoutObj = this.fanoutPost({
@@ -94,7 +99,9 @@ class TimelineItem extends Component {
 
         let fanoutObj = {};
 
-        if(followers && followers !== 'null' && followers !== 'undefined') {
+        console.log(followers);
+
+        if(followers && followers.length > 0) {
             followers.forEach((key) => fanoutObj[
             '/Users/' + key +
             '/myChallenges/' + challengesId +
@@ -211,7 +218,7 @@ class TimelineItem extends Component {
         const {voted, votes} = this.props.post;
         const {buttonContainer, styleVotes} = styles;
 
-        if(voted){
+        if(false){
             return (
                 <View style={buttonContainer}>
                     <Text style={styleVotes}>
