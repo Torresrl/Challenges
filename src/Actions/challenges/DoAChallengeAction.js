@@ -166,7 +166,7 @@ const fanoutPost =({challengeId, challengesId, followers, post, owner}) => {
     console.log(followers.val !== 'null');
     console.log(followers.val !== 'undefined');
 
-    if(followers.val && followers.val !== 'null' && followers.val !== 'undefined') {
+    if(followers && followers.length > 0) {
 
         // write to each follower's timeline
         //denne virker ikke sikkelig!

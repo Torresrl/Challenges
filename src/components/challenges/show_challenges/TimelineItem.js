@@ -46,7 +46,6 @@ class TimelineItem extends Component {
         database
             .ref('/challenges/' + challengesId + '/followers')
             .on('value', snap => {
-                console.log("snap.val(): " + snap.val() != null);
                 if(snap.val() != null) {
                     this.setState({
                         followers: Object.keys(snap.val())
