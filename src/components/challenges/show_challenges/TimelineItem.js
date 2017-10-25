@@ -218,7 +218,7 @@ class TimelineItem extends Component {
         const {voted, votes} = this.props.post;
         const {buttonContainer, styleVotes} = styles;
 
-        if(false){
+        if(voted){
             return (
                 <View style={buttonContainer}>
                     <Text style={styleVotes}>
