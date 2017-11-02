@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import firebase from 'firebase';
 import _ from 'lodash';
 import {fetchTimeline} from '../../../../Actions';
-import {ListView} from 'react-native';
+import {FlatList} from 'react-native';
 import TimelineItem from '../TimelineItem';
 
 
@@ -12,9 +12,9 @@ class DoAChallengeTimeline extends Component {
     componentWillMount(){
         const {challengesId, challengeId} = this.props;
         this.props.fetchTimeline(challengesId, challengeId);
-        this.createDataSource(this.props);
+        //this.createDataSource(this.props);
     }
-
+/*
     componentWillReceiveProps(nextProps){
         this.createDataSource(nextProps);
     }
@@ -40,17 +40,50 @@ class DoAChallengeTimeline extends Component {
         />
 
     }
+*/
+/*
+    renderItem = ({item}, challengesId, challengeId, owner) => (
+        <TimelineItem
+            post={item}
+            challengesId={challengesId}
+            challengeId={challengeId}
+            owner={owner}
+        />
+
+    );
+
+    */
+
+    renderItem(item){
+        const {challengesId, challengeId, owner} = this.props;
+        return (
+            <TimelineItem
+                post={item}
+                challengesId={challengesId}
+                challengeId={challengeId}
+                owner={owner}
+            />
+        );
+    }
+    /*
+     <ListView
+     enableEmptySections={true}
+     dataSource={this.dataSource}
+     renderRow={(rowData) => this.renderRow(rowData)}
+     style={containerStyle}
+     />
+     */
 
 
     render() {
         const {containerStyle} = styles;
+        const {data, challengesId, challengeId, owner} = this.props;
 
         return (
-            <ListView
-                enableEmptySections={true}
-                dataSource={this.dataSource}
-                renderRow={(rowData) => this.renderRow(rowData)}
-                style={containerStyle}
+            <FlatList
+                data={data}
+                renderItem={({item}) => this.renderItem(item)}
+                keyExtractor={item => item.challengeId}
             />
 
         );

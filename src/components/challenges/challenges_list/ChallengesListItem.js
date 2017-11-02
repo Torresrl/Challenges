@@ -13,6 +13,7 @@ class ChallengesListItem extends Component {
         const {name} = this.props.challenges;
 
         return (
+
             <TouchableOpacity onPress={this.onRowPress.bind(this)}>
                 <View>
                     <Card style={styles.cardStyle}>

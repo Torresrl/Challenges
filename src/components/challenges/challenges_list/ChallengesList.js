@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ListView} from 'react-native';
+import {FlatList} from 'react-native';
 import {connect} from 'react-redux';
 import _ from 'lodash';
 import {challengesFetch} from '../../../Actions';
@@ -9,34 +9,27 @@ class ChallengesList extends Component{
 
     componentWillMount() {
         this.props.challengesFetch();
-        this.createDataSource(this.props);
+
     }
 
-    componentWillReceiveProps(nextProps){
-        this.createDataSource(nextProps);
-    }
 
-    createDataSource({challengesList}){
-        const ds = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1 !== r2
-        });
-
-        this.dataSource = ds.cloneWithRows(challengesList)
-    }
-
-    renderRow(challenges){
-        return <ChallengesListItem challenges={challenges}/>
-    }
+    renderItem = ({item}) => (
+         <ChallengesListItem challenges={item}/>
+    );
 
 
     render() {
 
+        const {challengesList} = this.props;
+
         return(
-                <ListView
-                    enableEmptySections={true}
-                    dataSource={this.dataSource}
-                    renderRow={(rowData) => this.renderRow(rowData)}
-                />
+            <FlatList
+                data={challengesList}
+                renderItem={this.renderItem}
+                keyExtractor={item => item.challengesId}
+
+            />
+
         );
     }
 
