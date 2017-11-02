@@ -14,45 +14,6 @@ class DoAChallengeTimeline extends Component {
         this.props.fetchTimeline(challengesId, challengeId);
         //this.createDataSource(this.props);
     }
-/*
-    componentWillReceiveProps(nextProps){
-        this.createDataSource(nextProps);
-    }
-
-    createDataSource({data}){
-        const ds = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1 !== r2
-        });
-
-        this.dataSource = ds.cloneWithRows(data)
-    }
-
-
-
-    renderRow(timelineItem){
-        const {challengesId, challengeId, owner} = this.props;
-
-        return <TimelineItem
-            post={timelineItem}
-            challengesId={challengesId}
-            challengeId={challengeId}
-            owner={owner}
-        />
-
-    }
-*/
-/*
-    renderItem = ({item}, challengesId, challengeId, owner) => (
-        <TimelineItem
-            post={item}
-            challengesId={challengesId}
-            challengeId={challengeId}
-            owner={owner}
-        />
-
-    );
-
-    */
 
     renderItem(item){
         const {challengesId, challengeId, owner} = this.props;
@@ -65,14 +26,7 @@ class DoAChallengeTimeline extends Component {
             />
         );
     }
-    /*
-     <ListView
-     enableEmptySections={true}
-     dataSource={this.dataSource}
-     renderRow={(rowData) => this.renderRow(rowData)}
-     style={containerStyle}
-     />
-     */
+
 
 
     render() {
