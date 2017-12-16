@@ -52,13 +52,16 @@ const styles = {
 };
 
 
-
+//når du debugger feilen er her, du har fikset den før.....
 const mapStateToProps = ({doAChallenge}) => {
     const {timeline} = doAChallenge;
+
+
     const timelineList = _.map(timeline, (val, uid) => {
         return {...val, uid};
     });
-    const data = _.orderBy(timelineList, ['postedAt'], ['desc']);
+    const data = _.sortByOrder(timelineList, ['postedAt'], ['asc']);
+
 
     return {data};
 };
